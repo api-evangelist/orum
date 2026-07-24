@@ -1,0 +1,725 @@
+openapi: 3.0.1
+info:
+  title: Orum Authentication Cards API
+  description: Orum API.
+  version: v2022-09-21
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+servers:
+- url: https://api-sandbox.orum.io
+- url: https://vault.api-sandbox.orum.io
+tags:
+- name: Cards
+paths:
+  /deliver/cards:
+    post:
+      tags:
+      - Cards
+      operationId: post-card
+      summary: Create a card
+      description: Create a card object.
+      servers:
+      - url: https://vault.api-sandbox.orum.io
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CardRequest'
+        required: true
+      responses:
+        '200':
+          description: 200 response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CardResponse'
+        '400':
+          description: invalid request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        default:
+          description: unexpected error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      security:
+      - oauth2:
+        - write:cards
+    get:
+      tags:
+      - Cards
+      operationId: get-cards
+      summary: Get all cards
+      description: Get all cards by filter.
+      parameters:
+      - name: Orum-Version
+        in: header
+        required: true
+        schema:
+          $ref: '#/components/schemas/OrumVersion'
+        x-orum-error-invalid:
+          known-error: version_invalid
+        x-orum-error-missing:
+          known-error: version_missing
+      - name: index
+        description: Index for paginated results
+        in: query
+        required: false
+        schema:
+          type: integer
+          default: 0
+          minimum: 0
+        x-orum-error-invalid:
+          known-error: index
+      - name: size
+        description: Max number of results to return
+        in: query
+        required: false
+        schema:
+          type: integer
+          default: 100
+          minimum: 0
+          maximum: 500
+        x-orum-error-invalid:
+          known-error: size
+      - name: customer_reference_id
+        description: Filter by customer reference id
+        in: query
+        required: false
+        allowEmptyValue: true
+        schema:
+          $ref: '#/components/schemas/CustomerReferenceId'
+        x-orum-error-invalid:
+          known-error: invalid_query_customer_reference_id
+      - name: status
+        description: Filter by card statuses (multiple allowed)
+        in: query
+        required: false
+        explode: true
+        schema:
+          $ref: '#/components/schemas/CardStatusFilter'
+      responses:
+        '200':
+          description: 200 response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CardsResponse'
+        '400':
+          description: invalid request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        default:
+          description: unexpected error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      security:
+      - oauth2:
+        - read:cards
+  /deliver/cards/{id}:
+    get:
+      tags:
+      - Cards
+      operationId: get-card
+      summary: Get a card by id
+      description: Get a card object by id.
+      parameters:
+      - name: id
+        in: path
+        description: Orum generated unique id for the resource for the card you are fetching.
+        required: true
+        schema:
+          $ref: '#/components/schemas/OrumId'
+        x-orum-error-invalid:
+          known-error: unknown_id_card
+      responses:
+        '200':
+          description: 200 response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CardResponse'
+        '404':
+          description: not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        default:
+          description: unexpected error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      security:
+      - oauth2:
+        - read:cards
+    delete:
+      tags:
+      - Cards
+      operationId: delete-card
+      summary: Closes a card by id
+      description: Close a card object so they are unable to transact.
+      parameters:
+      - name: id
+        in: path
+        description: Orum generated unique id for the resource for the card you are fetching.
+        required: true
+        schema:
+          $ref: '#/components/schemas/OrumId'
+        x-orum-error-invalid:
+          known-error: unknown_id_card
+      responses:
+        '200':
+          description: 200 response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CardResponse'
+        '404':
+          description: not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        default:
+          description: unexpected error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      security:
+      - oauth2:
+        - write:cards
+components:
+  schemas:
+    Address2:
+      title: Address2
+      type: string
+      description: Address line 2.
+      maxLength: 255
+      x-orum-error-invalid:
+        message: Address2 is invalid. Ensure it is a string with a maximum length of 255 characters.
+        code: invalid_address2
+    ErrorResponse:
+      type: object
+      properties:
+        error_code:
+          type: string
+        message:
+          type: string
+        details:
+          type: object
+          description: additional details about the error.
+          nullable: true
+      required:
+      - error_code
+      - message
+    CardAddressResponse:
+      title: CardAddressResponse
+      type: object
+      required:
+      - id
+      - type
+      - zip5
+      - created_at
+      - updated_at
+      description: Address.
+      properties:
+        id:
+          $ref: '#/components/schemas/OrumId'
+        type:
+          $ref: '#/components/schemas/AddressTypeCard'
+        address1:
+          $ref: '#/components/schemas/Address1'
+        address2:
+          $ref: '#/components/schemas/Address2'
+        city:
+          $ref: '#/components/schemas/City'
+        state:
+          $ref: '#/components/schemas/State'
+        country:
+          $ref: '#/components/schemas/Country'
+        zip5:
+          $ref: '#/components/schemas/Zip5'
+        created_at:
+          $ref: '#/components/schemas/CreatedAt'
+        updated_at:
+          $ref: '#/components/schemas/UpdatedAt'
+    CardStatusFilter:
+      title: CardStatusFilter
+      description: Filter by status of card in Orum system.
+      type: array
+      items:
+        $ref: '#/components/schemas/CardStatus'
+    CardAccountHolderNamePerson:
+      type: object
+      title: Person Name
+      required:
+      - first_name
+      - last_name
+      description: Name of account holder.
+      properties:
+        first_name:
+          allOf:
+          - $ref: '#/components/schemas/FirstName'
+          x-orum-error-invalid:
+            known-error: invalid_first_name
+          x-orum-error-missing:
+            known-error: missing_first_name
+        middle_name:
+          allOf:
+          - $ref: '#/components/schemas/MiddleName'
+          type: string
+          nullable: true
+          x-orum-error-invalid:
+            known-error: invalid_middle_name
+          x-omitempty: true
+        last_name:
+          allOf:
+          - $ref: '#/components/schemas/LastName'
+          x-orum-error-invalid:
+            known-error: invalid_last_name
+          x-orum-error-missing:
+            known-error: missing_last_name
+        suffix:
+          type: string
+          nullable: true
+          description: Accepts alphanumeric characters and hyphens, dashes, periods, apostrophes, spaces, and diacritics.
+          pattern: ^([ ’!"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~¡¢£¤¥¦§¨©ª«¬®¯°±²³´µ¶·¸¹º»¼½¾¿ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖ×ØÙÚÛÜÝÞßàáâãäåæçèéêëìíîïðñòóôõö÷øùúûüýþÿĀāĂăĄąĆćĈĉĊċČčĎďĐđĒēĔĕĖėĘęĚěĜĝĞğĠġĢģĤĥĦħĨĩĪīĬĭĮįİıĲĳĴĵĶķĸĹĺĻļĽľĿŀŁłŃńŅņŇňŉŊŋŌōŎŏŐőŒœŔŕŖŗŘřŚśŜŝŞşŠšŢţŤťŦŧŨũŪūŬŭŮůŰűŲųŴŵŶŷŸŹźŻżŽžſ]*)$
+          maxLength: 255
+          x-orum-error-invalid:
+            message: suffix is invalid. Accepted values are letters, spaces, hyphens, apostrophes, periods, and diacritics.
+            code: invalid_suffix
+          x-omitempty: true
+      x-orum-error-invalid:
+        message: Account holder name is invalid. Accepted values are letters, spaces, hyphens, apostrophes, periods and diacritics.
+        code: invalid_account_holder_name
+    CardAddressRequest:
+      type: object
+      title: Full Address
+      required:
+      - address1
+      - city
+      - state
+      - country
+      - zip5
+      description: Full address of card holder
+      properties:
+        address1:
+          $ref: '#/components/schemas/Address1'
+        address2:
+          $ref: '#/components/schemas/Address2'
+        city:
+          $ref: '#/components/schemas/City'
+        state:
+          allOf:
+          - $ref: '#/components/schemas/State'
+          x-orum-error-invalid:
+            known-error: invalid_state
+        country:
+          allOf:
+          - $ref: '#/components/schemas/Country'
+          x-orum-error-invalid:
+            known-error: invalid_country
+        zip5:
+          allOf:
+          - $ref: '#/components/schemas/Zip5'
+          x-orum-error-invalid:
+            known-error: invalid_zip5
+    CardStatus:
+      title: CardStatus
+      type: string
+      description: Status of card in Orum system.
+      enum:
+      - created
+      - verified
+      - rejected
+      - closed
+    City:
+      title: City
+      type: string
+      description: City.
+      maxLength: 255
+    CardResponse:
+      title: CardResponse
+      type: object
+      required:
+      - card
+      properties:
+        card:
+          allOf:
+          - $ref: '#/components/schemas/CardResponseBase'
+    CardsResponse:
+      title: CardsResponse
+      type: object
+      required:
+      - cards
+      properties:
+        cards:
+          type: array
+          description: List of card objects.
+          items:
+            allOf:
+            - $ref: '#/components/schemas/CardResponseBase'
+    Zip5:
+      title: Zip5
+      type: string
+      description: 5-digit ZIP Code. Numeric values (0-9) only.
+      pattern: ^\d{5}$
+    CardExpirationMonth:
+      type: integer
+      description: The month in which the card expires.
+      minimum: 1
+      maximum: 12
+    OrumVersion:
+      type: string
+      description: Version of Deliver and Verify APIs. Use v2022-09-21.
+      enum:
+      - v2022-09-21
+    StatusReason:
+      type: object
+      required:
+      - reason_code
+      - reason_code_message
+      properties:
+        reason_code:
+          $ref: '#/components/schemas/ReasonCode'
+        reason_code_message:
+          $ref: '#/components/schemas/ReasonCodeMessage'
+    CardLastFourDigits:
+      type: string
+      description: The last four digits of the card number supplied by the customer.
+      pattern: ^[xX]+\d{4}$
+    CardAccountReferenceId:
+      title: CardAccountReferenceId
+      type: string
+      description: Unique reference id for the card. Generated by you.
+      minLength: 1
+      maxLength: 255
+    CardAddressRequestZipOnly:
+      type: object
+      additionalProperties: false
+      title: Zip Code
+      required:
+      - zip5
+      description: Zip code of card holder
+      properties:
+        zip5:
+          allOf:
+          - $ref: '#/components/schemas/Zip5'
+          x-orum-error-invalid:
+            known-error: invalid_zip5
+    CardExpirationYear:
+      type: integer
+      description: The year in which the card expires.
+      minimum: 2024
+    ReasonCode:
+      type: string
+      description: A word-based code that describes the verification failure.
+      example: invalid_address
+    CreatedAt:
+      type: string
+      description: Timestamp when the resource was created.
+      format: date-time
+    ReasonCodeMessage:
+      type: string
+      description: A human-readable description of the reason code.
+      example: Address submitted is a non-supported address type
+    Metadata:
+      type: object
+      description: Additional data you would like to provide on the resource. The field supports valid JSON of up to 5 key-value pairs with a maximum of 20 characters for the key and 50 characters for the value. Do not include any sensitive information.
+    EndCustomerResourceType:
+      type: string
+      description: Type of customer resource - business, person, or enterprise.
+      enum:
+      - business
+      - person
+      - enterprise
+    MiddleName:
+      title: MiddleName
+      type: string
+      description: Accepts latin characters and hyphens, dashes, periods, apostrophes, spaces, and diacritics.
+      pattern: ^[ ’!"#$%&'()*+,-./:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~¡¢£¤¥¦§¨©ª«¬®¯°±²³´µ¶·¸¹º»¼½¾¿ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖ×ØÙÚÛÜÝÞßàáâãäåæçèéêëìíîïðñòóôõö÷øùúûüýþÿĀāĂăĄąĆćĈĉĊċČčĎďĐđĒēĔĕĖėĘęĚěĜĝĞğĠġĢģĤĥĦħĨĩĪīĬĭĮįİıĲĳĴĵĶķĸĹĺĻļĽľĿŀŁłŃńŅņŇňŉŊŋŌōŎŏŐőŒœŔŕŖŗŘřŚśŜŝŞşŠšŢţŤťŦŧŨũŪūŬŭŮůŰűŲųŴŵŶŷŸŹźŻżŽžſ]*$
+      maxLength: 255
+    State:
+      title: State
+      type: string
+      pattern: ^[A-Z]{2}$
+      description: Uppercase two-character state code of the address.
+    UpdatedAt:
+      type: string
+      description: Timestamp when the resource was last updated.
+      format: date-time
+    CardAccountHolderNameBusiness:
+      type: object
+      title: Business Name
+      description: Business name of account holder. Accepts alphanumeric characters and hyphens, dashes, periods, apostrophes, spaces, and diacritics.
+      required:
+      - company_name
+      properties:
+        company_name:
+          type: string
+          description: Accepts alphanumeric characters and hyphens, dashes, periods, apostrophes, spaces, and diacritics.
+          pattern: ^[^\s][ ’!"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~¡¢£¤¥¦§¨©ª«¬®¯°±²³´µ¶·¸¹º»¼½¾¿ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖ×ØÙÚÛÜÝÞßàáâãäåæçèéêëìíîïðñòóôõö÷øùúûüýþÿĀāĂăĄąĆćĈĉĊċČčĎďĐđĒēĔĕĖėĘęĚěĜĝĞğĠġĢģĤĥĦħĨĩĪīĬĭĮįİıĲĳĴĵĶķĸĹĺĻļĽľĿŀŁłŃńŅņŇňŉŊŋŌōŎŏŐőŒœŔŕŖŗŘřŚśŜŝŞşŠšŢţŤťŦŧŨũŪūŬŭŮůŰűŲųŴŵŶŷŸŹźŻżŽžſ]+$
+          maxLength: 255
+          x-orum-error-invalid:
+            message: Company name is invalid. Accepted values are letters, spaces, hyphens, apostrophes, periods, and diacritics.
+            code: invalid_company_name
+          x-orum-error-missing:
+            message: Company name is required. Accepted values are letters, spaces, hyphens, apostrophes, periods, and diacritics.
+            code: missing_company_name
+    LastName:
+      title: LastName
+      type: string
+      description: Accepts latin characters and hyphens, dashes, periods, apostrophes, spaces, and diacritics.
+      pattern: ^[ ’!"#$%&'()*+,-./:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~¡¢£¤¥¦§¨©ª«¬®¯°±²³´µ¶·¸¹º»¼½¾¿ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖ×ØÙÚÛÜÝÞßàáâãäåæçèéêëìíîïðñòóôõö÷øùúûüýþÿĀāĂăĄąĆćĈĉĊċČčĎďĐđĒēĔĕĖėĘęĚěĜĝĞğĠġĢģĤĥĦħĨĩĪīĬĭĮįİıĲĳĴĵĶķĸĹĺĻļĽľĿŀŁłŃńŅņŇňŉŊŋŌōŎŏŐőŒœŔŕŖŗŘřŚśŜŝŞşŠšŢţŤťŦŧŨũŪūŬŭŮůŰűŲųŴŵŶŷŸŹźŻżŽžſ]+$
+      minLength: 1
+      maxLength: 255
+    ClosedAt:
+      type: string
+      description: Timestamp when the status of the resource was set to "closed".
+      format: date-time
+    OrumId:
+      type: string
+      description: Orum generated unique id for the resource.
+      format: uuid
+    CardCustomerReferenceId:
+      title: CardCustomerReferenceId
+      type: string
+      description: Unique customer_reference_id that you passed when creating the associated customer (business or person) resource.
+      maxLength: 255
+    Country:
+      title: Country
+      type: string
+      description: 2-character ISO country code.
+      enum:
+      - US
+    FirstName:
+      title: FirstName
+      type: string
+      description: Accepts latin characters and hyphens, dashes, periods, apostrophes, spaces, and diacritics.
+      pattern: ^[ ’!"#$%&'()*+,-./:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~¡¢£¤¥¦§¨©ª«¬®¯°±²³´µ¶·¸¹º»¼½¾¿ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖ×ØÙÚÛÜÝÞßàáâãäåæçèéêëìíîïðñòóôõö÷øùúûüýþÿĀāĂăĄąĆćĈĉĊċČčĎďĐđĒēĔĕĖėĘęĚěĜĝĞğĠġĢģĤĥĦħĨĩĪīĬĭĮįİıĲĳĴĵĶķĸĹĺĻļĽľĿŀŁłŃńŅņŇňŉŊŋŌōŎŏŐőŒœŔŕŖŗŘřŚśŜŝŞşŠšŢţŤťŦŧŨũŪūŬŭŮůŰűŲųŴŵŶŷŸŹźŻżŽžſ]+$
+      minLength: 1
+      maxLength: 255
+    AddressTypeCard:
+      title: AddressTypeCard
+      type: string
+      description: Type of address. Always 'billing' for card object.
+      enum:
+      - billing
+    CustomerReferenceId:
+      title: CustomerReferenceId
+      type: string
+      description: Unique reference id for the customer (business or person) resource. Generated by you.
+      minLength: 1
+      maxLength: 255
+    CardResponseBase:
+      type: object
+      required:
+      - id
+      - account_reference_id
+      - customer_reference_id
+      - customer_resource_type
+      - account_holder_name
+      - status
+      - address
+      - last4
+      - expiration_month
+      - expiration_year
+      - created_at
+      - updated_at
+      properties:
+        id:
+          $ref: '#/components/schemas/OrumId'
+        account_reference_id:
+          allOf:
+          - $ref: '#/components/schemas/CardAccountReferenceId'
+        customer_reference_id:
+          $ref: '#/components/schemas/CustomerReferenceId'
+        customer_resource_type:
+          allOf:
+          - $ref: '#/components/schemas/EndCustomerResourceType'
+        account_holder_name:
+          oneOf:
+          - $ref: '#/components/schemas/CardAccountHolderNamePerson'
+          - $ref: '#/components/schemas/CardAccountHolderNameBusiness'
+        status:
+          $ref: '#/components/schemas/CardStatus'
+        pull_eligible:
+          type: boolean
+          description: Indicates that the card can be used for pull transactions.
+        push_eligible:
+          type: boolean
+          description: Indicates that the card can be used for push transactions.
+        address:
+          $ref: '#/components/schemas/CardAddressResponse'
+        created_at:
+          $ref: '#/components/schemas/CreatedAt'
+        updated_at:
+          $ref: '#/components/schemas/UpdatedAt'
+        closed_at:
+          $ref: '#/components/schemas/ClosedAt'
+        metadata:
+          type: object
+          description: Additional data you would like to provide on the resource. The field supports valid JSON of up to 5 key-value pairs with a maximum of 20 characters for the key and 50 characters for the value. Do not include any sensitive information.
+        last4:
+          $ref: '#/components/schemas/CardLastFourDigits'
+        expiration_month:
+          $ref: '#/components/schemas/CardExpirationMonth'
+        expiration_year:
+          $ref: '#/components/schemas/CardExpirationYear'
+        status_reasons:
+          type: array
+          description: Array that explains why the person failed verification.
+          items:
+            $ref: '#/components/schemas/StatusReason'
+    CardRequest:
+      title: CardRequest
+      type: object
+      required:
+      - account_reference_id
+      - customer_reference_id
+      - customer_resource_type
+      - account_holder_name
+      - address
+      - number
+      - expiration_month
+      - expiration_year
+      properties:
+        account_reference_id:
+          allOf:
+          - $ref: '#/components/schemas/CardAccountReferenceId'
+          x-orum-error-missing:
+            message: Account reference id is required. Pass a unique account reference id.
+            code: missing_account_reference_id
+          x-orum-error-invalid:
+            message: Account reference id is invalid. Pass a string value.
+            code: invalid_account_reference_id
+        customer_reference_id:
+          allOf:
+          - $ref: '#/components/schemas/CardCustomerReferenceId'
+          x-orum-error-missing:
+            message: Customer reference id for the card's associated person or business is required.
+            code: missing_customer_reference_id
+          x-orum-error-invalid:
+            message: Customer reference id is invalid. Pass a string value.
+            code: invalid_customer_reference_id
+        customer_resource_type:
+          allOf:
+          - $ref: '#/components/schemas/EndCustomerResourceType'
+          x-orum-error-missing:
+            message: Customer resource type is required. Valid customer resource type is "person", "business" or "enterprise".
+            code: missing_customer_resource_type
+          x-orum-error-invalid:
+            message: Customer resource type is invalid. Valid customer resource type is "person", "business" or "enterprise".
+            code: invalid_customer_resource_type
+        account_holder_name:
+          oneOf:
+          - $ref: '#/components/schemas/CardAccountHolderNamePerson'
+          - $ref: '#/components/schemas/CardAccountHolderNameBusiness'
+          x-orum-error-missing:
+            message: Account holder name is required.
+            code: missing_account_holder_name
+          x-orum-error-invalid:
+            message: Account holder name is invalid.
+            code: invalid_account_holder_name
+        address:
+          anyOf:
+          - $ref: '#/components/schemas/CardAddressRequestZipOnly'
+          - $ref: '#/components/schemas/CardAddressRequest'
+          x-orum-error-missing:
+            message: Address is required.
+            code: missing_address
+          x-orum-error-invalid:
+            message: Address is invalid.
+            code: invalid_address
+        metadata:
+          allOf:
+          - $ref: '#/components/schemas/Metadata'
+          type: object
+          nullable: true
+          x-orum-error-invalid:
+            message: Metadata must be a valid JSON object.
+            code: invalid_metadata
+        number:
+          type: string
+          description: The card's number
+          minLength: 8
+          maxLength: 19
+          x-orum-error-missing:
+            message: Card number is required.
+            code: missing_number
+          x-orum-error-invalid:
+            message: Card number is invalid.
+            code: invalid_number
+        expiration_month:
+          allOf:
+          - $ref: '#/components/schemas/CardExpirationMonth'
+          x-orum-error-missing:
+            message: Card's expiration month is required.
+            code: missing_expiration_month
+          x-orum-error-invalid:
+            message: Card's expiration month is invalid.
+            code: invalid_expiration_month
+        expiration_year:
+          allOf:
+          - $ref: '#/components/schemas/CardExpirationYear'
+          x-orum-error-missing:
+            message: Card's expiration year is required.
+            code: missing_expiration_year
+          x-orum-error-invalid:
+            message: Card's expiration year is invalid.
+            code: invalid_expiration_year
+    Address1:
+      title: Address1
+      type: string
+      description: Address line 1.
+      maxLength: 255
+      x-orum-error-invalid:
+        message: Address1 is invalid. Ensure it is a string with a maximum length of 255 characters.
+        code: invalid_address1
+  securitySchemes:
+    oauth2:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: https://api-sandbox.orum.io/oauth/token
+          scopes:
+            read:persons: Read persons
+            write:persons: Write persons
+            read:businesses: Read businesses
+            write:businesses: Write businesses
+            read:external-accounts: Read external accounts
+            write:external-accounts: Write external accounts
+            read:cards: Read cards
+            write:cards: Write cards
+            read:transfers: Read transfers
+            write:transfers: Write transfers
+            read:transfer-groups: Read transfer groups
+            write:transfer-groups: Write transfer groups
+            read:schedules: Read schedules
+            write:schedules: Write schedules
+            read:routing-number-eligibility: Read routing number eligibility
+            read:balances: Read balances
+            read:reports: Read reports
+            write:reports: Write reports
+            read:booktransfers: Read book transfers
+            write:booktransfers: Write book transfers
+            read:subledgers: Read subledgers
+            write:subledgers: Write subledgers
+            read:verify-accounts: Read verify accounts
+            write:verify-accounts: Write verify accounts
+            read:webhook-configurations: Read webhook configurations
+            write:webhook-configurations: Write webhook configurations
+            read:webhook-secret: Read webhook secret
+            write:webhook-secret: Write webhook secret
+            invoke:webhook: Invoke webhook

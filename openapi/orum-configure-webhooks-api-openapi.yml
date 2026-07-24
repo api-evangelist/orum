@@ -1,0 +1,333 @@
+openapi: 3.0.1
+info:
+  title: Orum Authentication Configure webhooks API
+  description: Orum API.
+  version: v2022-09-21
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+servers:
+- url: https://api-sandbox.orum.io
+- url: https://vault.api-sandbox.orum.io
+tags:
+- name: Configure webhooks
+paths:
+  /webhooks/configurations:
+    post:
+      tags:
+      - Configure webhooks
+      operationId: post-webhook-configuration
+      summary: Create webhook configuration
+      parameters:
+      - name: Orum-Version
+        in: header
+        required: true
+        schema:
+          $ref: '#/components/schemas/OrumVersion'
+        x-orum-error-invalid:
+          known-error: version_invalid
+        x-orum-error-missing:
+          known-error: version_missing
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ConfigurationRequest'
+      responses:
+        '200':
+          description: 200 response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConfigurationResponse'
+        '401':
+          description: unauthorized request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      security:
+      - oauth2:
+        - write:webhook-configurations
+    get:
+      tags:
+      - Configure webhooks
+      operationId: get-webhook-configurations
+      summary: Retrieve list of webhook configurations
+      parameters:
+      - name: Orum-Version
+        in: header
+        required: true
+        schema:
+          $ref: '#/components/schemas/OrumVersion'
+        x-orum-error-invalid:
+          known-error: version_invalid
+        x-orum-error-missing:
+          known-error: version_missing
+      responses:
+        '200':
+          description: 200 response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConfigurationsResponse'
+        '401':
+          description: unauthorized request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      security:
+      - oauth2:
+        - read:webhook-configurations
+  /webhooks/configurations/{id}:
+    put:
+      tags:
+      - Configure webhooks
+      operationId: put-webhook-configurations
+      summary: Update webhook configuration
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+          description: Orum generated unique id for the webhook resource you are updating.
+      - name: Orum-Version
+        in: header
+        required: true
+        schema:
+          $ref: '#/components/schemas/OrumVersion'
+        x-orum-error-invalid:
+          known-error: version_invalid
+        x-orum-error-missing:
+          known-error: version_missing
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ConfigurationRequest'
+      responses:
+        '200':
+          description: 200 response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConfigurationResponse'
+        '401':
+          description: unauthorized request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      security:
+      - oauth2:
+        - write:webhook-configurations
+    delete:
+      tags:
+      - Configure webhooks
+      operationId: delete-webhook-configurations
+      summary: Delete webhook configuration
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+          description: Orum generated unique id for the webhook resource you are deleting.
+      - name: Orum-Version
+        in: header
+        required: true
+        schema:
+          $ref: '#/components/schemas/OrumVersion'
+        x-orum-error-invalid:
+          known-error: version_invalid
+        x-orum-error-missing:
+          known-error: version_missing
+      responses:
+        '204':
+          description: 204 response.
+        '401':
+          description: unauthorized request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      security:
+      - oauth2:
+        - write:webhook-configurations
+components:
+  schemas:
+    ConfigurationRequest:
+      title: ConfigurationRequest
+      type: object
+      required:
+      - event_types
+      - url
+      - enabled
+      properties:
+        event_types:
+          $ref: '#/components/schemas/EventTypes'
+        url:
+          type: string
+          description: The URL where you would like the webhook to be sent.
+        enabled:
+          type: boolean
+          description: A boolean to determine whether the configuration is enabled. Acts as an on/off switch for that particular webhook.
+    OrumVersion:
+      type: string
+      description: Version of Deliver and Verify APIs. Use v2022-09-21.
+      enum:
+      - v2022-09-21
+    WebhookConfiguration:
+      title: WebhookConfiguration
+      type: object
+      required:
+      - id
+      - enterprise_name
+      - event_types
+      - enabled
+      - url
+      - data_version
+      - created_at
+      - created_by
+      - updated_at
+      - updated_by
+      properties:
+        id:
+          type: string
+        enterprise_name:
+          type: string
+        data_version:
+          $ref: '#/components/schemas/DataVersion'
+        event_types:
+          $ref: '#/components/schemas/EventTypes'
+        enabled:
+          type: boolean
+        url:
+          type: string
+        created_at:
+          type: string
+        created_by:
+          type: string
+        updated_at:
+          type: string
+        updated_by:
+          type: string
+    ConfigurationResponse:
+      title: ConfigurationResponse
+      type: object
+      required:
+      - webhook_configuration
+      properties:
+        webhook_configuration:
+          $ref: '#/components/schemas/WebhookConfiguration'
+    ConfigurationsResponse:
+      title: ConfigurationsResponse
+      type: object
+      required:
+      - webhook_configurations
+      properties:
+        webhook_configurations:
+          type: array
+          description: An array of webhook configurations.
+          items:
+            $ref: '#/components/schemas/WebhookConfiguration'
+    EventTypes:
+      type: array
+      description: The types of events for which you would like to receive a webhook e.g. transfer_created. Use subscribe_all to receive webhooks for all events.
+      items:
+        $ref: '#/components/schemas/EventType'
+    EventType:
+      type: string
+      description: The type of event you want to invoke a webhook for.
+      enum:
+      - subscribe_all
+      - person_created
+      - person_verified
+      - person_rejected
+      - person_restricted
+      - person_unverified
+      - person_closed
+      - person_all
+      - business_created
+      - business_verified
+      - business_rejected
+      - business_restricted
+      - business_unverified
+      - business_closed
+      - business_all
+      - external_account_created
+      - external_account_verified
+      - external_account_rejected
+      - external_account_restricted
+      - external_account_unverified
+      - external_account_closed
+      - external_account_all
+      - transfer_updated
+      - transfer_all
+      - verify_account_updated
+      - subledger_all
+      - subledger_created
+      - book_transfer_all
+      - book_transfer_updated
+    ErrorResponse:
+      type: object
+      properties:
+        error_code:
+          type: string
+        message:
+          type: string
+        details:
+          type: object
+          description: additional details about the error.
+          nullable: true
+      required:
+      - error_code
+      - message
+    DataVersion:
+      type: string
+      description: data_version is set by the Orum-Version used to create or update the webhook configuration. A webhook configuration with data_version v2022-09-21 will match the v2022-09-21 schema for the given event type.
+      enum:
+      - v2022-09-21
+      - v2021-10-01
+  securitySchemes:
+    oauth2:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: https://api-sandbox.orum.io/oauth/token
+          scopes:
+            read:persons: Read persons
+            write:persons: Write persons
+            read:businesses: Read businesses
+            write:businesses: Write businesses
+            read:external-accounts: Read external accounts
+            write:external-accounts: Write external accounts
+            read:cards: Read cards
+            write:cards: Write cards
+            read:transfers: Read transfers
+            write:transfers: Write transfers
+            read:transfer-groups: Read transfer groups
+            write:transfer-groups: Write transfer groups
+            read:schedules: Read schedules
+            write:schedules: Write schedules
+            read:routing-number-eligibility: Read routing number eligibility
+            read:balances: Read balances
+            read:reports: Read reports
+            write:reports: Write reports
+            read:booktransfers: Read book transfers
+            write:booktransfers: Write book transfers
+            read:subledgers: Read subledgers
+            write:subledgers: Write subledgers
+            read:verify-accounts: Read verify accounts
+            write:verify-accounts: Write verify accounts
+            read:webhook-configurations: Read webhook configurations
+            write:webhook-configurations: Write webhook configurations
+            read:webhook-secret: Read webhook secret
+            write:webhook-secret: Write webhook secret
+            invoke:webhook: Invoke webhook

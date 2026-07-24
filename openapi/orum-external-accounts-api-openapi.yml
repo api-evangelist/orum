@@ -1,0 +1,904 @@
+openapi: 3.0.1
+info:
+  title: Orum Authentication External Accounts API
+  description: Orum API.
+  version: v2022-09-21
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+servers:
+- url: https://api-sandbox.orum.io
+- url: https://vault.api-sandbox.orum.io
+tags:
+- name: External Accounts
+paths:
+  /deliver/external/accounts:
+    post:
+      tags:
+      - External Accounts
+      operationId: post-external-account
+      summary: Create an external account
+      description: Create an external account object.
+      parameters:
+      - name: Orum-Version
+        in: header
+        required: true
+        schema:
+          $ref: '#/components/schemas/OrumVersion'
+        x-orum-error-invalid:
+          known-error: version_invalid
+        x-orum-error-missing:
+          known-error: version_missing
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ExternalAccountRequest'
+        required: true
+      responses:
+        '200':
+          description: 200 response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExternalAccountResponse'
+        '400':
+          description: duplicate external account.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DuplicateAccountError'
+        default:
+          description: invalid or unexpected error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      security:
+      - oauth2:
+        - write:external-accounts
+    get:
+      tags:
+      - External Accounts
+      operationId: get-external-accounts
+      summary: Get all external accounts
+      description: Get all external account objects.
+      parameters:
+      - name: Orum-Version
+        in: header
+        required: true
+        schema:
+          $ref: '#/components/schemas/OrumVersion'
+        x-orum-error-invalid:
+          known-error: version_invalid
+        x-orum-error-missing:
+          known-error: version_missing
+      - name: index
+        description: Index for paginated results
+        in: query
+        required: false
+        schema:
+          type: integer
+          default: 0
+          minimum: 0
+        x-orum-error-invalid:
+          known-error: index
+      - name: size
+        description: Max number of results to return
+        in: query
+        required: false
+        schema:
+          type: integer
+          default: 100
+          minimum: 0
+          maximum: 500
+        x-orum-error-invalid:
+          known-error: size
+      - name: account_reference_id
+        description: Filter by account reference id
+        in: query
+        required: false
+        allowEmptyValue: true
+        schema:
+          $ref: '#/components/schemas/AccountReferenceId'
+        x-orum-error-invalid:
+          known-error: invalid_query_account_reference_id
+      - name: customer_reference_id
+        description: Filter by customer reference id
+        in: query
+        required: false
+        allowEmptyValue: true
+        schema:
+          $ref: '#/components/schemas/CustomerReferenceId'
+        x-orum-error-invalid:
+          known-error: invalid_query_customer_reference_id
+      responses:
+        '200':
+          description: 200 response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExternalAccountsResponse'
+        '400':
+          description: invalid request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        default:
+          description: unexpected error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      security:
+      - oauth2:
+        - read:external-accounts
+    put:
+      tags:
+      - External Accounts
+      operationId: put-external-account-using-reference-id
+      summary: Update an external account by reference id
+      description: Update an external account object using its reference id.
+      parameters:
+      - name: Orum-Version
+        in: header
+        required: true
+        schema:
+          $ref: '#/components/schemas/OrumVersion'
+        x-orum-error-invalid:
+          known-error: version_invalid
+        x-orum-error-missing:
+          known-error: version_missing
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PutExternalAccountRequest'
+        required: true
+      responses:
+        '200':
+          description: 200 response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExternalAccountResponse'
+        '400':
+          description: invalid request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        default:
+          description: unexpected error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      security:
+      - oauth2:
+        - write:external-accounts
+  /deliver/external/accounts/{id}:
+    get:
+      tags:
+      - External Accounts
+      operationId: get-external-account
+      summary: Get an external account by id
+      description: Get an external account object.
+      parameters:
+      - name: Orum-Version
+        in: header
+        required: true
+        schema:
+          $ref: '#/components/schemas/OrumVersion'
+        x-orum-error-invalid:
+          known-error: version_invalid
+        x-orum-error-missing:
+          known-error: version_missing
+      - name: id
+        in: path
+        description: Orum generated unique id for the resource for the external account you are fetching.
+        required: true
+        schema:
+          $ref: '#/components/schemas/OrumId'
+        x-orum-error-invalid:
+          known-error: unknown_id_external_account
+      responses:
+        '200':
+          description: 200 response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExternalAccountResponse'
+        '404':
+          description: not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        default:
+          description: unexpected error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      security:
+      - oauth2:
+        - read:external-accounts
+    put:
+      tags:
+      - External Accounts
+      operationId: put-external-account
+      summary: Update an external account by id
+      description: Update an external account object.
+      parameters:
+      - name: Orum-Version
+        in: header
+        required: true
+        schema:
+          $ref: '#/components/schemas/OrumVersion'
+        x-orum-error-invalid:
+          known-error: version_invalid
+        x-orum-error-missing:
+          known-error: version_missing
+      - name: id
+        description: Orum generated unique id for the resource for the external account you are updating.
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/OrumId'
+        x-orum-error-invalid:
+          known-error: unknown_id_external_account
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PutExternalAccountRequest'
+        required: true
+      responses:
+        '200':
+          description: 200 response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExternalAccountResponse'
+        '400':
+          description: invalid request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        default:
+          description: unexpected error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      security:
+      - oauth2:
+        - write:external-accounts
+    patch:
+      tags:
+      - External Accounts
+      operationId: patch-external-account
+      summary: Partial update an external account by id
+      description: Update individual fields on an external account object.
+      parameters:
+      - name: Orum-Version
+        in: header
+        required: true
+        schema:
+          $ref: '#/components/schemas/OrumVersion'
+        x-orum-error-invalid:
+          known-error: version_invalid
+        x-orum-error-missing:
+          known-error: version_missing
+      - name: id
+        description: Orum generated unique id for the resource for the external account you are updating.
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/OrumId'
+        x-orum-error-invalid:
+          known-error: unknown_id_external_account
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchExternalAccountRequest'
+        required: true
+      responses:
+        '200':
+          description: 200 response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExternalAccountResponse'
+        '400':
+          description: invalid request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        default:
+          description: unexpected error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      security:
+      - oauth2:
+        - write:external-accounts
+    delete:
+      tags:
+      - External Accounts
+      operationId: delete-external-account
+      summary: Closes an external account by id
+      description: Close an external account object so they are unable to transact.
+      parameters:
+      - name: Orum-Version
+        in: header
+        required: true
+        schema:
+          $ref: '#/components/schemas/OrumVersion'
+        x-orum-error-invalid:
+          known-error: version_invalid
+        x-orum-error-missing:
+          known-error: version_missing
+      - name: id
+        description: Orum generated unique id for the resource for the external account you are updating.
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/OrumId'
+        x-orum-error-invalid:
+          known-error: unknown_id_external_account
+      responses:
+        '200':
+          description: 200 response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExternalAccountResponse'
+        '400':
+          description: invalid request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        default:
+          description: unexpected error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      security:
+      - oauth2:
+        - write:external-accounts
+  /deliver/persons/{id}/external/accounts:
+    get:
+      tags:
+      - External Accounts
+      operationId: get-person-external-accounts
+      summary: Get all external accounts for a specific person
+      description: Get all external account objects, associated with a specific person
+      parameters:
+      - name: Orum-Version
+        in: header
+        required: true
+        schema:
+          $ref: '#/components/schemas/OrumVersion'
+        x-orum-error-invalid:
+          known-error: version_invalid
+        x-orum-error-missing:
+          known-error: version_missing
+      - name: id
+        description: Orum generated unique id for the person you are requesting accounts for
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/OrumId'
+        x-orum-error-invalid:
+          known-error: unknown_id_person
+      - name: index
+        description: Index for paginated results
+        in: query
+        required: false
+        schema:
+          type: integer
+          default: 0
+          minimum: 0
+        x-orum-error-invalid:
+          known-error: index
+      - name: size
+        description: Max number of results to return
+        in: query
+        required: false
+        schema:
+          type: integer
+          default: 100
+          minimum: 0
+          maximum: 500
+        x-orum-error-invalid:
+          known-error: size
+      responses:
+        '200':
+          description: 200 response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExternalAccountsResponse'
+        '400':
+          description: invalid request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        default:
+          description: unexpected error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      security:
+      - oauth2:
+        - read:external-accounts
+  /deliver/businesses/{id}/external/accounts:
+    get:
+      tags:
+      - External Accounts
+      operationId: get-business-external-accounts
+      summary: Get all external accounts for a specific business
+      description: Get all external account objects, associated with a specific business
+      parameters:
+      - name: Orum-Version
+        in: header
+        required: true
+        schema:
+          $ref: '#/components/schemas/OrumVersion'
+        x-orum-error-invalid:
+          known-error: version_invalid
+        x-orum-error-missing:
+          known-error: version_missing
+      - name: id
+        description: Orum generated unique id for the business you are requesting accounts for
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/OrumId'
+        x-orum-error-invalid:
+          known-error: unknown_id_business
+      - name: index
+        description: Index for paginated results
+        in: query
+        required: false
+        schema:
+          type: integer
+          default: 0
+          minimum: 0
+        x-orum-error-invalid:
+          known-error: index
+      - name: size
+        description: Max number of results to return
+        in: query
+        required: false
+        schema:
+          type: integer
+          default: 100
+          minimum: 0
+          maximum: 500
+        x-orum-error-invalid:
+          known-error: size
+      responses:
+        '200':
+          description: 200 response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExternalAccountsResponse'
+        '400':
+          description: invalid request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        default:
+          description: unexpected error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      security:
+      - oauth2:
+        - read:external-accounts
+components:
+  schemas:
+    PutExternalAccountRequest:
+      title: PutExternalAccountRequest
+      allOf:
+      - $ref: '#/components/schemas/ExternalAccountRequest'
+      - type: object
+        properties:
+          metadata:
+            allOf:
+            - $ref: '#/components/schemas/MetadataPut'
+            type: object
+            nullable: true
+            x-orum-error-invalid:
+              message: Metadata must be a valid JSON object.
+              code: invalid_metadata
+    ExternalAccountResponse:
+      title: ExternalAccountResponse
+      type: object
+      required:
+      - external_account
+      properties:
+        external_account:
+          $ref: '#/components/schemas/ExternalAccountResponseBase'
+    ErrorResponse:
+      type: object
+      properties:
+        error_code:
+          type: string
+        message:
+          type: string
+        details:
+          type: object
+          description: additional details about the error.
+          nullable: true
+      required:
+      - error_code
+      - message
+    DuplicateAccountError:
+      allOf:
+      - $ref: '#/components/schemas/ErrorResponse'
+      - type: object
+        properties:
+          error_code:
+            type: string
+            enum:
+            - duplicate_account_details
+          details:
+            type: object
+            nullable: true
+            description: fields for duplicate account case.
+            properties:
+              customer_resource_type:
+                type: string
+                description: The type of customer resource that caused the error.
+                enum:
+                - person
+                - business
+              customer_reference_id:
+                type: string
+                description: The attempted customer_reference_id that already exists with this account.
+              customer_resource_id:
+                $ref: '#/components/schemas/OrumId'
+    AbaRoutingNumber:
+      title: AbaRoutingNumber
+      type: string
+      pattern: ^\d{9}$
+      description: 9-digit American Bankers Association (ABA) routing number.
+    OrumVersion:
+      type: string
+      description: Version of Deliver and Verify APIs. Use v2022-09-21.
+      enum:
+      - v2022-09-21
+    ExternalAccountRequest:
+      title: ExternalAccountRequest
+      type: object
+      required:
+      - account_reference_id
+      - customer_reference_id
+      - customer_resource_type
+      - account_type
+      - account_number
+      - routing_number
+      - account_holder_name
+      properties:
+        account_reference_id:
+          allOf:
+          - $ref: '#/components/schemas/AccountReferenceId'
+          x-orum-error-missing:
+            message: Account reference id is required. Pass a unique account reference id.
+            code: missing_account_reference_id
+          x-orum-error-invalid:
+            message: Account reference id is invalid. Pass a string value.
+            code: invalid_account_reference_id
+        customer_reference_id:
+          allOf:
+          - $ref: '#/components/schemas/ExternalAccountCustomerReferenceId'
+          x-orum-error-missing:
+            message: Customer reference id for the external account's associated person or business is required.
+            code: missing_customer_reference_id
+          x-orum-error-invalid:
+            message: Customer reference id is invalid. Pass a string value.
+            code: invalid_customer_reference_id
+        customer_resource_type:
+          allOf:
+          - $ref: '#/components/schemas/EndCustomerResourceType'
+          x-orum-error-missing:
+            message: Customer resource type is required. Valid customer resource type is "person", "business" or "enterprise".
+            code: missing_customer_resource_type
+          x-orum-error-invalid:
+            message: Customer resource type is invalid. Valid customer resource type is "person", "business" or "enterprise".
+            code: invalid_customer_resource_type
+        account_type:
+          allOf:
+          - $ref: '#/components/schemas/AccountType'
+          x-orum-error-missing:
+            message: Account type is required. Valid account type is "checking" or "savings".
+            code: missing_account_type
+          x-orum-error-invalid:
+            message: Account type is invalid. Valid account type is "checking" or "savings".
+            code: invalid_account_type
+        account_number:
+          allOf:
+          - $ref: '#/components/schemas/UsBankAccountNumber'
+          x-orum-error-missing:
+            message: Account number is required. Pass an account number with 17 digits or fewer.
+            code: missing_account_number
+          x-orum-error-invalid:
+            known-error: invalid_account_number
+        routing_number:
+          allOf:
+          - $ref: '#/components/schemas/AbaRoutingNumber'
+          x-orum-error-missing:
+            message: Routing number is required. Pass a valid 9-digit routing number.
+            code: missing_routing_number
+          x-orum-error-invalid:
+            message: Routing number is invalid. Pass a valid 9-digit routing number.
+            code: invalid_routing_number
+        account_holder_name:
+          allOf:
+          - $ref: '#/components/schemas/AccountHolderName'
+          x-orum-error-missing:
+            message: Account holder name is required.
+            code: missing_account_holder_name
+          x-orum-error-invalid:
+            message: Account holder name is invalid. Accepted values are letters, spaces, hyphens, apostrophes, periods and diacritics.
+            code: invalid_account_holder_name
+        metadata:
+          allOf:
+          - $ref: '#/components/schemas/Metadata'
+          type: object
+          nullable: true
+          x-orum-error-invalid:
+            message: Metadata must be a valid JSON object.
+            code: invalid_metadata
+    ExternalAccountResponseBase:
+      title: ExternalAccountResponseBase
+      type: object
+      description: A single object of External Account.
+      required:
+      - id
+      - account_reference_id
+      - customer_reference_id
+      - customer_resource_type
+      - account_type
+      - account_number
+      - routing_number
+      - account_holder_name
+      - status
+      - created_at
+      - updated_at
+      properties:
+        id:
+          $ref: '#/components/schemas/OrumId'
+        account_reference_id:
+          $ref: '#/components/schemas/AccountReferenceId'
+        customer_reference_id:
+          $ref: '#/components/schemas/ExternalAccountCustomerReferenceId'
+        customer_resource_type:
+          $ref: '#/components/schemas/EndCustomerResourceType'
+        account_type:
+          $ref: '#/components/schemas/AccountType'
+        account_number:
+          $ref: '#/components/schemas/UsBankAccountNumber'
+        routing_number:
+          $ref: '#/components/schemas/AbaRoutingNumber'
+        account_holder_name:
+          type: string
+          description: Name of account holder.
+        status:
+          $ref: '#/components/schemas/ExternalAccountStatus'
+        created_at:
+          $ref: '#/components/schemas/CreatedAt'
+        updated_at:
+          $ref: '#/components/schemas/UpdatedAt'
+        closed_at:
+          $ref: '#/components/schemas/ClosedAt'
+        metadata:
+          $ref: '#/components/schemas/Metadata'
+    UsBankAccountNumber:
+      title: UsBankAccountNumber
+      type: string
+      pattern: ^(?:\d-{0,1}){3,16}\d$
+      description: Account number for US bank account. 4 to 17 digits are acceptable.
+    Metadata:
+      type: object
+      description: Additional data you would like to provide on the resource. The field supports valid JSON of up to 5 key-value pairs with a maximum of 20 characters for the key and 50 characters for the value. Do not include any sensitive information.
+    EndCustomerResourceType:
+      type: string
+      description: Type of customer resource - business, person, or enterprise.
+      enum:
+      - business
+      - person
+      - enterprise
+    UpdatedAt:
+      type: string
+      description: Timestamp when the resource was last updated.
+      format: date-time
+    CreatedAt:
+      type: string
+      description: Timestamp when the resource was created.
+      format: date-time
+    ExternalAccountStatus:
+      type: string
+      description: Status of the external account.
+      enum:
+      - created
+      - verified
+      - rejected
+      - restricted
+      - closed
+    ClosedAt:
+      type: string
+      description: Timestamp when the status of the resource was set to "closed".
+      format: date-time
+    MetadataPut:
+      type: object
+      description: Additional data you would like to provide on the resource. The field supports valid JSON of up to 5 key-value pairs with a maximum of 20 characters for the key and 50 characters for the value. Do not include any sensitive information.
+    OrumId:
+      type: string
+      description: Orum generated unique id for the resource.
+      format: uuid
+    PatchExternalAccountRequest:
+      title: PatchExternalAccountRequest
+      type: object
+      properties:
+        account_type:
+          allOf:
+          - $ref: '#/components/schemas/AccountType'
+          type: string
+          nullable: true
+          x-orum-error-invalid:
+            message: Account type is invalid. Valid account type is "checking" or "savings".
+            code: invalid_account_type
+        account_number:
+          allOf:
+          - $ref: '#/components/schemas/UsBankAccountNumber'
+          type: string
+          nullable: true
+          x-orum-error-invalid:
+            known-error: invalid_account_number
+        routing_number:
+          allOf:
+          - $ref: '#/components/schemas/AbaRoutingNumber'
+          type: string
+          nullable: true
+          x-orum-error-invalid:
+            message: Routing number is invalid. Pass a valid 9-digit routing number.
+            code: invalid_routing_number
+        account_holder_name:
+          allOf:
+          - $ref: '#/components/schemas/AccountHolderName'
+          type: string
+          nullable: true
+          x-orum-error-invalid:
+            message: Account holder name is invalid. Accepted values are letters, spaces, hyphens, apostrophes, periods and diacritics.
+            code: invalid_account_holder_name
+        metadata:
+          allOf:
+          - $ref: '#/components/schemas/Metadata'
+          type: object
+          nullable: true
+          x-orum-error-invalid:
+            message: Metadata must be a valid JSON object.
+            code: invalid_metadata
+    ExternalAccountsResponse:
+      title: ExternalAccountsResponse
+      type: object
+      required:
+      - external_accounts
+      properties:
+        external_accounts:
+          type: array
+          description: List of External Accounts.
+          items:
+            $ref: '#/components/schemas/ExternalAccountResponseBase'
+    AccountHolderName:
+      type: string
+      description: Name of account holder. Accepts alphanumeric characters and hyphens, dashes, periods, apostrophes, spaces, and diacritics.
+      pattern: ^([ ’!"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~¡¢£¤¥¦§¨©ª«¬®¯°±²³´µ¶·¸¹º»¼½¾¿ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖ×ØÙÚÛÜÝÞßàáâãäåæçèéêëìíîïðñòóôõö÷øùúûüýþÿĀāĂăĄąĆćĈĉĊċČčĎďĐđĒēĔĕĖėĘęĚěĜĝĞğĠġĢģĤĥĦħĨĩĪīĬĭĮįİıĲĳĴĵĶķĸĹĺĻļĽľĿŀŁłŃńŅņŇňŉŊŋŌōŎŏŐőŒœŔŕŖŗŘřŚśŜŝŞşŠšŢţŤťŦŧŨũŪūŬŭŮůŰűŲųŴŵŶŷŸŹźŻżŽžſ]*|)$
+      maxLength: 255
+      minLength: 1
+    ExternalAccountCustomerReferenceId:
+      title: ExternalAccountCustomerReferenceId
+      type: string
+      description: Unique customer_reference_id that you passed when creating the associated customer (business or person) resource.
+      maxLength: 255
+    AccountReferenceId:
+      title: AccountReferenceId
+      type: string
+      description: Unique reference id for the external account. Generated by you.
+      minLength: 1
+      maxLength: 255
+    CustomerReferenceId:
+      title: CustomerReferenceId
+      type: string
+      description: Unique reference id for the customer (business or person) resource. Generated by you.
+      minLength: 1
+      maxLength: 255
+    AccountType:
+      type: string
+      description: Type of bank account - checking or savings.
+      enum:
+      - checking
+      - savings
+  securitySchemes:
+    oauth2:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: https://api-sandbox.orum.io/oauth/token
+          scopes:
+            read:persons: Read persons
+            write:persons: Write persons
+            read:businesses: Read businesses
+            write:businesses: Write businesses
+            read:external-accounts: Read external accounts
+            write:external-accounts: Write external accounts
+            read:cards: Read cards
+            write:cards: Write cards
+            read:transfers: Read transfers
+            write:transfers: Write transfers
+            read:transfer-groups: Read transfer groups
+            write:transfer-groups: Write transfer groups
+            read:schedules: Read schedules
+            write:schedules: Write schedules
+            read:routing-number-eligibility: Read routing number eligibility
+            read:balances: Read balances
+            read:reports: Read reports
+            write:reports: Write reports
+            read:booktransfers: Read book transfers
+            write:booktransfers: Write book transfers
+            read:subledgers: Read subledgers
+            write:subledgers: Write subledgers
+            read:verify-accounts: Read verify accounts
+            write:verify-accounts: Write verify accounts
+            read:webhook-configurations: Read webhook configurations
+            write:webhook-configurations: Write webhook configurations
+            read:webhook-secret: Read webhook secret
+            write:webhook-secret: Write webhook secret
+            invoke:webhook: Invoke webhook

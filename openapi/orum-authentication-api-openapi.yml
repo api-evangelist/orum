@@ -1,0 +1,174 @@
+openapi: 3.0.1
+info:
+  title: Orum Authentication API
+  description: Orum API.
+  version: v2022-09-21
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+servers:
+- url: https://api-sandbox.orum.io
+- url: https://vault.api-sandbox.orum.io
+tags:
+- name: Authentication
+paths:
+  /oauth/token:
+    post:
+      summary: Request an access token
+      tags:
+      - Authentication
+      operationId: post-oauth-token
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OauthTokenBody'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/OauthTokenBody'
+        required: true
+      responses:
+        '200':
+          description: 200 response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OauthTokenResponse'
+        '400':
+          description: invalid request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: unauthorized request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '403':
+          description: forbidden request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '429':
+          description: too many requests.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: internal server error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '503':
+          description: service unavailable.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        default:
+          description: internal server error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      security: []
+components:
+  schemas:
+    OauthTokenResponse:
+      title: OauthTokenResponse
+      type: object
+      required:
+      - access_token
+      - token_type
+      - expires_in
+      properties:
+        access_token:
+          type: string
+          description: Short-lived auth (access) token that you will pass in the Authorization header of all Deliver and Verify calls.
+        token_type:
+          type: string
+          description: The type of token returned. This will always be "Bearer".
+        expires_in:
+          type: number
+          description: The time in seconds until the token expires.
+    ErrorResponse:
+      type: object
+      properties:
+        error_code:
+          type: string
+        message:
+          type: string
+        details:
+          type: object
+          description: additional details about the error.
+          nullable: true
+      required:
+      - error_code
+      - message
+    OauthTokenBody:
+      type: object
+      required:
+      - client_id
+      - client_secret
+      properties:
+        client_id:
+          type: string
+          description: ID returned when generating API Credentials.
+          x-orum-error-missing:
+            message: client_id is required
+            code: missing_client_id
+          x-orum-error-invalid:
+            message: client_id must be a string
+            code: invalid_client_id
+            status: '400'
+        client_secret:
+          type: string
+          description: Secret returned when generating API Credentials.
+          x-orum-error-missing:
+            message: client_secret is required
+            code: missing_client_secret
+          x-orum-error-invalid:
+            message: client_secret must be a string
+            code: invalid_client_secret
+            status: '400'
+  securitySchemes:
+    oauth2:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: https://api-sandbox.orum.io/oauth/token
+          scopes:
+            read:persons: Read persons
+            write:persons: Write persons
+            read:businesses: Read businesses
+            write:businesses: Write businesses
+            read:external-accounts: Read external accounts
+            write:external-accounts: Write external accounts
+            read:cards: Read cards
+            write:cards: Write cards
+            read:transfers: Read transfers
+            write:transfers: Write transfers
+            read:transfer-groups: Read transfer groups
+            write:transfer-groups: Write transfer groups
+            read:schedules: Read schedules
+            write:schedules: Write schedules
+            read:routing-number-eligibility: Read routing number eligibility
+            read:balances: Read balances
+            read:reports: Read reports
+            write:reports: Write reports
+            read:booktransfers: Read book transfers
+            write:booktransfers: Write book transfers
+            read:subledgers: Read subledgers
+            write:subledgers: Write subledgers
+            read:verify-accounts: Read verify accounts
+            write:verify-accounts: Write verify accounts
+            read:webhook-configurations: Read webhook configurations
+            write:webhook-configurations: Write webhook configurations
+            read:webhook-secret: Read webhook secret
+            write:webhook-secret: Write webhook secret
+            invoke:webhook: Invoke webhook

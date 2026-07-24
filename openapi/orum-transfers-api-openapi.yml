@@ -1,0 +1,811 @@
+openapi: 3.0.1
+info:
+  title: Orum Authentication Transfers API
+  description: Orum API.
+  version: v2022-09-21
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+servers:
+- url: https://api-sandbox.orum.io
+- url: https://vault.api-sandbox.orum.io
+tags:
+- name: Transfers
+paths:
+  /deliver/transfers:
+    post:
+      tags:
+      - Transfers
+      operationId: post-transfer
+      summary: Create a transfer
+      description: Initiate a transfer between a source party and destination party.
+      parameters:
+      - name: Orum-Version
+        in: header
+        required: true
+        schema:
+          $ref: '#/components/schemas/OrumVersion'
+        x-orum-error-invalid:
+          known-error: version_invalid
+        x-orum-error-missing:
+          known-error: version_missing
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TransferRequest'
+        required: true
+      responses:
+        '200':
+          description: 200 response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransferResponse'
+        '400':
+          description: invalid request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        default:
+          description: unexpected error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      security:
+      - oauth2:
+        - write:transfers
+    get:
+      tags:
+      - Transfers
+      operationId: get-transfers
+      summary: Get all transfers
+      description: Get all transfer objects.
+      parameters:
+      - name: Orum-Version
+        in: header
+        required: true
+        schema:
+          $ref: '#/components/schemas/OrumVersion'
+        x-orum-error-invalid:
+          known-error: version_invalid
+        x-orum-error-missing:
+          known-error: version_missing
+      - name: index
+        description: Index for paginated results
+        in: query
+        required: false
+        schema:
+          type: integer
+          default: 0
+          minimum: 0
+        x-orum-error-invalid:
+          known-error: index
+      - name: size
+        description: Max number of results to return
+        in: query
+        required: false
+        schema:
+          type: integer
+          default: 100
+          minimum: 0
+          maximum: 500
+        x-orum-error-invalid:
+          known-error: size
+      - name: transfer_reference_id
+        description: Filter results by transfer reference id
+        in: query
+        required: false
+        schema:
+          $ref: '#/components/schemas/TransferReferenceId'
+      - name: status
+        description: Filter results by transfer status
+        in: query
+        required: false
+        schema:
+          $ref: '#/components/schemas/TransferStatus'
+        x-orum-error-invalid:
+          known-error: invalid_status
+      - name: transfer_group_id
+        description: Filter results by transfer group id
+        in: query
+        required: false
+        schema:
+          $ref: '#/components/schemas/OrumId'
+      - name: schedule_id
+        description: Filter results by schedule id
+        in: query
+        required: false
+        schema:
+          $ref: '#/components/schemas/OrumId'
+        x-orum-error-invalid:
+          known-error: invalid_schedule_id
+      - name: subledger_reference_id
+        description: Filter results by subledger reference id
+        in: query
+        required: false
+        schema:
+          $ref: '#/components/schemas/SubledgerReferenceId'
+        x-orum-error-invalid:
+          known-error: invalid_subledger_reference_id
+      responses:
+        '200':
+          description: 200 response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransfersResponse'
+        '400':
+          description: invalid request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        default:
+          description: unexpected error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      security:
+      - oauth2:
+        - read:transfers
+  /deliver/transfers/{id}:
+    get:
+      tags:
+      - Transfers
+      operationId: get-transfer
+      summary: Get a transfer by id
+      description: Get a transfer object.
+      parameters:
+      - name: Orum-Version
+        in: header
+        required: true
+        schema:
+          $ref: '#/components/schemas/OrumVersion'
+        x-orum-error-invalid:
+          known-error: version_invalid
+        x-orum-error-missing:
+          known-error: version_missing
+      - name: id
+        description: Orum generated unique id for the transfer you are fetching.
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/OrumId'
+        x-orum-error-invalid:
+          known-error: unknown_id_transfer
+      responses:
+        '200':
+          description: 200 response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransferResponse'
+        '404':
+          description: not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        default:
+          description: unexpected error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      security:
+      - oauth2:
+        - read:transfers
+    patch:
+      tags:
+      - Transfers
+      operationId: patch-transfer-metadata
+      summary: Update transfer metadata by id
+      description: Update the metadata on a transfer.
+      parameters:
+      - name: Orum-Version
+        in: header
+        required: true
+        schema:
+          $ref: '#/components/schemas/OrumVersion'
+        x-orum-error-invalid:
+          known-error: version_invalid
+        x-orum-error-missing:
+          known-error: version_missing
+      - name: id
+        description: Orum generated unique id for the transfer you are fetching.
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/OrumId'
+        x-orum-error-invalid:
+          known-error: unknown_id_transfer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TransferPatchMetadataRequest'
+        required: true
+      responses:
+        '200':
+          description: 200 response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransferResponse'
+        '400':
+          description: invalid request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        default:
+          description: unexpected error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      security:
+      - oauth2:
+        - write:transfers
+  /deliver/transfers/{id}/cancel:
+    post:
+      tags:
+      - Transfers
+      operationId: post-transfer-cancel
+      summary: Cancel a transfer by id
+      description: Initiates a transfer cancellation request if the transfer is eligible.
+      parameters:
+      - name: Orum-Version
+        in: header
+        required: true
+        schema:
+          $ref: '#/components/schemas/OrumVersion'
+        x-orum-error-invalid:
+          known-error: version_invalid
+        x-orum-error-missing:
+          known-error: version_missing
+      - name: id
+        description: Orum generated unique id for the transfer you are canceling.
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/OrumId'
+        x-orum-error-invalid:
+          known-error: unknown_id_transfer
+      responses:
+        '202':
+          description: 202 response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransferCancelResponse'
+        '400':
+          description: invalid request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        default:
+          description: unexpected error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      security:
+      - oauth2:
+        - write:transfers
+  /deliver/transfers/{id}/history:
+    get:
+      tags:
+      - Transfers
+      operationId: get-transfer-history
+      summary: Get transfer history by id
+      description: Get the history of status changes for a transfer.
+      parameters:
+      - name: Orum-Version
+        in: header
+        required: true
+        schema:
+          $ref: '#/components/schemas/OrumVersion'
+        x-orum-error-invalid:
+          known-error: version_invalid
+        x-orum-error-missing:
+          known-error: version_missing
+      - name: id
+        description: Orum generated unique id for the transfer.
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/OrumId'
+        x-orum-error-invalid:
+          known-error: unknown_id_transfer
+      responses:
+        '200':
+          description: 200 response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransferHistoryResponse'
+        '404':
+          description: not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        default:
+          description: unexpected error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      security:
+      - oauth2:
+        - read:transfers
+components:
+  schemas:
+    SubledgerReferenceId:
+      title: SubledgerReferenceId
+      type: string
+      description: Unique reference id for the subledger resource. Generated by you.
+      minLength: 1
+      maxLength: 255
+    TraceNumber:
+      title: TraceNumber
+      type: string
+      description: Unique tracking number of the payment assigned by its origination FI. This number can be used to track the lifecycle of the payment at the FI.
+    ErrorResponse:
+      type: object
+      properties:
+        error_code:
+          type: string
+        message:
+          type: string
+        details:
+          type: object
+          description: additional details about the error.
+          nullable: true
+      required:
+      - error_code
+      - message
+    TransferStatus:
+      title: TransferStatus
+      type: string
+      description: Describes the current status of the transfer.
+      enum:
+      - completed
+      - created
+      - failed
+      - pending
+      - settled
+    ReasonCodes:
+      title: ReasonCode
+      type: object
+      required:
+      - reason_code
+      - reason_code_message
+      properties:
+        reason_code:
+          type: string
+          description: A word-based code created by Orum to describe the reason for the failure. Orum reason codes are rail-agnostic.
+          example: insufficient_funds
+        reason_code_message:
+          type: string
+          description: A human-readable description of the reason code.
+        network_reason_code:
+          type: string
+          description: The reason code sent by the network (ex R01).
+        network_reason_code_message:
+          type: string
+          description: The message sent by the network.
+        network_reason_code_rail_type:
+          type: string
+          description: The payment rail used in the transfer. Either RTP or ACH.
+    SourceTransferPartyResponse:
+      title: SourceTransferPartyResponse
+      type: object
+      description: For use cases that require a Source, information about the transfer funding source, which will be debited.
+      properties:
+        customer_reference_id:
+          type: string
+          description: Unique reference ID for the customer (person or business) associated with the external account being debited.
+        account_reference_id:
+          type: string
+          description: Unique reference ID for the external account being debited.
+        statement_display_name:
+          allOf:
+          - $ref: '#/components/schemas/PartyStatementDisplayName'
+        trace_number:
+          allOf:
+          - $ref: '#/components/schemas/TraceNumber'
+        return_trace_number:
+          allOf:
+          - $ref: '#/components/schemas/ReturnTraceNumber'
+      required:
+      - account_reference_id
+      - customer_reference_id
+    TransferAmount:
+      title: TransferAmount
+      type: integer
+      description: 'Transfer amount in integral cents (example: 100 = $1). Must be greater than zero.'
+      minimum: 1
+    TransferResponseBaseObject:
+      title: TransferResponseBaseObject
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/OrumId'
+        transfer_reference_id:
+          $ref: '#/components/schemas/TransferReferenceId'
+        amount:
+          $ref: '#/components/schemas/TransferAmount'
+        currency:
+          $ref: '#/components/schemas/Currency'
+        speed:
+          $ref: '#/components/schemas/TransferSpeed'
+        source:
+          $ref: '#/components/schemas/SourceTransferPartyResponse'
+        destination:
+          $ref: '#/components/schemas/DestinationTransferPartyResponse'
+        status:
+          $ref: '#/components/schemas/TransferStatus'
+        status_reasons:
+          type: array
+          description: Array that explains why the transfer failed.
+          items:
+            $ref: '#/components/schemas/TransferStatusReason'
+        account_statement_descriptor:
+          type: string
+          description: Banks can display additional information to help the end user understand why they received funds. This information will appear on both the source and destination bank account statements. The field supports 10 alphanumeric characters for ACH and 140 for RTP.
+        estimated_funds_delivery_date:
+          type: string
+          format: date-time
+          description: Estimated date that funds will arrive in destination account. Time will always be midnight and should be ignored.
+        created_at:
+          $ref: '#/components/schemas/CreatedAt'
+        updated_at:
+          $ref: '#/components/schemas/UpdatedAt'
+        metadata:
+          $ref: '#/components/schemas/Metadata'
+        transfer_group_id:
+          $ref: '#/components/schemas/OrumId'
+        schedule_id:
+          $ref: '#/components/schemas/OrumId'
+        subledger_reference_id:
+          $ref: '#/components/schemas/SubledgerReferenceId'
+      required:
+      - id
+      - transfer_reference_id
+      - amount
+      - currency
+      - speed
+      - status
+      - created_at
+      - updated_at
+    SourceTransferParty:
+      title: Source
+      type: object
+      description: For use cases that require a Source, information about the transfer funding source, which will be debited.
+      properties:
+        customer_reference_id:
+          type: string
+          description: Unique reference ID for the customer (person or business) associated with the external account being debited.
+          minLength: 1
+          x-orum-error-missing:
+            known-error: missing_source_customer_reference_id
+          x-orum-error-invalid:
+            known-error: invalid_source_customer_reference_id
+        account_reference_id:
+          type: string
+          description: Unique reference ID for the external account being debited.
+          minLength: 1
+          x-orum-error-missing:
+            known-error: missing_source_account_reference_id
+          x-orum-error-invalid:
+            known-error: invalid_source_account_reference_id
+        statement_display_name:
+          type: string
+          description: The name that will appear on the bank account statement of the account being debited. The field supports 16 alphanumeric characters for ACH, and 140 for RTP.
+          nullable: true
+      required:
+      - account_reference_id
+      - customer_reference_id
+    TransfersResponse:
+      title: TransfersResponse
+      type: object
+      required:
+      - transfers
+      properties:
+        transfers:
+          type: array
+          description: List of transfers.
+          items:
+            $ref: '#/components/schemas/TransferResponseBaseObject'
+    TransferRequest:
+      title: TransferRequest
+      type: object
+      properties:
+        transfer_reference_id:
+          allOf:
+          - $ref: '#/components/schemas/TransferReferenceId'
+          x-orum-error-missing:
+            known-error: missing_transfer_reference_id
+          x-orum-error-invalid:
+            known-error: invalid_transfer_reference_id
+        amount:
+          allOf:
+          - $ref: '#/components/schemas/TransferAmount'
+          x-orum-error-missing:
+            known-error: missing_amount
+          x-orum-error-invalid:
+            known-error: invalid_amount
+        currency:
+          allOf:
+          - $ref: '#/components/schemas/Currency'
+          x-orum-error-missing:
+            known-error: missing_currency
+          x-orum-error-invalid:
+            known-error: invalid_currency
+        speed:
+          allOf:
+          - $ref: '#/components/schemas/TransferSpeed'
+          x-orum-error-missing:
+            known-error: missing_speed
+          x-orum-error-invalid:
+            known-error: invalid_speed
+        source:
+          allOf:
+          - $ref: '#/components/schemas/SourceTransferParty'
+          type: object
+          nullable: true
+        destination:
+          allOf:
+          - $ref: '#/components/schemas/DestinationTransferParty'
+          type: object
+          nullable: true
+        account_statement_descriptor:
+          type: string
+          description: Banks can display additional information to help the end user understand why they received funds. This information will appear on both the source and destination bank account statements. The field supports 10 alphanumeric characters for ACH and 140 for RTP.
+          nullable: true
+          x-orum-error-invalid:
+            known-error: invalid_account_statement_descriptor
+        metadata:
+          allOf:
+          - $ref: '#/components/schemas/Metadata'
+          type: object
+          nullable: true
+          x-orum-error-invalid:
+            message: Metadata must be a valid JSON object.
+            code: invalid_metadata
+        transfer_group_id:
+          allOf:
+          - $ref: '#/components/schemas/OrumId'
+          type: string
+          nullable: true
+          x-orum-error-invalid:
+            known-error: invalid_transfer_group_id
+        subledger_reference_id:
+          allOf:
+          - $ref: '#/components/schemas/SubledgerReferenceId'
+          x-orum-error-invalid:
+            known-error: invalid_subledger_reference_id
+      required:
+      - transfer_reference_id
+      - amount
+      - currency
+      - speed
+    TransferReferenceId:
+      title: TransferReferenceId
+      type: string
+      description: Unique reference id for the transfer. Generated by you.
+      minLength: 1
+    ReturnTraceNumber:
+      title: ReturnTraceNumber
+      type: string
+      description: Unique tracking number assigned to a return to associate it back with its original trace number for reconciliation.
+    OrumVersion:
+      type: string
+      description: Version of Deliver and Verify APIs. Use v2022-09-21.
+      enum:
+      - v2022-09-21
+    PartyStatementDisplayName:
+      title: PartyStatementDisplayName
+      type: string
+      description: The name that will appear on the bank account statement of the account being debited. The field supports 16 alphanumeric characters for ACH, and 140 for RTP.
+    Currency:
+      title: Currency
+      type: string
+      description: Currency code in ISO 4217 format. Only USD is supported.
+      enum:
+      - USD
+    TransferHistoryResponse:
+      title: TransferHistoryResponse
+      type: object
+      required:
+      - statuses
+      properties:
+        statuses:
+          type: array
+          description: List of transfer status history entries.
+          items:
+            $ref: '#/components/schemas/TransferHistoryEntry'
+    TransferPatchMetadataRequest:
+      title: TransferPatchMetadata
+      type: object
+      properties:
+        metadata:
+          allOf:
+          - $ref: '#/components/schemas/Metadata'
+          x-orum-error-missing:
+            message: Metadata is required
+            code: missing_metadata
+          x-orum-error-invalid:
+            message: Metadata must be a valid JSON object.
+            code: invalid_metadata
+      required:
+      - metadata
+    CreatedAt:
+      type: string
+      description: Timestamp when the resource was created.
+      format: date-time
+    Metadata:
+      type: object
+      description: Additional data you would like to provide on the resource. The field supports valid JSON of up to 5 key-value pairs with a maximum of 20 characters for the key and 50 characters for the value. Do not include any sensitive information.
+    UpdatedAt:
+      type: string
+      description: Timestamp when the resource was last updated.
+      format: date-time
+    TransferHistoryEntry:
+      title: TransferHistoryEntry
+      type: object
+      required:
+      - status
+      - updated_at
+      properties:
+        status:
+          $ref: '#/components/schemas/TransferStatus'
+        updated_at:
+          $ref: '#/components/schemas/UpdatedAt'
+    TransferResponse:
+      title: TransferResponse
+      type: object
+      required:
+      - transfer
+      properties:
+        transfer:
+          $ref: '#/components/schemas/TransferResponseBaseObject'
+    OrumId:
+      type: string
+      description: Orum generated unique id for the resource.
+      format: uuid
+    TransferStatusReason:
+      title: Transfer Status Reason
+      type: object
+      description: For failed transfers - details on why the transfer is in a failed state.
+      properties:
+        source:
+          description: Present if transfer failed due to an issue with the transfer source.
+          $ref: '#/components/schemas/ReasonCodes'
+        destination:
+          description: Present if transfer failed due to an issue with the transfer destination.
+          $ref: '#/components/schemas/ReasonCodes'
+    DestinationTransferPartyResponse:
+      title: DestinationTransferPartyResponse
+      type: object
+      description: Information about the transfer funds destination, which will be credited.
+      properties:
+        customer_reference_id:
+          type: string
+          description: Unique reference ID for the customer (person or business) associated with the external account being credited.
+        account_reference_id:
+          type: string
+          description: Unique reference ID for the account being credited.
+        statement_display_name:
+          allOf:
+          - $ref: '#/components/schemas/PartyStatementDisplayName'
+        trace_number:
+          allOf:
+          - $ref: '#/components/schemas/TraceNumber'
+        return_trace_number:
+          allOf:
+          - $ref: '#/components/schemas/ReturnTraceNumber'
+      required:
+      - account_reference_id
+      - customer_reference_id
+    DestinationTransferParty:
+      title: TransferDestination
+      type: object
+      description: Information about the transfer funds destination, which will be credited.
+      properties:
+        customer_reference_id:
+          type: string
+          description: Unique reference ID for the customer (person or business) associated with the external account being credited.
+          minLength: 1
+          x-orum-error-missing:
+            known-error: missing_destination_customer_reference_id
+          x-orum-error-invalid:
+            known-error: invalid_destination_customer_reference_id
+        account_reference_id:
+          type: string
+          description: Unique reference ID for the account being credited.
+          minLength: 1
+          x-orum-error-missing:
+            known-error: missing_destination_account_reference_id
+          x-orum-error-invalid:
+            known-error: invalid_destination_account_reference_id
+        statement_display_name:
+          type: string
+          description: The name that will appear on the bank account statement of the account being credited. The field supports 16 alphanumeric characters for ACH, and 140 for RTP.
+          nullable: true
+      required:
+      - account_reference_id
+      - customer_reference_id
+    TransferCancelResponse:
+      title: TransferCancelResponse
+      type: object
+      required:
+      - message
+      properties:
+        message:
+          type: string
+          description: An explanation for the status of the transfer cancellation request.
+    TransferSpeed:
+      title: TransferSpeed
+      type: string
+      description: Speed of transfer.
+      enum:
+      - asap
+      - standard
+      - same_day
+      - wire
+  securitySchemes:
+    oauth2:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: https://api-sandbox.orum.io/oauth/token
+          scopes:
+            read:persons: Read persons
+            write:persons: Write persons
+            read:businesses: Read businesses
+            write:businesses: Write businesses
+            read:external-accounts: Read external accounts
+            write:external-accounts: Write external accounts
+            read:cards: Read cards
+            write:cards: Write cards
+            read:transfers: Read transfers
+            write:transfers: Write transfers
+            read:transfer-groups: Read transfer groups
+            write:transfer-groups: Write transfer groups
+            read:schedules: Read schedules
+            write:schedules: Write schedules
+            read:routing-number-eligibility: Read routing number eligibility
+            read:balances: Read balances
+            read:reports: Read reports
+            write:reports: Write reports
+            read:booktransfers: Read book transfers
+            write:booktransfers: Write book transfers
+            read:subledgers: Read subledgers
+            write:subledgers: Write subledgers
+            read:verify-accounts: Read verify accounts
+            write:verify-accounts: Write verify accounts
+            read:webhook-configurations: Read webhook configurations
+            write:webhook-configurations: Write webhook configurations
+            read:webhook-secret: Read webhook secret
+            write:webhook-secret: Write webhook secret
+            invoke:webhook: Invoke webhook

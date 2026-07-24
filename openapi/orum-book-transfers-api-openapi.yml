@@ -1,0 +1,449 @@
+openapi: 3.0.1
+info:
+  title: Orum Authentication Book Transfers API
+  description: Orum API.
+  version: v2022-09-21
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+servers:
+- url: https://api-sandbox.orum.io
+- url: https://vault.api-sandbox.orum.io
+tags:
+- name: Book Transfers
+paths:
+  /deliver/booktransfers:
+    post:
+      tags:
+      - Book Transfers
+      operationId: post-book-transfer
+      summary: Create a book transfer
+      description: Create a book transfer
+      parameters:
+      - name: Orum-Version
+        in: header
+        required: true
+        schema:
+          $ref: '#/components/schemas/OrumVersion'
+        x-orum-error-invalid:
+          known-error: version_invalid
+        x-orum-error-missing:
+          known-error: version_missing
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BookTransferRequest'
+        required: true
+      responses:
+        200:
+          description: successful response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BookTransferResponse'
+        400:
+          description: invalid request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        404:
+          description: not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        default:
+          description: unexpected error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      security:
+      - oauth2:
+        - write:booktransfers
+    get:
+      tags:
+      - Book Transfers
+      operationId: get-book-transfers
+      summary: Get all book transfers
+      description: Get all book transfer objects.
+      parameters:
+      - name: Orum-Version
+        in: header
+        required: true
+        schema:
+          $ref: '#/components/schemas/OrumVersion'
+        x-orum-error-invalid:
+          known-error: version_invalid
+        x-orum-error-missing:
+          known-error: version_missing
+      - name: index
+        description: Index for paginated results
+        in: query
+        required: false
+        schema:
+          type: integer
+          default: 0
+          minimum: 0
+        x-orum-error-invalid:
+          known-error: index
+      - name: size
+        description: Max number of results to return
+        in: query
+        required: false
+        schema:
+          type: integer
+          default: 100
+          minimum: 0
+          maximum: 500
+        x-orum-error-invalid:
+          known-error: size
+      - name: book_transfer_reference_id
+        description: Filter results by book transfer reference id
+        in: query
+        required: false
+        schema:
+          $ref: '#/components/schemas/BookTransferReferenceId'
+      - name: status
+        description: Filter results by book transfer status
+        in: query
+        required: false
+        schema:
+          $ref: '#/components/schemas/BookTransferStatus'
+        x-orum-error-invalid:
+          known-error: invalid_status
+      - name: subledger_reference_id
+        description: Filter results by subledger reference id
+        in: query
+        required: false
+        schema:
+          $ref: '#/components/schemas/SubledgerReferenceId'
+      responses:
+        '200':
+          description: 200 response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BookTransfersResponse'
+        '400':
+          description: invalid request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        default:
+          description: unexpected error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      security:
+      - oauth2:
+        - read:booktransfers
+  /deliver/booktransfers/{id}:
+    get:
+      tags:
+      - Book Transfers
+      operationId: get-book-transfer
+      summary: Get a book transfer
+      description: Get a book transfer by id
+      parameters:
+      - name: Orum-Version
+        in: header
+        required: true
+        schema:
+          $ref: '#/components/schemas/OrumVersion'
+        x-orum-error-invalid:
+          known-error: version_invalid
+        x-orum-error-missing:
+          known-error: version_missing
+      - name: id
+        in: path
+        required: true
+        description: Book Transfer ID
+        schema:
+          type: string
+          format: uuid
+          description: The unique identifier for the book transfer in UUID format.
+        x-orum-error-invalid:
+          known-error: unknown_id_book_transfer
+      responses:
+        200:
+          description: successful response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BookTransferResponse'
+        400:
+          description: invalid request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        404:
+          description: not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        default:
+          description: unexpected error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      security:
+      - oauth2:
+        - read:booktransfers
+components:
+  schemas:
+    BookTransferReferenceId:
+      title: BookTransferReferenceId
+      type: string
+      minLength: 1
+      description: Unique reference id for the book tranfer
+      x-orum-error-invalid:
+        known-error: invalid_book_transfer_reference_id
+    SubledgerReferenceId:
+      title: SubledgerReferenceId
+      type: string
+      description: Unique reference id for the subledger resource. Generated by you.
+      minLength: 1
+      maxLength: 255
+    BookTransferStatus:
+      title: BookTransferStatus
+      type: string
+      description: Describes the current status of the book transfer.
+      enum:
+      - created
+      - completed
+      - failed
+    ErrorResponse:
+      type: object
+      properties:
+        error_code:
+          type: string
+        message:
+          type: string
+        details:
+          type: object
+          description: additional details about the error.
+          nullable: true
+      required:
+      - error_code
+      - message
+    BookTransfer:
+      title: BookTransfer
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/OrumId'
+        created_at:
+          $ref: '#/components/schemas/CreatedAt'
+        updated_at:
+          $ref: '#/components/schemas/UpdatedAt'
+        book_transfer_reference_id:
+          $ref: '#/components/schemas/BookTransferReferenceId'
+        amount:
+          allOf:
+          - $ref: '#/components/schemas/TransferAmount'
+          x-orum-error-missing:
+            known-error: missing_amount
+          x-orum-error-invalid:
+            known-error: invalid_amount
+        currency:
+          $ref: '#/components/schemas/Currency'
+        status:
+          $ref: '#/components/schemas/BookTransferStatus'
+        status_reasons:
+          type: array
+          description: Array that explains why the transfer failed.
+          items:
+            $ref: '#/components/schemas/BookTransferStatusReason'
+        metadata:
+          $ref: '#/components/schemas/Metadata'
+        source:
+          $ref: '#/components/schemas/BookTransferSourceObject'
+        destination:
+          $ref: '#/components/schemas/BookTransferDestinationObject'
+      required:
+      - id
+      - created_at
+      - updated_at
+      - book_transfer_reference_id
+      - amount
+      - currency
+      - status
+    TransferAmount:
+      title: TransferAmount
+      type: integer
+      description: 'Transfer amount in integral cents (example: 100 = $1). Must be greater than zero.'
+      minimum: 1
+    BookTransferDestinationObject:
+      title: Destination
+      type: object
+      description: Information about the ultimate destination of the book transfer.
+      properties:
+        subledger_reference_id:
+          type: string
+          minLength: 1
+          description: Unique id of the account on the Enterprise platform
+          x-orum-error-missing:
+            known-error: missing_book_transfer_destination_subledger_reference_id
+          x-orum-error-invalid:
+            known-error: invalid_book_transfer_destination_subledger_reference_id
+      required:
+      - subledger_reference_id
+    BookTransferRequest:
+      title: BookTransferRequest
+      type: object
+      properties:
+        book_transfer_reference_id:
+          $ref: '#/components/schemas/TransferGroupReferenceID'
+        amount:
+          allOf:
+          - $ref: '#/components/schemas/TransferAmount'
+          x-orum-error-missing:
+            known-error: missing_amount
+          x-orum-error-invalid:
+            known-error: invalid_amount
+        currency:
+          $ref: '#/components/schemas/Currency'
+        metadata:
+          $ref: '#/components/schemas/Metadata'
+        source:
+          $ref: '#/components/schemas/BookTransferSourceObject'
+        destination:
+          $ref: '#/components/schemas/BookTransferDestinationObject'
+      required:
+      - book_transfer_reference_id
+      - amount
+      - currency
+    OrumVersion:
+      type: string
+      description: Version of Deliver and Verify APIs. Use v2022-09-21.
+      enum:
+      - v2022-09-21
+    BookTransferResponse:
+      title: BookTransferResponse
+      type: object
+      properties:
+        book_transfer:
+          $ref: '#/components/schemas/BookTransfer'
+      required:
+      - book_transfer
+    Currency:
+      title: Currency
+      type: string
+      description: Currency code in ISO 4217 format. Only USD is supported.
+      enum:
+      - USD
+    CreatedAt:
+      type: string
+      description: Timestamp when the resource was created.
+      format: date-time
+    Metadata:
+      type: object
+      description: Additional data you would like to provide on the resource. The field supports valid JSON of up to 5 key-value pairs with a maximum of 20 characters for the key and 50 characters for the value. Do not include any sensitive information.
+    UpdatedAt:
+      type: string
+      description: Timestamp when the resource was last updated.
+      format: date-time
+    TransferGroupReferenceID:
+      title: TransferGroupReferenceID
+      type: string
+      minLength: 1
+      description: Unique reference id for the transfer group
+      x-orum-error-invalid:
+        known-error: invalid_transfer_group_reference_id
+    OrumId:
+      type: string
+      description: Orum generated unique id for the resource.
+      format: uuid
+    BookTransferReasonCode:
+      title: BookTransferReasonCode
+      type: object
+      required:
+      - reason_code
+      - reason_code_message
+      properties:
+        reason_code:
+          type: string
+          description: A word-based code created by Orum to describe the reason for the failure. Orum reason codes are rail-agnostic.
+          example: insufficient_funds
+        reason_code_message:
+          type: string
+          description: A human-readable description of the reason code.
+    BookTransfersResponse:
+      title: BookTransfersResponse
+      type: object
+      required:
+      - book_transfers
+      properties:
+        book_transfers:
+          type: array
+          description: List of book transfers.
+          items:
+            $ref: '#/components/schemas/BookTransfer'
+    BookTransferSourceObject:
+      title: Source
+      type: object
+      description: Information about the ultimate source of the book transfer
+      properties:
+        subledger_reference_id:
+          type: string
+          minLength: 1
+          description: Unique id of the account on the Enterprise platform
+          x-orum-error-missing:
+            known-error: missing_book_transfer_source_subledger_reference_id
+          x-orum-error-invalid:
+            known-error: invalid_book_transfer_source_subledger_reference_id
+      required:
+      - subledger_reference_id
+    BookTransferStatusReason:
+      title: BookTransfer Status Reason
+      type: object
+      description: For failed book transfers - details on why the book transfer is in a failed state.
+      properties:
+        source:
+          $ref: '#/components/schemas/BookTransferReasonCode'
+        destination:
+          $ref: '#/components/schemas/BookTransferReasonCode'
+  securitySchemes:
+    oauth2:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: https://api-sandbox.orum.io/oauth/token
+          scopes:
+            read:persons: Read persons
+            write:persons: Write persons
+            read:businesses: Read businesses
+            write:businesses: Write businesses
+            read:external-accounts: Read external accounts
+            write:external-accounts: Write external accounts
+            read:cards: Read cards
+            write:cards: Write cards
+            read:transfers: Read transfers
+            write:transfers: Write transfers
+            read:transfer-groups: Read transfer groups
+            write:transfer-groups: Write transfer groups
+            read:schedules: Read schedules
+            write:schedules: Write schedules
+            read:routing-number-eligibility: Read routing number eligibility
+            read:balances: Read balances
+            read:reports: Read reports
+            write:reports: Write reports
+            read:booktransfers: Read book transfers
+            write:booktransfers: Write book transfers
+            read:subledgers: Read subledgers
+            write:subledgers: Write subledgers
+            read:verify-accounts: Read verify accounts
+            write:verify-accounts: Write verify accounts
+            read:webhook-configurations: Read webhook configurations
+            write:webhook-configurations: Write webhook configurations
+            read:webhook-secret: Read webhook secret
+            write:webhook-secret: Write webhook secret
+            invoke:webhook: Invoke webhook

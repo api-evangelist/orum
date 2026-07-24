@@ -1,0 +1,309 @@
+openapi: 3.0.1
+info:
+  title: Orum Authentication Balance API
+  description: Orum API.
+  version: v2022-09-21
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+servers:
+- url: https://api-sandbox.orum.io
+- url: https://vault.api-sandbox.orum.io
+tags:
+- name: Balance
+paths:
+  /deliver/balance:
+    get:
+      tags:
+      - Balance
+      operationId: get-balance
+      summary: Get balance
+      description: Get balance object.
+      parameters:
+      - name: Orum-Version
+        in: header
+        required: true
+        schema:
+          $ref: '#/components/schemas/OrumVersion'
+        x-orum-error-invalid:
+          known-error: version_invalid
+        x-orum-error-missing:
+          known-error: version_missing
+      responses:
+        '200':
+          description: The requested enterprise account balance
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BalanceResponse'
+        '401':
+          description: unauthorized request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        default:
+          description: unexpected error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      security:
+      - oauth2:
+        - read:balances
+  /deliver/balance/subledgers/{id}:
+    get:
+      tags:
+      - Balance
+      operationId: get-subledger-balance
+      summary: Get subledger account balance
+      description: Get subledger account balance object.
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+        x-orum-error-invalid:
+          known-error: unknown_id_subledger
+      - name: Orum-Version
+        in: header
+        required: true
+        schema:
+          $ref: '#/components/schemas/OrumVersion'
+        x-orum-error-invalid:
+          known-error: version_invalid
+        x-orum-error-missing:
+          known-error: version_missing
+      responses:
+        200:
+          description: The requested subledger account balance
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SubledgerBalanceResponse'
+        '401':
+          description: unauthorized request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        default:
+          description: unexpected error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      security:
+      - oauth2:
+        - read:balances
+  /deliver/balance/subledgers:
+    get:
+      tags:
+      - Balance
+      operationId: get-all-subledger-balance
+      summary: Gets all subledger account balances
+      description: Gets all subledger account balance object.
+      parameters:
+      - name: Orum-Version
+        in: header
+        required: true
+        schema:
+          $ref: '#/components/schemas/OrumVersion'
+        x-orum-error-invalid:
+          known-error: version_invalid
+        x-orum-error-missing:
+          known-error: version_missing
+      - name: index
+        description: Index for paginated results
+        in: query
+        required: false
+        schema:
+          type: integer
+          default: 0
+          minimum: 0
+        x-orum-error-invalid:
+          known-error: index
+      - name: size
+        description: Max number of results to return
+        in: query
+        required: false
+        schema:
+          type: integer
+          default: 100
+          minimum: 0
+          maximum: 500
+        x-orum-error-invalid:
+          known-error: size
+      responses:
+        200:
+          description: The requested subledger account balance
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SubledgerBalancesResponse'
+        '401':
+          description: unauthorized request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        default:
+          description: unexpected error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      security:
+      - oauth2:
+        - read:balances
+components:
+  schemas:
+    SubledgerBalanceResponse:
+      title: BalanceResponse
+      type: object
+      required:
+      - balance
+      properties:
+        balance:
+          $ref: '#/components/schemas/SubledgerBalance'
+    Currency:
+      title: Currency
+      type: string
+      description: Currency code in ISO 4217 format. Only USD is supported.
+      enum:
+      - USD
+    OrumVersion:
+      type: string
+      description: Version of Deliver and Verify APIs. Use v2022-09-21.
+      enum:
+      - v2022-09-21
+    UpdatedAt:
+      type: string
+      description: Timestamp when the resource was last updated.
+      format: date-time
+    SubledgerBalancesResponse:
+      title: BalancesResponse
+      type: object
+      required:
+      - balances
+      properties:
+        balances:
+          type: array
+          description: List of balance objects.
+          items:
+            allOf:
+            - $ref: '#/components/schemas/SubledgerBalance'
+    Balance:
+      title: Balance
+      type: object
+      required:
+      - pending
+      - available
+      - currency
+      - updated_at
+      properties:
+        pending:
+          type: integer
+          format: int64
+          description: 'Pending amount of the balance in integral cents (example: 100 = $1).'
+        available:
+          type: integer
+          format: int64
+          description: 'Available amount of the balance in integral cents (example: 100 = $1).'
+        currency:
+          $ref: '#/components/schemas/Currency'
+        updated_at:
+          $ref: '#/components/schemas/UpdatedAt'
+    ErrorResponse:
+      type: object
+      properties:
+        error_code:
+          type: string
+        message:
+          type: string
+        details:
+          type: object
+          description: additional details about the error.
+          nullable: true
+      required:
+      - error_code
+      - message
+    SubledgerBalance:
+      title: SubledgerBalance
+      type: object
+      required:
+      - subledger_id
+      - pending
+      - available
+      - currency
+      - updated_at
+      - subledger_reference_id
+      properties:
+        subledger_id:
+          type: string
+          format: uuid
+          description: The subledger ID associated with the balance
+        pending:
+          type: integer
+          format: int64
+          description: 'Pending amount of the balance in integral cents (example: 100 = $1).'
+        available:
+          type: integer
+          format: int64
+          description: 'Available amount of the balance in integral cents (example: 100 = $1).'
+        currency:
+          $ref: '#/components/schemas/Currency'
+        updated_at:
+          $ref: '#/components/schemas/UpdatedAt'
+        subledger_reference_id:
+          type: string
+          description: The subledger reference id associated with the balance
+    BalanceResponse:
+      title: BalanceResponse
+      type: object
+      required:
+      - balance
+      - total_balance
+      properties:
+        balance:
+          $ref: '#/components/schemas/Balance'
+        total_balance:
+          $ref: '#/components/schemas/Balance'
+  securitySchemes:
+    oauth2:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: https://api-sandbox.orum.io/oauth/token
+          scopes:
+            read:persons: Read persons
+            write:persons: Write persons
+            read:businesses: Read businesses
+            write:businesses: Write businesses
+            read:external-accounts: Read external accounts
+            write:external-accounts: Write external accounts
+            read:cards: Read cards
+            write:cards: Write cards
+            read:transfers: Read transfers
+            write:transfers: Write transfers
+            read:transfer-groups: Read transfer groups
+            write:transfer-groups: Write transfer groups
+            read:schedules: Read schedules
+            write:schedules: Write schedules
+            read:routing-number-eligibility: Read routing number eligibility
+            read:balances: Read balances
+            read:reports: Read reports
+            write:reports: Write reports
+            read:booktransfers: Read book transfers
+            write:booktransfers: Write book transfers
+            read:subledgers: Read subledgers
+            write:subledgers: Write subledgers
+            read:verify-accounts: Read verify accounts
+            write:verify-accounts: Write verify accounts
+            read:webhook-configurations: Read webhook configurations
+            write:webhook-configurations: Write webhook configurations
+            read:webhook-secret: Read webhook secret
+            write:webhook-secret: Write webhook secret
+            invoke:webhook: Invoke webhook

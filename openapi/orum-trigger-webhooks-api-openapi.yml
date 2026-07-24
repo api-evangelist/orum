@@ -1,0 +1,1144 @@
+openapi: 3.0.1
+info:
+  title: Orum Authentication Trigger webhooks API
+  description: Orum API.
+  version: v2022-09-21
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+servers:
+- url: https://api-sandbox.orum.io
+- url: https://vault.api-sandbox.orum.io
+tags:
+- name: Trigger webhooks
+paths:
+  /webhooks/invoke:
+    post:
+      operationId: post-invoke
+      tags:
+      - Trigger webhooks
+      summary: Invoke a test webhook event
+      parameters:
+      - name: Orum-Version
+        in: header
+        required: true
+        schema:
+          $ref: '#/components/schemas/OrumVersion'
+        x-orum-error-invalid:
+          known-error: version_invalid
+        x-orum-error-missing:
+          known-error: version_missing
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              oneOf:
+              - $ref: '#/components/schemas/PersonTestRequest'
+              - $ref: '#/components/schemas/BusinessTestRequest'
+              - $ref: '#/components/schemas/ExternalAccountTestRequest'
+              - $ref: '#/components/schemas/TransferTestRequest'
+              - $ref: '#/components/schemas/VerifyAccountTestRequest'
+              - $ref: '#/components/schemas/SubledgerTestRequest'
+              - $ref: '#/components/schemas/BookTransferTestRequest'
+      responses:
+        '201':
+          description: 201 response.
+        '401':
+          description: unauthorized request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      security:
+      - oauth2:
+        - invoke:webhook
+components:
+  schemas:
+    ContactTypeBusiness:
+      title: ContactTypeBusiness
+      type: string
+      description: Type of contact information associated with a business - 'email', 'phone' or 'website'.
+      enum:
+      - email
+      - phone
+      - website
+    OwnershipPerson:
+      description: Ownership details for a person
+      type: object
+      required:
+      - first_name
+      - last_name
+      properties:
+        first_name:
+          type: string
+        last_name:
+          type: string
+        phone_number:
+          type: string
+        first_name_match:
+          $ref: '#/components/schemas/OwnershipResult'
+        last_name_match:
+          $ref: '#/components/schemas/OwnershipResult'
+        phone_number_match:
+          $ref: '#/components/schemas/OwnershipResult'
+        ssn_match:
+          $ref: '#/components/schemas/OwnershipResult'
+    PersonTestRequest:
+      type: object
+      title: Person Test Event
+      required:
+      - event_type
+      - data
+      properties:
+        event_type:
+          $ref: '#/components/schemas/PersonEventType'
+        data:
+          $ref: '#/components/schemas/PersonResponseBase'
+    BusinessResponseBase:
+      title: BusinessResponseBase
+      type: object
+      required:
+      - id
+      - customer_reference_id
+      - legal_name
+      - status
+      - created_at
+      - updated_at
+      properties:
+        id:
+          $ref: '#/components/schemas/OrumId'
+        customer_reference_id:
+          $ref: '#/components/schemas/CustomerReferenceId'
+        legal_name:
+          type: string
+          description: The legal name of the business as it appears on official registration forms. Accepts alphanumeric characters and hyphens, dashes, periods, apostrophes, spaces, hashes, colons, forward slashes, and diacritics.
+        business_name:
+          type: string
+          description: A trade name or pseudonym used by the business that is not its officially registered company name. Accepts alphanumeric characters and hyphens, dashes, periods, apostrophes, spaces, hashes, colons, forward slashes, and diacritics.
+        entity_type:
+          type: string
+          description: Describes the type of business entity.
+        tax_id_type:
+          type: string
+          description: 'The type of tax ID number associated with the business. Note: This field is required for payouts, deposits, or account-to-account transfers.'
+        account_holder_name:
+          type: string
+          description: Name of the owner or primary person associated with the business.
+        incorporation_date:
+          type: string
+          description: Date the business was incorporated, in YYYY-MM-DD format.
+        status:
+          $ref: '#/components/schemas/BusinessStatus'
+        addresses:
+          type: array
+          description: 'Incorporated address information for the business. Note: This field is required for payouts, deposits, or account-to-account transfers. Orum requires a physical address for all registered businesses; aligned with standards mandated by FinCEN and the FDIC. A physical address is a tangible building address, such as a home, office, or office suite. A PO Box is a mailing address, but not a physical address.'
+          items:
+            $ref: '#/components/schemas/PostalAddressResponse'
+          minItems: 1
+          maxItems: 1
+        contacts:
+          type: array
+          description: List of contact information for the business.
+          items:
+            $ref: '#/components/schemas/ContactResponseBusiness'
+          minItems: 1
+          maxItems: 3
+        created_at:
+          $ref: '#/components/schemas/CreatedAt'
+        updated_at:
+          $ref: '#/components/schemas/UpdatedAt'
+        closed_at:
+          $ref: '#/components/schemas/ClosedAt'
+        metadata:
+          type: object
+          description: Additional data you would like to provide on the resource. The field supports valid JSON of up to 5 key-value pairs with a maximum of 20 characters for the key and 50 characters for the value. Do not include any sensitive information.
+    Address2:
+      title: Address2
+      type: string
+      description: Address line 2.
+      maxLength: 255
+      x-orum-error-invalid:
+        message: Address2 is invalid. Ensure it is a string with a maximum length of 255 characters.
+        code: invalid_address2
+    ReasonCodes:
+      title: ReasonCode
+      type: object
+      required:
+      - reason_code
+      - reason_code_message
+      properties:
+        reason_code:
+          type: string
+          description: A word-based code created by Orum to describe the reason for the failure. Orum reason codes are rail-agnostic.
+          example: insufficient_funds
+        reason_code_message:
+          type: string
+          description: A human-readable description of the reason code.
+        network_reason_code:
+          type: string
+          description: The reason code sent by the network (ex R01).
+        network_reason_code_message:
+          type: string
+          description: The message sent by the network.
+        network_reason_code_rail_type:
+          type: string
+          description: The payment rail used in the transfer. Either RTP or ACH.
+    OwnershipResult:
+      type: string
+      description: Result of Ownership match
+      enum:
+      - match
+      - not_a_match
+      - not_found
+    SourceTransferPartyResponse:
+      title: SourceTransferPartyResponse
+      type: object
+      description: For use cases that require a Source, information about the transfer funding source, which will be debited.
+      properties:
+        customer_reference_id:
+          type: string
+          description: Unique reference ID for the customer (person or business) associated with the external account being debited.
+        account_reference_id:
+          type: string
+          description: Unique reference ID for the external account being debited.
+        statement_display_name:
+          allOf:
+          - $ref: '#/components/schemas/PartyStatementDisplayName'
+        trace_number:
+          allOf:
+          - $ref: '#/components/schemas/TraceNumber'
+        return_trace_number:
+          allOf:
+          - $ref: '#/components/schemas/ReturnTraceNumber'
+      required:
+      - account_reference_id
+      - customer_reference_id
+    ContactResponseBusiness:
+      title: ContactResponse
+      type: object
+      required:
+      - id
+      - type
+      - value
+      - created_at
+      - updated_at
+      description: Contact information.
+      properties:
+        id:
+          $ref: '#/components/schemas/OrumId'
+        type:
+          $ref: '#/components/schemas/ContactTypeBusiness'
+        value:
+          type: string
+          description: A standard set of values that indicate the contact type.
+        created_at:
+          $ref: '#/components/schemas/CreatedAt'
+        updated_at:
+          $ref: '#/components/schemas/UpdatedAt'
+    AbaRoutingNumber:
+      title: AbaRoutingNumber
+      type: string
+      pattern: ^\d{9}$
+      description: 9-digit American Bankers Association (ABA) routing number.
+    Zip5:
+      title: Zip5
+      type: string
+      description: 5-digit ZIP Code. Numeric values (0-9) only.
+      pattern: ^\d{5}$
+    BusinessEventType:
+      type: string
+      description: The type of event you want to invoke a webhook for.
+      enum:
+      - business_created
+      - business_verified
+      - business_rejected
+      - business_restricted
+      - business_unverified
+      - business_closed
+    OrumVersion:
+      type: string
+      description: Version of Deliver and Verify APIs. Use v2022-09-21.
+      enum:
+      - v2022-09-21
+    EstimatedVerificationDate:
+      type: string
+      description: Estimated date that the account verification will be complete. Time will always be midnight and should be ignored.
+      format: date-time
+      example: '2023-07-13T00:00:00.000Z'
+    VerifyAccountTestRequest:
+      type: object
+      title: Verify Account Test Event
+      required:
+      - event_type
+      - data
+      properties:
+        event_type:
+          $ref: '#/components/schemas/VerifyAccountEventType'
+        data:
+          $ref: '#/components/schemas/VerifyAccountResponseBase'
+    ReasonCode:
+      type: string
+      description: A word-based code that describes the verification failure.
+      example: invalid_address
+    UpdatedAt:
+      type: string
+      description: Timestamp when the resource was last updated.
+      format: date-time
+    ExternalAccountEventType:
+      type: string
+      description: The type of event you want to invoke a webhook for.
+      enum:
+      - external_account_created
+      - external_account_verified
+      - external_account_rejected
+      - external_account_restricted
+      - external_account_unverified
+      - external_account_closed
+    OwnershipStatus:
+      type: string
+      description: Status of account ownership.
+      enum:
+      - pending
+      - full
+      - partial
+      - not_a_match
+      - not_found
+    TransferStatusReason:
+      title: Transfer Status Reason
+      type: object
+      description: For failed transfers - details on why the transfer is in a failed state.
+      properties:
+        source:
+          description: Present if transfer failed due to an issue with the transfer source.
+          $ref: '#/components/schemas/ReasonCodes'
+        destination:
+          description: Present if transfer failed due to an issue with the transfer destination.
+          $ref: '#/components/schemas/ReasonCodes'
+    Email:
+      type: string
+      format: email
+      description: Email address to notify once the statement code is sent to the account to verify account control.
+    PersonStatus:
+      title: PersonStatus
+      type: string
+      description: Status of person in Orum system.
+      enum:
+      - created
+      - verified
+      - rejected
+      - restricted
+      - closed
+    VerifyAccountEventType:
+      type: string
+      description: The type of event you want to invoke a webhook for.
+      enum:
+      - verify_account_updated
+    BookTransferEventType:
+      type: string
+      description: The type of event you want to invoke a webhook for.
+      enum:
+      - book_transfer_updated
+    SubledgerReferenceId:
+      title: SubledgerReferenceId
+      type: string
+      description: Unique reference id for the subledger resource. Generated by you.
+      minLength: 1
+      maxLength: 255
+    ContactTypePerson:
+      title: ContactTypePerson
+      type: string
+      description: Type of contact information associated with a person - 'email' or 'phone'.
+      enum:
+      - email
+      - phone
+    BookTransfer:
+      title: BookTransfer
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/OrumId'
+        created_at:
+          $ref: '#/components/schemas/CreatedAt'
+        updated_at:
+          $ref: '#/components/schemas/UpdatedAt'
+        book_transfer_reference_id:
+          $ref: '#/components/schemas/BookTransferReferenceId'
+        amount:
+          allOf:
+          - $ref: '#/components/schemas/TransferAmount'
+          x-orum-error-missing:
+            known-error: missing_amount
+          x-orum-error-invalid:
+            known-error: invalid_amount
+        currency:
+          $ref: '#/components/schemas/Currency'
+        status:
+          $ref: '#/components/schemas/BookTransferStatus'
+        status_reasons:
+          type: array
+          description: Array that explains why the transfer failed.
+          items:
+            $ref: '#/components/schemas/BookTransferStatusReason'
+        metadata:
+          $ref: '#/components/schemas/Metadata'
+        source:
+          $ref: '#/components/schemas/BookTransferSourceObject'
+        destination:
+          $ref: '#/components/schemas/BookTransferDestinationObject'
+      required:
+      - id
+      - created_at
+      - updated_at
+      - book_transfer_reference_id
+      - amount
+      - currency
+      - status
+    BookTransferDestinationObject:
+      title: Destination
+      type: object
+      description: Information about the ultimate destination of the book transfer.
+      properties:
+        subledger_reference_id:
+          type: string
+          minLength: 1
+          description: Unique id of the account on the Enterprise platform
+          x-orum-error-missing:
+            known-error: missing_book_transfer_destination_subledger_reference_id
+          x-orum-error-invalid:
+            known-error: invalid_book_transfer_destination_subledger_reference_id
+      required:
+      - subledger_reference_id
+    VerifyAccountResponseBase:
+      title: VerifyAccountResponseBase
+      type: object
+      required:
+      - id
+      - created_at
+      - updated_at
+      - account_number
+      - routing_number
+      - account_holder_name
+      - verification_status
+      properties:
+        id:
+          $ref: '#/components/schemas/OrumId'
+        created_at:
+          $ref: '#/components/schemas/CreatedAt'
+        updated_at:
+          $ref: '#/components/schemas/UpdatedAt'
+        account_number:
+          $ref: '#/components/schemas/UsBankAccountNumber'
+        routing_number:
+          $ref: '#/components/schemas/AbaRoutingNumber'
+        account_holder_name:
+          $ref: '#/components/schemas/AccountHolderName'
+        email:
+          $ref: '#/components/schemas/Email'
+        verification_status:
+          $ref: '#/components/schemas/VerificationStatus'
+        status_reason:
+          $ref: '#/components/schemas/VerificationStatusReason'
+        ownership_status:
+          $ref: '#/components/schemas/OwnershipStatus'
+        person:
+          $ref: '#/components/schemas/OwnershipPerson'
+        business:
+          $ref: '#/components/schemas/OwnershipBusiness'
+        control_status:
+          $ref: '#/components/schemas/ControlStatus'
+        debit_status:
+          $ref: '#/components/schemas/DebitStatus'
+        debit_status_reason:
+          $ref: '#/components/schemas/DebitStatusReason'
+        estimated_verification_date:
+          $ref: '#/components/schemas/EstimatedVerificationDate'
+        sender_name:
+          $ref: '#/components/schemas/SenderName'
+    SubledgerEventType:
+      type: string
+      description: The type of event you want to invoke a webhook for.
+      enum:
+      - subledger_created
+    TransferResponseBaseObject:
+      title: TransferResponseBaseObject
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/OrumId'
+        transfer_reference_id:
+          $ref: '#/components/schemas/TransferReferenceId'
+        amount:
+          $ref: '#/components/schemas/TransferAmount'
+        currency:
+          $ref: '#/components/schemas/Currency'
+        speed:
+          $ref: '#/components/schemas/TransferSpeed'
+        source:
+          $ref: '#/components/schemas/SourceTransferPartyResponse'
+        destination:
+          $ref: '#/components/schemas/DestinationTransferPartyResponse'
+        status:
+          $ref: '#/components/schemas/TransferStatus'
+        status_reasons:
+          type: array
+          description: Array that explains why the transfer failed.
+          items:
+            $ref: '#/components/schemas/TransferStatusReason'
+        account_statement_descriptor:
+          type: string
+          description: Banks can display additional information to help the end user understand why they received funds. This information will appear on both the source and destination bank account statements. The field supports 10 alphanumeric characters for ACH and 140 for RTP.
+        estimated_funds_delivery_date:
+          type: string
+          format: date-time
+          description: Estimated date that funds will arrive in destination account. Time will always be midnight and should be ignored.
+        created_at:
+          $ref: '#/components/schemas/CreatedAt'
+        updated_at:
+          $ref: '#/components/schemas/UpdatedAt'
+        metadata:
+          $ref: '#/components/schemas/Metadata'
+        transfer_group_id:
+          $ref: '#/components/schemas/OrumId'
+        schedule_id:
+          $ref: '#/components/schemas/OrumId'
+        subledger_reference_id:
+          $ref: '#/components/schemas/SubledgerReferenceId'
+      required:
+      - id
+      - transfer_reference_id
+      - amount
+      - currency
+      - speed
+      - status
+      - created_at
+      - updated_at
+    DebitStatus:
+      type: string
+      description: Status of account debit.
+      enum:
+      - pending
+      - valid
+      - blocked
+      - failed
+    TransferReferenceId:
+      title: TransferReferenceId
+      type: string
+      description: Unique reference id for the transfer. Generated by you.
+      minLength: 1
+    DebitStatusReason:
+      type: string
+      description: Status reason for failed and blocked accounts.
+      enum:
+      - blocked_account
+      - closed_account
+      - deceased_party
+      - duplicated_transfer
+      - invalid_account
+      - invalid_field
+      - invalid_routing
+      - regulatory_error
+      - unavailable_financial_institution
+      - unexpected_error
+      - unsupported_transfer
+      - debit_blocked
+      - unauthorized_transfer
+    PersonResponseBase:
+      type: object
+      required:
+      - id
+      - customer_reference_id
+      - first_name
+      - last_name
+      - status
+      - created_at
+      - updated_at
+      properties:
+        id:
+          $ref: '#/components/schemas/OrumId'
+        customer_reference_id:
+          $ref: '#/components/schemas/CustomerReferenceId'
+        first_name:
+          type: string
+        middle_name:
+          type: string
+        last_name:
+          type: string
+        date_of_birth:
+          type: string
+          description: 'Date of birth in YYYY-MM-DD format. Note: This field is required for payouts, deposits, or account-to-account transfers. Age must be less than 100 years and greater than 18 years to be verified.'
+        status:
+          $ref: '#/components/schemas/PersonStatus'
+        addresses:
+          type: array
+          description: 'Address information for the person. Note: This field is required for payouts, deposits, or account-to-account transfers.'
+          items:
+            $ref: '#/components/schemas/PostalAddressResponse'
+          minItems: 1
+          maxItems: 1
+        contacts:
+          type: array
+          description: List of contact information for the person.
+          items:
+            $ref: '#/components/schemas/ContactResponsePerson'
+          minItems: 1
+          maxItems: 2
+        status_reasons:
+          type: array
+          description: Array that explains why the person failed verification.
+          items:
+            $ref: '#/components/schemas/StatusReason'
+        created_at:
+          $ref: '#/components/schemas/CreatedAt'
+        updated_at:
+          $ref: '#/components/schemas/UpdatedAt'
+        closed_at:
+          $ref: '#/components/schemas/ClosedAt'
+        metadata:
+          type: object
+          description: Additional data you would like to provide on the resource. The field supports valid JSON of up to 5 key-value pairs with a maximum of 20 characters for the key and 50 characters for the value. Do not include any sensitive information.
+    ExternalAccountResponseBase:
+      title: ExternalAccountResponseBase
+      type: object
+      description: A single object of External Account.
+      required:
+      - id
+      - account_reference_id
+      - customer_reference_id
+      - customer_resource_type
+      - account_type
+      - account_number
+      - routing_number
+      - account_holder_name
+      - status
+      - created_at
+      - updated_at
+      properties:
+        id:
+          $ref: '#/components/schemas/OrumId'
+        account_reference_id:
+          $ref: '#/components/schemas/AccountReferenceId'
+        customer_reference_id:
+          $ref: '#/components/schemas/ExternalAccountCustomerReferenceId'
+        customer_resource_type:
+          $ref: '#/components/schemas/EndCustomerResourceType'
+        account_type:
+          $ref: '#/components/schemas/AccountType'
+        account_number:
+          $ref: '#/components/schemas/UsBankAccountNumber'
+        routing_number:
+          $ref: '#/components/schemas/AbaRoutingNumber'
+        account_holder_name:
+          type: string
+          description: Name of account holder.
+        status:
+          $ref: '#/components/schemas/ExternalAccountStatus'
+        created_at:
+          $ref: '#/components/schemas/CreatedAt'
+        updated_at:
+          $ref: '#/components/schemas/UpdatedAt'
+        closed_at:
+          $ref: '#/components/schemas/ClosedAt'
+        metadata:
+          $ref: '#/components/schemas/Metadata'
+    PersonEventType:
+      type: string
+      description: The type of event you want to invoke a webhook for.
+      enum:
+      - person_created
+      - person_verified
+      - person_rejected
+      - person_restricted
+      - person_unverified
+      - person_closed
+    ClosedAt:
+      type: string
+      description: Timestamp when the status of the resource was set to "closed".
+      format: date-time
+    PostalAddressResponse:
+      title: PostalAddressResponse
+      type: object
+      required:
+      - id
+      - type
+      - address1
+      - city
+      - state
+      - country
+      - zip5
+      - created_at
+      - updated_at
+      description: Address.
+      properties:
+        id:
+          $ref: '#/components/schemas/OrumId'
+        type:
+          $ref: '#/components/schemas/AddressType'
+        address1:
+          $ref: '#/components/schemas/Address1'
+        address2:
+          $ref: '#/components/schemas/Address2'
+        city:
+          $ref: '#/components/schemas/City'
+        state:
+          $ref: '#/components/schemas/State'
+        country:
+          $ref: '#/components/schemas/Country'
+        zip5:
+          $ref: '#/components/schemas/Zip5'
+        created_at:
+          $ref: '#/components/schemas/CreatedAt'
+        updated_at:
+          $ref: '#/components/schemas/UpdatedAt'
+    OrumId:
+      type: string
+      description: Orum generated unique id for the resource.
+      format: uuid
+    AccountHolderName:
+      type: string
+      description: Name of account holder. Accepts alphanumeric characters and hyphens, dashes, periods, apostrophes, spaces, and diacritics.
+      pattern: ^([ ’!"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~¡¢£¤¥¦§¨©ª«¬®¯°±²³´µ¶·¸¹º»¼½¾¿ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖ×ØÙÚÛÜÝÞßàáâãäåæçèéêëìíîïðñòóôõö÷øùúûüýþÿĀāĂăĄąĆćĈĉĊċČčĎďĐđĒēĔĕĖėĘęĚěĜĝĞğĠġĢģĤĥĦħĨĩĪīĬĭĮįİıĲĳĴĵĶķĸĹĺĻļĽľĿŀŁłŃńŅņŇňŉŊŋŌōŎŏŐőŒœŔŕŖŗŘřŚśŜŝŞşŠšŢţŤťŦŧŨũŪūŬŭŮůŰűŲųŴŵŶŷŸŹźŻżŽžſ]*|)$
+      maxLength: 255
+      minLength: 1
+    DestinationTransferPartyResponse:
+      title: DestinationTransferPartyResponse
+      type: object
+      description: Information about the transfer funds destination, which will be credited.
+      properties:
+        customer_reference_id:
+          type: string
+          description: Unique reference ID for the customer (person or business) associated with the external account being credited.
+        account_reference_id:
+          type: string
+          description: Unique reference ID for the account being credited.
+        statement_display_name:
+          allOf:
+          - $ref: '#/components/schemas/PartyStatementDisplayName'
+        trace_number:
+          allOf:
+          - $ref: '#/components/schemas/TraceNumber'
+        return_trace_number:
+          allOf:
+          - $ref: '#/components/schemas/ReturnTraceNumber'
+      required:
+      - account_reference_id
+      - customer_reference_id
+    ContactResponsePerson:
+      title: ContactResponse
+      type: object
+      required:
+      - id
+      - type
+      - value
+      - created_at
+      - updated_at
+      description: Contact information.
+      properties:
+        id:
+          $ref: '#/components/schemas/OrumId'
+        type:
+          $ref: '#/components/schemas/ContactTypePerson'
+        value:
+          type: string
+          description: Email or phone number.
+        created_at:
+          $ref: '#/components/schemas/CreatedAt'
+        updated_at:
+          $ref: '#/components/schemas/UpdatedAt'
+    ExternalAccountTestRequest:
+      type: object
+      title: External Account Test Event
+      required:
+      - event_type
+      - data
+      properties:
+        event_type:
+          $ref: '#/components/schemas/ExternalAccountEventType'
+        data:
+          $ref: '#/components/schemas/ExternalAccountResponseBase'
+    BookTransferStatus:
+      title: BookTransferStatus
+      type: string
+      description: Describes the current status of the book transfer.
+      enum:
+      - created
+      - completed
+      - failed
+    ErrorResponse:
+      type: object
+      properties:
+        error_code:
+          type: string
+        message:
+          type: string
+        details:
+          type: object
+          description: additional details about the error.
+          nullable: true
+      required:
+      - error_code
+      - message
+    TransferStatus:
+      title: TransferStatus
+      type: string
+      description: Describes the current status of the transfer.
+      enum:
+      - completed
+      - created
+      - failed
+      - pending
+      - settled
+    TransferAmount:
+      title: TransferAmount
+      type: integer
+      description: 'Transfer amount in integral cents (example: 100 = $1). Must be greater than zero.'
+      minimum: 1
+    City:
+      title: City
+      type: string
+      description: City.
+      maxLength: 255
+    VerificationStatusReason:
+      type: string
+      description: Status reason for failed, invalid, and closed accounts.
+      enum:
+      - blocked_account
+      - closed_account
+      - deceased_party
+      - duplicated_transfer
+      - invalid_account
+      - invalid_field
+      - invalid_routing
+      - regulatory_error
+      - unavailable_financial_institution
+      - unexpected_error
+      - unsupported_transfer
+    SubledgerResponseBase:
+      type: object
+      required:
+      - id
+      - subledger_reference_id
+      - customer_reference_id
+      - customer_resource_type
+      - status
+      - created_at
+      - updated_at
+      properties:
+        id:
+          $ref: '#/components/schemas/OrumId'
+        subledger_reference_id:
+          $ref: '#/components/schemas/SubledgerReferenceId'
+        customer_reference_id:
+          $ref: '#/components/schemas/CustomerReferenceId'
+        customer_resource_type:
+          $ref: '#/components/schemas/EndCustomerResourceType'
+        status:
+          $ref: '#/components/schemas/SubledgerStatus'
+        created_at:
+          $ref: '#/components/schemas/CreatedAt'
+        updated_at:
+          $ref: '#/components/schemas/UpdatedAt'
+        closed_at:
+          $ref: '#/components/schemas/ClosedAt'
+    VerificationStatus:
+      type: string
+      description: Status of account verification.
+      enum:
+      - pending
+      - valid
+      - closed
+      - invalid
+      - failed
+    BusinessStatus:
+      title: BusinessStatus
+      type: string
+      description: Status of Business.
+      enum:
+      - created
+      - verified
+      - rejected
+      - restricted
+      - closed
+    ReturnTraceNumber:
+      title: ReturnTraceNumber
+      type: string
+      description: Unique tracking number assigned to a return to associate it back with its original trace number for reconciliation.
+    PartyStatementDisplayName:
+      title: PartyStatementDisplayName
+      type: string
+      description: The name that will appear on the bank account statement of the account being debited. The field supports 16 alphanumeric characters for ACH, and 140 for RTP.
+    SenderName:
+      type: string
+      description: Name of sender initiating the verification request. This name will appear on the statement and should be recognizable to the account holder. Accepts alphanumeric characters and hyphens, dashes, periods, apostrophes, spaces, and diacritics.
+      pattern: ^([ ’!"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~¡¢£¤¥¦§¨©ª«¬®¯°±²³´µ¶·¸¹º»¼½¾¿ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖ×ØÙÚÛÜÝÞßàáâãäåæçèéêëìíîïðñòóôõö÷øùúûüýþÿĀāĂăĄąĆćĈĉĊċČčĎďĐđĒēĔĕĖėĘęĚěĜĝĞğĠġĢģĤĥĦħĨĩĪīĬĭĮįİıĲĳĴĵĶķĸĹĺĻļĽľĿŀŁłŃńŅņŇňŉŊŋŌōŎŏŐőŒœŔŕŖŗŘřŚśŜŝŞşŠšŢţŤťŦŧŨũŪūŬŭŮůŰűŲųŴŵŶŷŸŹźŻżŽžſ]*|)$
+      maxLength: 255
+      minLength: 1
+    ReasonCodeMessage:
+      type: string
+      description: A human-readable description of the reason code.
+      example: Address submitted is a non-supported address type
+    State:
+      title: State
+      type: string
+      pattern: ^[A-Z]{2}$
+      description: Uppercase two-character state code of the address.
+    ExternalAccountStatus:
+      type: string
+      description: Status of the external account.
+      enum:
+      - created
+      - verified
+      - rejected
+      - restricted
+      - closed
+    BookTransferTestRequest:
+      type: object
+      title: Book Transfer Test Event
+      required:
+      - event_type
+      - data
+      properties:
+        event_type:
+          $ref: '#/components/schemas/BookTransferEventType'
+        data:
+          $ref: '#/components/schemas/BookTransfer'
+    SubledgerTestRequest:
+      type: object
+      title: Subledger Test Event
+      required:
+      - event_type
+      - data
+      properties:
+        event_type:
+          $ref: '#/components/schemas/SubledgerEventType'
+        data:
+          $ref: '#/components/schemas/SubledgerResponseBase'
+    ExternalAccountCustomerReferenceId:
+      title: ExternalAccountCustomerReferenceId
+      type: string
+      description: Unique customer_reference_id that you passed when creating the associated customer (business or person) resource.
+      maxLength: 255
+    TransferEventType:
+      type: string
+      description: The type of event you want to invoke a webhook for.
+      enum:
+      - transfer_updated
+    BookTransferSourceObject:
+      title: Source
+      type: object
+      description: Information about the ultimate source of the book transfer
+      properties:
+        subledger_reference_id:
+          type: string
+          minLength: 1
+          description: Unique id of the account on the Enterprise platform
+          x-orum-error-missing:
+            known-error: missing_book_transfer_source_subledger_reference_id
+          x-orum-error-invalid:
+            known-error: invalid_book_transfer_source_subledger_reference_id
+      required:
+      - subledger_reference_id
+    CustomerReferenceId:
+      title: CustomerReferenceId
+      type: string
+      description: Unique reference id for the customer (business or person) resource. Generated by you.
+      minLength: 1
+      maxLength: 255
+    TransferSpeed:
+      title: TransferSpeed
+      type: string
+      description: Speed of transfer.
+      enum:
+      - asap
+      - standard
+      - same_day
+      - wire
+    SubledgerStatus:
+      title: SubledgerStatus
+      type: string
+      description: Status of subledger in Orum system.
+      enum:
+      - created
+    AccountType:
+      type: string
+      description: Type of bank account - checking or savings.
+      enum:
+      - checking
+      - savings
+    Address1:
+      title: Address1
+      type: string
+      description: Address line 1.
+      maxLength: 255
+      x-orum-error-invalid:
+        message: Address1 is invalid. Ensure it is a string with a maximum length of 255 characters.
+        code: invalid_address1
+    BookTransferReferenceId:
+      title: BookTransferReferenceId
+      type: string
+      minLength: 1
+      description: Unique reference id for the book tranfer
+      x-orum-error-invalid:
+        known-error: invalid_book_transfer_reference_id
+    OwnershipBusiness:
+      description: Ownership details for a business
+      type: object
+      required:
+      - business_name
+      properties:
+        business_name:
+          type: string
+        phone_number:
+          type: string
+        business_name_match:
+          $ref: '#/components/schemas/OwnershipResult'
+        phone_number_match:
+          $ref: '#/components/schemas/OwnershipResult'
+        tax_id_match:
+          $ref: '#/components/schemas/OwnershipResult'
+    TraceNumber:
+      title: TraceNumber
+      type: string
+      description: Unique tracking number of the payment assigned by its origination FI. This number can be used to track the lifecycle of the payment at the FI.
+    AddressType:
+      title: AddressType
+      type: string
+      description: Type of address.
+      enum:
+      - home
+      - legal
+    StatusReason:
+      type: object
+      required:
+      - reason_code
+      - reason_code_message
+      properties:
+        reason_code:
+          $ref: '#/components/schemas/ReasonCode'
+        reason_code_message:
+          $ref: '#/components/schemas/ReasonCodeMessage'
+    Currency:
+      title: Currency
+      type: string
+      description: Currency code in ISO 4217 format. Only USD is supported.
+      enum:
+      - USD
+    BusinessTestRequest:
+      type: object
+      title: Business Test Event
+      required:
+      - event_type
+      - data
+      properties:
+        event_type:
+          $ref: '#/components/schemas/BusinessEventType'
+        data:
+          $ref: '#/components/schemas/BusinessResponseBase'
+    CreatedAt:
+      type: string
+      description: Timestamp when the resource was created.
+      format: date-time
+    UsBankAccountNumber:
+      title: UsBankAccountNumber
+      type: string
+      pattern: ^(?:\d-{0,1}){3,16}\d$
+      description: Account number for US bank account. 4 to 17 digits are acceptable.
+    Metadata:
+      type: object
+      description: Additional data you would like to provide on the resource. The field supports valid JSON of up to 5 key-value pairs with a maximum of 20 characters for the key and 50 characters for the value. Do not include any sensitive information.
+    EndCustomerResourceType:
+      type: string
+      description: Type of customer resource - business, person, or enterprise.
+      enum:
+      - business
+      - person
+      - enterprise
+    TransferTestRequest:
+      type: object
+      title: Transfer Test Event
+      required:
+      - event_type
+      - data
+      properties:
+        event_type:
+          $ref: '#/components/schemas/TransferEventType'
+        data:
+          $ref: '#/components/schemas/TransferResponseBaseObject'
+    ControlStatus:
+      type: string
+      description: Status of account control.
+      enum:
+      - pending
+      - valid
+      - canceled
+    BookTransferReasonCode:
+      title: BookTransferReasonCode
+      type: object
+      required:
+      - reason_code
+      - reason_code_message
+      properties:
+        reason_code:
+          type: string
+          description: A word-based code created by Orum to describe the reason for the failure. Orum reason codes are rail-agnostic.
+          example: insufficient_funds
+        reason_code_message:
+          type: string
+          description: A human-readable description of the reason code.
+    Country:
+      title: Country
+      type: string
+      description: 2-character ISO country code.
+      enum:
+      - US
+    AccountReferenceId:
+      title: AccountReferenceId
+      type: string
+      description: Unique reference id for the external account. Generated by you.
+      minLength: 1
+      maxLength: 255
+    BookTransferStatusReason:
+      title: BookTransfer Status Reason
+      type: object
+      description: For failed book transfers - details on why the book transfer is in a failed state.
+      properties:
+        source:
+          $ref: '#/components/schemas/BookTransferReasonCode'
+        destination:
+          $ref: '#/components/schemas/BookTransferReasonCode'
+  securitySchemes:
+    oauth2:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: https://api-sandbox.orum.io/oauth/token
+          scopes:
+            read:persons: Read persons
+            write:persons: Write persons
+            read:businesses: Read businesses
+            write:businesses: Write businesses
+            read:external-accounts: Read external accounts
+            write:external-accounts: Write external accounts
+            read:cards: Read cards
+            write:cards: Write cards
+            read:transfers: Read transfers
+            write:transfers: Write transfers
+            read:transfer-groups: Read transfer groups
+            write:transfer-groups: Write transfer groups
+            read:schedules: Read schedules
+            write:schedules: Write schedules
+            read:routing-number-eligibility: Read routing number eligibility
+            read:balances: Read balances
+            read:reports: Read reports
+            write:reports: Write reports
+            read:booktransfers: Read book transfers
+            write:booktransfers: Write book transfers
+            read:subledgers: Read subledgers
+            write:subledgers: Write subledgers
+            read:verify-accounts: Read verify accounts
+            write:verify-accounts: Write verify accounts
+            read:webhook-configurations: Read webhook configurations
+            write:webhook-configurations: Write webhook configurations
+            read:webhook-secret: Read webhook secret
+            write:webhook-secret: Write webhook secret
+            invoke:webhook: Invoke webhook

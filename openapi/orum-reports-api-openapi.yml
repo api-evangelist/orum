@@ -1,0 +1,598 @@
+openapi: 3.0.1
+info:
+  title: Orum Authentication Reports API
+  description: Orum API.
+  version: v2022-09-21
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+servers:
+- url: https://api-sandbox.orum.io
+- url: https://vault.api-sandbox.orum.io
+tags:
+- name: Reports
+paths:
+  /deliver/reports/recon:
+    post:
+      tags:
+      - Reports
+      operationId: post-reports-recon
+      summary: Create a reconciliation report
+      description: Create a reconciliation report for the requested start and end date.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ReconReportRequest'
+      responses:
+        200:
+          description: 200 response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReconReportResponse'
+        400:
+          description: invalid request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        401:
+          description: unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        403:
+          description: forbidden.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        default:
+          description: unexpected error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      security:
+      - oauth2:
+        - write:reports
+    get:
+      tags:
+      - Reports
+      operationId: get-reports-recon
+      summary: Get all reconciliation reports
+      description: Get all reconciliation reports.
+      responses:
+        200:
+          description: 200 response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReportsResponse'
+        400:
+          description: invalid request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        401:
+          description: unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        403:
+          description: forbidden.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        default:
+          description: unexpected error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      security:
+      - oauth2:
+        - read:reports
+  /deliver/reports/recon/{id}:
+    get:
+      tags:
+      - Reports
+      operationId: get-recon-report
+      summary: Get a reconciliation report
+      description: Get a single reconciliation report by ID.
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/OrumId'
+      responses:
+        200:
+          description: 200 response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReconReportResponse'
+        400:
+          description: invalid request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        401:
+          description: unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        403:
+          description: forbidden.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        404:
+          description: not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        default:
+          description: unexpected error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      security:
+      - oauth2:
+        - read:reports
+  /deliver/reports/{id}:
+    delete:
+      tags:
+      - Reports
+      operationId: delete-report
+      summary: Delete a report
+      description: Delete a single report.
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/OrumId'
+      responses:
+        204:
+          description: 204 response.
+        400:
+          description: invalid request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        401:
+          description: unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        403:
+          description: forbidden.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        404:
+          description: not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        default:
+          description: unexpected error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      security:
+      - oauth2:
+        - write:reports
+  /deliver/reports/{id}/download:
+    get:
+      tags:
+      - Reports
+      operationId: get-report-download
+      summary: Download a report
+      description: Download a single report.
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: Unique id for the resource.
+        schema:
+          $ref: '#/components/schemas/OrumId'
+      responses:
+        200:
+          description: CSV file containing the report data.
+          content:
+            text/csv:
+              schema:
+                type: string
+                format: binary
+        400:
+          description: invalid request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        401:
+          description: unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        403:
+          description: forbidden.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        404:
+          description: not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        default:
+          description: unexpected error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      security:
+      - oauth2:
+        - read:reports
+  /deliver/reports/balances:
+    get:
+      tags:
+      - Reports
+      operationId: get-reports-balances
+      summary: Get a balance statement summary report
+      description: Get a balance statement summary report for the requested start and end date.
+      parameters:
+      - name: start_time
+        in: query
+        required: true
+        schema:
+          allOf:
+          - $ref: '#/components/schemas/StartTime'
+        x-orum-error-missing:
+          message: start_time is required
+          code: missing_start_time
+        x-orum-error-invalid:
+          message: start_time must be a valid timestamp
+          code: invalid_start_time
+      - name: end_time
+        in: query
+        required: true
+        schema:
+          allOf:
+          - $ref: '#/components/schemas/EndTime'
+        x-orum-error-missing:
+          message: end_time is required
+          code: missing_end_time
+        x-orum-error-invalid:
+          message: end_time must be a valid timestamp
+          code: invalid_end_time
+      - name: report_scope
+        in: query
+        required: false
+        schema:
+          $ref: '#/components/schemas/ReportScope'
+        x-orum-error-invalid:
+          message: 'report_scope must be one of the following: total, enterprise, subledger'
+          code: invalid_report_scope
+      - name: subledger_reference_id
+        in: query
+        required: false
+        schema:
+          $ref: '#/components/schemas/SubledgerReferenceId'
+        x-orum-error-invalid:
+          message: subledger_reference_id must be a valid string
+          code: invalid_subledger_reference_id
+      responses:
+        200:
+          description: 200 response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BalanceReportResponse'
+        400:
+          description: invalid request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        401:
+          description: unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        403:
+          description: forbidden.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        default:
+          description: unexpected error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      security:
+      - oauth2:
+        - read:reports
+components:
+  schemas:
+    ReportResponseBase:
+      title: ReportResponseBase
+      type: object
+      required:
+      - id
+      - created_at
+      - start_time
+      - end_time
+      - status
+      - report_scope
+      properties:
+        id:
+          $ref: '#/components/schemas/OrumId'
+        created_at:
+          $ref: '#/components/schemas/CreatedAt'
+        start_time:
+          $ref: '#/components/schemas/StartTime'
+        end_time:
+          $ref: '#/components/schemas/EndTime'
+        status:
+          $ref: '#/components/schemas/ReportStatusResponse'
+        report_scope:
+          $ref: '#/components/schemas/ReportScope'
+        subledger_reference_id:
+          $ref: '#/components/schemas/SubledgerReferenceId'
+    SubledgerReferenceId:
+      title: SubledgerReferenceId
+      type: string
+      description: Unique reference id for the subledger resource. Generated by you.
+      minLength: 1
+      maxLength: 255
+    BalanceReportResponse:
+      title: BalanceReportResponse
+      type: object
+      required:
+      - balance_statement_summary_report
+      properties:
+        balance_statement_summary_report:
+          $ref: '#/components/schemas/BalanceReportResponseBase'
+    ReportStatusResponse:
+      title: ReportStatus
+      type: string
+      description: Status of the report.
+      enum:
+      - created
+      - pending
+      - completed
+      - failed
+    ErrorResponse:
+      type: object
+      properties:
+        error_code:
+          type: string
+        message:
+          type: string
+        details:
+          type: object
+          description: additional details about the error.
+          nullable: true
+      required:
+      - error_code
+      - message
+    ReportAccountBalances:
+      title: ReportAccountBalances
+      type: object
+      description: Open and close balances for an account.
+      required:
+      - opening
+      - closing
+      properties:
+        opening:
+          $ref: '#/components/schemas/ReportBalanceAmounts'
+        closing:
+          $ref: '#/components/schemas/ReportBalanceAmounts'
+    Amount:
+      type: integer
+      description: Amount in integral cents.
+      format: int64
+      example: 4295
+    ReportScope:
+      title: ReportScope
+      type: string
+      description: The scope of the report.
+      enum:
+      - total
+      - enterprise
+      - subledger
+      default: total
+    LedgerEntryBalance:
+      type: object
+      description: Ledger entries with type and debit/credit balances.
+      required:
+      - type
+      - debit
+      - credit
+      properties:
+        type:
+          $ref: '#/components/schemas/LedgerEntryBalanceType'
+        debit:
+          $ref: '#/components/schemas/Amount'
+        credit:
+          $ref: '#/components/schemas/Amount'
+    EndTime:
+      type: string
+      description: The end time of the report range in ISO-8601 format.
+      format: date-time
+      example: '2023-07-13T00:00:00.000Z'
+    LedgerEntryBalanceType:
+      type: string
+      description: Type of ledger entry.
+      enum:
+      - rtp
+      - ach
+      - sdach
+      - ach_return
+      - wire
+      - wire_return
+      - outbound_funds
+      - inbound_funds
+      - balance_top_up
+    CreatedAt:
+      type: string
+      description: Timestamp when the resource was created.
+      format: date-time
+    ReportBalanceAmounts:
+      type: object
+      description: Pending and available amounts.
+      required:
+      - pending_amount
+      - available_amount
+      properties:
+        pending_amount:
+          $ref: '#/components/schemas/Amount'
+        available_amount:
+          $ref: '#/components/schemas/Amount'
+    BalanceReportResponseBase:
+      title: BalanceReportResponseBase
+      type: object
+      required:
+      - start_time
+      - end_time
+      - account_balances
+      - ledger_entry_balances
+      properties:
+        start_time:
+          $ref: '#/components/schemas/StartTime'
+        end_time:
+          $ref: '#/components/schemas/EndTime'
+        account_balances:
+          $ref: '#/components/schemas/ReportAccountBalances'
+        ledger_entry_balances:
+          type: array
+          items:
+            $ref: '#/components/schemas/LedgerEntryBalance'
+    OrumId:
+      type: string
+      description: Orum generated unique id for the resource.
+      format: uuid
+    ReconReportRequest:
+      title: ReconReportRequest
+      type: object
+      required:
+      - start_time
+      - end_time
+      properties:
+        start_time:
+          allOf:
+          - $ref: '#/components/schemas/StartTime'
+          x-orum-error-missing:
+            message: start_time is required
+            code: missing_start_time
+          x-orum-error-invalid:
+            message: start_time must be a valid timestamp
+            code: invalid_start_time
+        end_time:
+          allOf:
+          - $ref: '#/components/schemas/EndTime'
+          x-orum-error-missing:
+            message: end_time is required
+            code: missing_end_time
+          x-orum-error-invalid:
+            message: end_time must be a valid timestamp
+            code: invalid_end_time
+        report_scope:
+          allOf:
+          - $ref: '#/components/schemas/ReportScope'
+          x-orum-error-invalid:
+            message: 'report_scope must be one of the following: total, enterprise, subledger'
+            code: invalid_report_scope
+        subledger_reference_id:
+          allOf:
+          - $ref: '#/components/schemas/SubledgerReferenceId'
+          x-orum-error-invalid:
+            message: subledger_reference_id must be a valid string
+            code: invalid_subledger_reference_id
+    ReportsResponse:
+      title: ReportsResponse
+      type: object
+      required:
+      - reports
+      properties:
+        reports:
+          type: array
+          description: A collection of reports.
+          items:
+            $ref: '#/components/schemas/ReportResponseBase'
+    StartTime:
+      type: string
+      description: The start time of the report range in ISO-8601 format.
+      format: date-time
+      example: '2023-07-13T00:00:00.000Z'
+    ReconReportResponse:
+      title: ReconReportResponse
+      type: object
+      required:
+      - report
+      properties:
+        report:
+          allOf:
+          - $ref: '#/components/schemas/ReportResponseBase'
+  securitySchemes:
+    oauth2:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: https://api-sandbox.orum.io/oauth/token
+          scopes:
+            read:persons: Read persons
+            write:persons: Write persons
+            read:businesses: Read businesses
+            write:businesses: Write businesses
+            read:external-accounts: Read external accounts
+            write:external-accounts: Write external accounts
+            read:cards: Read cards
+            write:cards: Write cards
+            read:transfers: Read transfers
+            write:transfers: Write transfers
+            read:transfer-groups: Read transfer groups
+            write:transfer-groups: Write transfer groups
+            read:schedules: Read schedules
+            write:schedules: Write schedules
+            read:routing-number-eligibility: Read routing number eligibility
+            read:balances: Read balances
+            read:reports: Read reports
+            write:reports: Write reports
+            read:booktransfers: Read book transfers
+            write:booktransfers: Write book transfers
+            read:subledgers: Read subledgers
+            write:subledgers: Write subledgers
+            read:verify-accounts: Read verify accounts
+            write:verify-accounts: Write verify accounts
+            read:webhook-configurations: Read webhook configurations
+            write:webhook-configurations: Write webhook configurations
+            read:webhook-secret: Read webhook secret
+            write:webhook-secret: Write webhook secret
+            invoke:webhook: Invoke webhook

@@ -1,0 +1,1111 @@
+openapi: 3.0.1
+info:
+  title: Orum Authentication Persons API
+  description: Orum API.
+  version: v2022-09-21
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+servers:
+- url: https://api-sandbox.orum.io
+- url: https://vault.api-sandbox.orum.io
+tags:
+- name: Persons
+paths:
+  /deliver/persons:
+    post:
+      tags:
+      - Persons
+      operationId: post-person
+      summary: Create a person
+      description: Create a person object to represent a human customer.
+      parameters:
+      - name: Orum-Version
+        in: header
+        required: true
+        schema:
+          $ref: '#/components/schemas/OrumVersion'
+        x-orum-error-invalid:
+          known-error: version_invalid
+        x-orum-error-missing:
+          known-error: version_missing
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PersonRequest'
+        required: true
+      responses:
+        '200':
+          description: 200 response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PersonResponse'
+        '400':
+          description: invalid request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        default:
+          description: unexpected error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      security:
+      - oauth2:
+        - write:persons
+    get:
+      tags:
+      - Persons
+      operationId: get-persons
+      summary: Get all persons
+      description: Get all persons objects.
+      parameters:
+      - name: Orum-Version
+        in: header
+        required: true
+        schema:
+          $ref: '#/components/schemas/OrumVersion'
+        x-orum-error-invalid:
+          known-error: version_invalid
+        x-orum-error-missing:
+          known-error: version_missing
+      - name: index
+        description: Index for paginated results
+        in: query
+        required: false
+        schema:
+          type: integer
+          default: 0
+          minimum: 0
+        x-orum-error-invalid:
+          known-error: index
+      - name: size
+        description: Max number of results to return
+        in: query
+        required: false
+        schema:
+          type: integer
+          default: 100
+          minimum: 0
+          maximum: 500
+        x-orum-error-invalid:
+          known-error: size
+      - name: customer_reference_id
+        description: Filter by customer reference id
+        in: query
+        required: false
+        schema:
+          $ref: '#/components/schemas/CustomerReferenceId'
+      - name: status
+        description: Filter by customer statuses (multiple allowed)
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            $ref: '#/components/schemas/PersonStatus'
+        explode: true
+        x-orum-error-invalid:
+          known-error: invalid_person_status
+      - name: start_time
+        description: Filter results created at or after this time
+        in: query
+        required: false
+        schema:
+          type: string
+          format: date-time
+        x-orum-error-invalid:
+          known-error: invalid_start_time
+      - name: end_time
+        description: Filter results created before this time
+        in: query
+        required: false
+        schema:
+          type: string
+          format: date-time
+        x-orum-error-invalid:
+          known-error: invalid_end_time
+      - name: first_name
+        in: query
+        description: The first name to filter persons by (case-insensitive, exact match).
+        required: false
+        schema:
+          type: string
+      - name: last_name
+        in: query
+        description: The last name to filter persons by (case-insensitive, exact match).
+        required: false
+        schema:
+          type: string
+      - name: account_number
+        in: query
+        description: Filter by account number
+        required: false
+        schema:
+          allOf:
+          - $ref: '#/components/schemas/UsBankAccountNumber'
+        x-orum-error-invalid:
+          known-error: invalid_account_number
+      - name: id
+        description: Filter results by the person id
+        in: query
+        required: false
+        schema:
+          type: string
+          format: uuid
+        x-orum-error-invalid:
+          message: Orum ID is invalid. Pass in a valid uuid
+          code: invalid_orum_id
+      responses:
+        '200':
+          description: 200 response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PersonsResponse'
+        '400':
+          description: invalid request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        default:
+          description: unexpected error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      security:
+      - oauth2:
+        - read:persons
+    put:
+      tags:
+      - Persons
+      operationId: put-person-using-reference-id
+      summary: Update a person by customer reference id
+      description: Update a person object using its reference id.
+      parameters:
+      - name: Orum-Version
+        in: header
+        required: true
+        schema:
+          $ref: '#/components/schemas/OrumVersion'
+        x-orum-error-invalid:
+          known-error: version_invalid
+        x-orum-error-missing:
+          known-error: version_missing
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PutPersonRequest'
+        required: true
+      responses:
+        '200':
+          description: 200 response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PutPersonResponse'
+        '400':
+          description: invalid request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        default:
+          description: unexpected error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      security:
+      - oauth2:
+        - write:persons
+  /deliver/persons/{id}:
+    get:
+      tags:
+      - Persons
+      operationId: get-person
+      summary: Get a person by id
+      description: Get a person object.
+      parameters:
+      - name: Orum-Version
+        in: header
+        required: true
+        schema:
+          $ref: '#/components/schemas/OrumVersion'
+        x-orum-error-invalid:
+          known-error: version_invalid
+        x-orum-error-missing:
+          known-error: version_missing
+      - name: id
+        in: path
+        description: Orum generated unique id for the person resource you are fetching.
+        required: true
+        schema:
+          $ref: '#/components/schemas/OrumId'
+        x-orum-error-invalid:
+          known-error: unknown_id_person
+      responses:
+        '200':
+          description: 200 response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PersonResponse'
+        '400':
+          description: invalid request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        default:
+          description: unexpected error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      security:
+      - oauth2:
+        - read:persons
+    put:
+      tags:
+      - Persons
+      operationId: put-person
+      summary: Update a person by id
+      description: Update a person object by its id.
+      parameters:
+      - name: Orum-Version
+        in: header
+        required: true
+        schema:
+          $ref: '#/components/schemas/OrumVersion'
+        x-orum-error-invalid:
+          known-error: version_invalid
+        x-orum-error-missing:
+          known-error: version_missing
+      - name: id
+        in: path
+        required: true
+        description: Orum generated unique id for the person resource you are updating.
+        schema:
+          $ref: '#/components/schemas/OrumId'
+        x-orum-error-invalid:
+          known-error: unknown_id_person
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PutPersonRequest'
+        required: true
+      responses:
+        '200':
+          description: 200 response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PutPersonResponse'
+        '400':
+          description: invalid request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        default:
+          description: unexpected error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      security:
+      - oauth2:
+        - write:persons
+    patch:
+      tags:
+      - Persons
+      operationId: patch-person
+      summary: Partial update a person by id
+      description: Update individual fields on person object.
+      parameters:
+      - name: Orum-Version
+        in: header
+        required: true
+        schema:
+          $ref: '#/components/schemas/OrumVersion'
+        x-orum-error-invalid:
+          known-error: version_invalid
+        x-orum-error-missing:
+          known-error: version_missing
+      - name: id
+        in: path
+        required: true
+        description: Orum generated unique id for the resource for the person resource you are updating.
+        schema:
+          $ref: '#/components/schemas/OrumId'
+        x-orum-error-invalid:
+          known-error: unknown_id_person
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchPersonRequest'
+        required: true
+      responses:
+        '200':
+          description: 200 response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PersonResponse'
+        '400':
+          description: invalid request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        default:
+          description: unexpected error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      security:
+      - oauth2:
+        - write:persons
+    delete:
+      tags:
+      - Persons
+      operationId: delete-person
+      summary: Closes a person by id
+      description: Close a person object so they are unable to transact.
+      parameters:
+      - name: Orum-Version
+        in: header
+        required: true
+        schema:
+          $ref: '#/components/schemas/OrumVersion'
+        x-orum-error-invalid:
+          known-error: version_invalid
+        x-orum-error-missing:
+          known-error: version_missing
+      - name: id
+        in: path
+        required: true
+        description: Orum generated unique id for the resource for the person resource you are updating.
+        schema:
+          $ref: '#/components/schemas/OrumId'
+        x-orum-error-invalid:
+          known-error: unknown_id_person
+      responses:
+        '200':
+          description: 200 response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PersonResponse'
+        '400':
+          description: invalid request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        default:
+          description: unexpected error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      security:
+      - oauth2:
+        - write:persons
+components:
+  schemas:
+    PersonStatus:
+      title: PersonStatus
+      type: string
+      description: Status of person in Orum system.
+      enum:
+      - created
+      - verified
+      - rejected
+      - restricted
+      - closed
+    PutPersonResponse:
+      title: PutPersonResponse
+      type: object
+      required:
+      - person
+      properties:
+        person:
+          $ref: '#/components/schemas/PutPersonResponseBase'
+    PersonPostalAddressRequest:
+      title: PersonPostalAddressRequest
+      type: object
+      required:
+      - type
+      - address1
+      - city
+      - state
+      - country
+      - zip5
+      description: Address.
+      properties:
+        type:
+          allOf:
+          - $ref: '#/components/schemas/AddressTypePerson'
+          x-orum-error-invalid:
+            message: Address type is invalid. Valid type for person is "home".
+            code: invalid_addresses_type
+          x-orum-error-missing:
+            message: Address type is required. Pass type "home" for a person resource.
+            code: missing_addresses_type
+        address1:
+          allOf:
+          - $ref: '#/components/schemas/Address1'
+          x-orum-error-invalid:
+            known-error: invalid_address1
+          x-orum-error-missing:
+            message: Address1 is required.
+            code: missing_address1
+        address2:
+          allOf:
+          - $ref: '#/components/schemas/Address2'
+          x-orum-error-invalid:
+            known-error: invalid_address2
+        city:
+          allOf:
+          - $ref: '#/components/schemas/City'
+          x-orum-error-invalid:
+            known-error: invalid_city
+          x-orum-error-missing:
+            known-error: missing_city
+        state:
+          allOf:
+          - $ref: '#/components/schemas/State'
+          x-orum-error-invalid:
+            known-error: invalid_state
+          x-orum-error-missing:
+            known-error: missing_state
+        country:
+          allOf:
+          - $ref: '#/components/schemas/Country'
+          x-orum-error-invalid:
+            known-error: invalid_country
+          x-orum-error-missing:
+            known-error: missing_country
+        zip5:
+          allOf:
+          - $ref: '#/components/schemas/Zip5'
+          x-orum-error-invalid:
+            known-error: invalid_zip5
+          x-orum-error-missing:
+            known-error: missing_zip5
+    ContactTypePerson:
+      title: ContactTypePerson
+      type: string
+      description: Type of contact information associated with a person - 'email' or 'phone'.
+      enum:
+      - email
+      - phone
+    AddressType:
+      title: AddressType
+      type: string
+      description: Type of address.
+      enum:
+      - home
+      - legal
+    Address2:
+      title: Address2
+      type: string
+      description: Address line 2.
+      maxLength: 255
+      x-orum-error-invalid:
+        message: Address2 is invalid. Ensure it is a string with a maximum length of 255 characters.
+        code: invalid_address2
+    ContactBasePerson:
+      title: ContactBasePerson
+      required:
+      - type
+      description: Contact information.
+      properties:
+        type:
+          allOf:
+          - $ref: '#/components/schemas/ContactTypePerson'
+          x-orum-error-invalid:
+            message: Contact type is invalid. Valid contact type for person is "email" or "phone".
+            code: invalid_contacts_type
+          x-orum-error-missing:
+            message: Type field is required. Valid types are "email", or "phone".
+            code: missing_contacts_type
+        value:
+          type: string
+          description: Email or phone number.
+          maxLength: 255
+          x-orum-error-invalid:
+            message: Value for contact type is invalid. Pass a string value.
+            code: invalid_contacts_value
+    ErrorResponse:
+      type: object
+      properties:
+        error_code:
+          type: string
+        message:
+          type: string
+        details:
+          type: object
+          description: additional details about the error.
+          nullable: true
+      required:
+      - error_code
+      - message
+    UsBankAccountNumber:
+      title: UsBankAccountNumber
+      type: string
+      pattern: ^(?:\d-{0,1}){3,16}\d$
+      description: Account number for US bank account. 4 to 17 digits are acceptable.
+    PutPersonRequest:
+      title: PutPersonRequest
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/PersonRequest'
+      - type: object
+        properties:
+          metadata:
+            allOf:
+            - $ref: '#/components/schemas/MetadataPut'
+            type: object
+            nullable: true
+            x-orum-error-invalid:
+              message: Metadata must be a valid JSON object.
+              code: invalid_metadata
+    ContactRequestPerson:
+      allOf:
+      - $ref: '#/components/schemas/ContactPostBasePerson'
+      - type: object
+        required:
+        - value
+    City:
+      title: City
+      type: string
+      description: City.
+      maxLength: 255
+    PersonResponse:
+      title: PersonResponse
+      type: object
+      required:
+      - person
+      properties:
+        person:
+          allOf:
+          - $ref: '#/components/schemas/PersonResponseBase'
+    Zip5:
+      title: Zip5
+      type: string
+      description: 5-digit ZIP Code. Numeric values (0-9) only.
+      pattern: ^\d{5}$
+    OrumVersion:
+      type: string
+      description: Version of Deliver and Verify APIs. Use v2022-09-21.
+      enum:
+      - v2022-09-21
+    StatusReason:
+      type: object
+      required:
+      - reason_code
+      - reason_code_message
+      properties:
+        reason_code:
+          $ref: '#/components/schemas/ReasonCode'
+        reason_code_message:
+          $ref: '#/components/schemas/ReasonCodeMessage'
+    DateOfBirth:
+      title: DateOfBirth
+      type: string
+      pattern: ^((19|20)\d\d)-(0[1-9]|1[0-2])-(([01])[0-9]|2[0-9]|3[0-1])$
+      description: 'Date of birth in YYYY-MM-DD format. Note: This field is required for payouts, deposits, or account-to-account transfers. Age must be less than 100 years and greater than 18 years to be verified.'
+    PatchPersonRequest:
+      title: PatchPersonRequest
+      type: object
+      properties:
+        first_name:
+          allOf:
+          - $ref: '#/components/schemas/FirstName'
+          type: string
+          nullable: true
+          x-orum-error-invalid:
+            known-error: invalid_first_name
+        middle_name:
+          allOf:
+          - $ref: '#/components/schemas/MiddleName'
+          type: string
+          nullable: true
+          x-orum-error-invalid:
+            known-error: invalid_middle_name
+        last_name:
+          allOf:
+          - $ref: '#/components/schemas/LastName'
+          type: string
+          nullable: true
+          x-orum-error-invalid:
+            known-error: invalid_last_name
+        date_of_birth:
+          allOf:
+          - $ref: '#/components/schemas/DateOfBirth'
+          type: string
+          nullable: true
+          x-orum-error-invalid:
+            message: Date of birth is invalid. Valid format is YYYY-MM-DD.
+            code: invalid_date_of_birth
+        social_security_number:
+          allOf:
+          - $ref: '#/components/schemas/SocialSecurityNumber'
+          type: string
+          nullable: true
+        addresses:
+          type: array
+          description: 'Address information for the person. "type" is required if you are updating other address fields. Note: This field is required for payouts, deposits, or account-to-account transfers.'
+          items:
+            $ref: '#/components/schemas/PersonPatchPostalAddressRequest'
+          maxItems: 1
+          nullable: true
+        contacts:
+          type: array
+          description: Optional list of contact information for the person. If object is present, either phone and/or email contact types are accepted.  A maximum of three persons or businesses can have the same phone number.
+          items:
+            $ref: '#/components/schemas/PatchContactRequestPerson'
+          minItems: 0
+          maxItems: 2
+          nullable: true
+        metadata:
+          allOf:
+          - $ref: '#/components/schemas/Metadata'
+          type: object
+          nullable: true
+          x-orum-error-invalid:
+            message: Metadata must be a valid JSON object.
+            code: invalid_metadata
+    PersonRequest:
+      title: PersonRequest
+      type: object
+      required:
+      - customer_reference_id
+      - first_name
+      - last_name
+      properties:
+        customer_reference_id:
+          allOf:
+          - $ref: '#/components/schemas/CustomerReferenceId'
+          x-orum-error-missing:
+            known-error: missing_customer_reference_id
+          x-orum-error-invalid:
+            known-error: invalid_customer_reference_id
+        first_name:
+          allOf:
+          - $ref: '#/components/schemas/FirstName'
+          x-orum-error-invalid:
+            known-error: invalid_first_name
+          x-orum-error-missing:
+            known-error: missing_first_name
+        middle_name:
+          allOf:
+          - $ref: '#/components/schemas/MiddleName'
+          type: string
+          nullable: true
+          x-orum-error-invalid:
+            known-error: invalid_middle_name
+        last_name:
+          allOf:
+          - $ref: '#/components/schemas/LastName'
+          x-orum-error-invalid:
+            known-error: invalid_last_name
+          x-orum-error-missing:
+            known-error: missing_last_name
+        date_of_birth:
+          allOf:
+          - $ref: '#/components/schemas/DateOfBirth'
+          type: string
+          nullable: true
+          x-orum-error-invalid:
+            message: Date of birth is invalid. Valid format is YYYY-MM-DD.
+            code: invalid_date_of_birth
+        social_security_number:
+          allOf:
+          - $ref: '#/components/schemas/SocialSecurityNumber'
+          x-orum-error-invalid:
+            message: Social Security Number is invalid.
+            code: invalid_social_security_number
+        addresses:
+          type: array
+          nullable: true
+          description: 'Address information for the person. Note: This field is required for payouts, deposits, or account-to-account transfers.'
+          items:
+            $ref: '#/components/schemas/PersonPostalAddressRequest'
+          minItems: 1
+          maxItems: 1
+          x-orum-error-invalid:
+            message: Addresses array is invalid. Pass an array containing an address object.
+            code: invalid_addresses
+        contacts:
+          type: array
+          nullable: true
+          description: Optional list of contact information for the person. If object is present, either phone and/or email contact types are accepted.  A maximum of three persons or businesses can have the same phone number.
+          items:
+            $ref: '#/components/schemas/ContactRequestPerson'
+          minItems: 1
+          maxItems: 2
+          x-orum-error-invalid:
+            message: Contacts array is invalid. Pass an array of contact information containing phone and/or email contact types.
+            code: invalid_contacts
+        metadata:
+          allOf:
+          - $ref: '#/components/schemas/Metadata'
+          type: object
+          nullable: true
+          x-orum-error-invalid:
+            message: Metadata must be a valid JSON object.
+            code: invalid_metadata
+    PersonResponseBase:
+      type: object
+      required:
+      - id
+      - customer_reference_id
+      - first_name
+      - last_name
+      - status
+      - created_at
+      - updated_at
+      properties:
+        id:
+          $ref: '#/components/schemas/OrumId'
+        customer_reference_id:
+          $ref: '#/components/schemas/CustomerReferenceId'
+        first_name:
+          type: string
+        middle_name:
+          type: string
+        last_name:
+          type: string
+        date_of_birth:
+          type: string
+          description: 'Date of birth in YYYY-MM-DD format. Note: This field is required for payouts, deposits, or account-to-account transfers. Age must be less than 100 years and greater than 18 years to be verified.'
+        status:
+          $ref: '#/components/schemas/PersonStatus'
+        addresses:
+          type: array
+          description: 'Address information for the person. Note: This field is required for payouts, deposits, or account-to-account transfers.'
+          items:
+            $ref: '#/components/schemas/PostalAddressResponse'
+          minItems: 1
+          maxItems: 1
+        contacts:
+          type: array
+          description: List of contact information for the person.
+          items:
+            $ref: '#/components/schemas/ContactResponsePerson'
+          minItems: 1
+          maxItems: 2
+        status_reasons:
+          type: array
+          description: Array that explains why the person failed verification.
+          items:
+            $ref: '#/components/schemas/StatusReason'
+        created_at:
+          $ref: '#/components/schemas/CreatedAt'
+        updated_at:
+          $ref: '#/components/schemas/UpdatedAt'
+        closed_at:
+          $ref: '#/components/schemas/ClosedAt'
+        metadata:
+          type: object
+          description: Additional data you would like to provide on the resource. The field supports valid JSON of up to 5 key-value pairs with a maximum of 20 characters for the key and 50 characters for the value. Do not include any sensitive information.
+    PatchContactRequestPerson:
+      allOf:
+      - $ref: '#/components/schemas/ContactBasePerson'
+    ReasonCode:
+      type: string
+      description: A word-based code that describes the verification failure.
+      example: invalid_address
+    CreatedAt:
+      type: string
+      description: Timestamp when the resource was created.
+      format: date-time
+    ReasonCodeMessage:
+      type: string
+      description: A human-readable description of the reason code.
+      example: Address submitted is a non-supported address type
+    Metadata:
+      type: object
+      description: Additional data you would like to provide on the resource. The field supports valid JSON of up to 5 key-value pairs with a maximum of 20 characters for the key and 50 characters for the value. Do not include any sensitive information.
+    MiddleName:
+      title: MiddleName
+      type: string
+      description: Accepts latin characters and hyphens, dashes, periods, apostrophes, spaces, and diacritics.
+      pattern: ^[ ’!"#$%&'()*+,-./:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~¡¢£¤¥¦§¨©ª«¬®¯°±²³´µ¶·¸¹º»¼½¾¿ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖ×ØÙÚÛÜÝÞßàáâãäåæçèéêëìíîïðñòóôõö÷øùúûüýþÿĀāĂăĄąĆćĈĉĊċČčĎďĐđĒēĔĕĖėĘęĚěĜĝĞğĠġĢģĤĥĦħĨĩĪīĬĭĮįİıĲĳĴĵĶķĸĹĺĻļĽľĿŀŁłŃńŅņŇňŉŊŋŌōŎŏŐőŒœŔŕŖŗŘřŚśŜŝŞşŠšŢţŤťŦŧŨũŪūŬŭŮůŰűŲųŴŵŶŷŸŹźŻżŽžſ]*$
+      maxLength: 255
+    AddressTypePerson:
+      title: AddressTypePerson
+      type: string
+      description: Type of address. Always 'home' for person object.
+      enum:
+      - home
+    State:
+      title: State
+      type: string
+      pattern: ^[A-Z]{2}$
+      description: Uppercase two-character state code of the address.
+    PersonsResponse:
+      title: PersonsResponse
+      type: object
+      required:
+      - persons
+      properties:
+        persons:
+          type: array
+          description: List of person objects.
+          items:
+            allOf:
+            - $ref: '#/components/schemas/PersonResponseBase'
+    UpdatedAt:
+      type: string
+      description: Timestamp when the resource was last updated.
+      format: date-time
+    PutPersonResponseBase:
+      title: PutPersonResponseBase
+      allOf:
+      - $ref: '#/components/schemas/PersonResponseBase'
+      - type: object
+        properties:
+          metadata:
+            $ref: '#/components/schemas/MetadataPut'
+    LastName:
+      title: LastName
+      type: string
+      description: Accepts latin characters and hyphens, dashes, periods, apostrophes, spaces, and diacritics.
+      pattern: ^[ ’!"#$%&'()*+,-./:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~¡¢£¤¥¦§¨©ª«¬®¯°±²³´µ¶·¸¹º»¼½¾¿ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖ×ØÙÚÛÜÝÞßàáâãäåæçèéêëìíîïðñòóôõö÷øùúûüýþÿĀāĂăĄąĆćĈĉĊċČčĎďĐđĒēĔĕĖėĘęĚěĜĝĞğĠġĢģĤĥĦħĨĩĪīĬĭĮįİıĲĳĴĵĶķĸĹĺĻļĽľĿŀŁłŃńŅņŇňŉŊŋŌōŎŏŐőŒœŔŕŖŗŘřŚśŜŝŞşŠšŢţŤťŦŧŨũŪūŬŭŮůŰűŲųŴŵŶŷŸŹźŻżŽžſ]+$
+      minLength: 1
+      maxLength: 255
+    MetadataPut:
+      type: object
+      description: Additional data you would like to provide on the resource. The field supports valid JSON of up to 5 key-value pairs with a maximum of 20 characters for the key and 50 characters for the value. Do not include any sensitive information.
+    ClosedAt:
+      type: string
+      description: Timestamp when the status of the resource was set to "closed".
+      format: date-time
+    PostalAddressResponse:
+      title: PostalAddressResponse
+      type: object
+      required:
+      - id
+      - type
+      - address1
+      - city
+      - state
+      - country
+      - zip5
+      - created_at
+      - updated_at
+      description: Address.
+      properties:
+        id:
+          $ref: '#/components/schemas/OrumId'
+        type:
+          $ref: '#/components/schemas/AddressType'
+        address1:
+          $ref: '#/components/schemas/Address1'
+        address2:
+          $ref: '#/components/schemas/Address2'
+        city:
+          $ref: '#/components/schemas/City'
+        state:
+          $ref: '#/components/schemas/State'
+        country:
+          $ref: '#/components/schemas/Country'
+        zip5:
+          $ref: '#/components/schemas/Zip5'
+        created_at:
+          $ref: '#/components/schemas/CreatedAt'
+        updated_at:
+          $ref: '#/components/schemas/UpdatedAt'
+    OrumId:
+      type: string
+      description: Orum generated unique id for the resource.
+      format: uuid
+    Country:
+      title: Country
+      type: string
+      description: 2-character ISO country code.
+      enum:
+      - US
+    FirstName:
+      title: FirstName
+      type: string
+      description: Accepts latin characters and hyphens, dashes, periods, apostrophes, spaces, and diacritics.
+      pattern: ^[ ’!"#$%&'()*+,-./:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~¡¢£¤¥¦§¨©ª«¬®¯°±²³´µ¶·¸¹º»¼½¾¿ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖ×ØÙÚÛÜÝÞßàáâãäåæçèéêëìíîïðñòóôõö÷øùúûüýþÿĀāĂăĄąĆćĈĉĊċČčĎďĐđĒēĔĕĖėĘęĚěĜĝĞğĠġĢģĤĥĦħĨĩĪīĬĭĮįİıĲĳĴĵĶķĸĹĺĻļĽľĿŀŁłŃńŅņŇňŉŊŋŌōŎŏŐőŒœŔŕŖŗŘřŚśŜŝŞşŠšŢţŤťŦŧŨũŪūŬŭŮůŰűŲųŴŵŶŷŸŹźŻżŽžſ]+$
+      minLength: 1
+      maxLength: 255
+    SocialSecurityNumber:
+      title: SocialSecurityNumber
+      type: string
+      nullable: true
+      description: 'Social Security Number (SSN) or Individual Taxpayer Identification Number (ITIN) in XXX-XX-XXXX format. An example dummy value is 123-45-6789. Note: This field is required for payouts, deposits, or account-to-account transfers.'
+    ContactResponsePerson:
+      title: ContactResponse
+      type: object
+      required:
+      - id
+      - type
+      - value
+      - created_at
+      - updated_at
+      description: Contact information.
+      properties:
+        id:
+          $ref: '#/components/schemas/OrumId'
+        type:
+          $ref: '#/components/schemas/ContactTypePerson'
+        value:
+          type: string
+          description: Email or phone number.
+        created_at:
+          $ref: '#/components/schemas/CreatedAt'
+        updated_at:
+          $ref: '#/components/schemas/UpdatedAt'
+    CustomerReferenceId:
+      title: CustomerReferenceId
+      type: string
+      description: Unique reference id for the customer (business or person) resource. Generated by you.
+      minLength: 1
+      maxLength: 255
+    ContactPostBasePerson:
+      title: ContactBasePerson
+      required:
+      - type
+      - value
+      description: Contact information.
+      properties:
+        type:
+          allOf:
+          - $ref: '#/components/schemas/ContactTypePerson'
+          x-orum-error-invalid:
+            message: Contact type is invalid. Valid contact type for person is "email" or "phone".
+            code: invalid_contacts_type
+          x-orum-error-missing:
+            message: Type field is required. Valid types are "email", or "phone".
+            code: missing_contacts_type
+        value:
+          type: string
+          description: Email or phone number.
+          maxLength: 255
+          x-orum-error-invalid:
+            message: Value for contact type is invalid. Pass a string value.
+            code: invalid_contacts_value
+          x-orum-error-missing:
+            message: 'Value for contact type is missing. For type "phone", pass a valid 10-digit US phone number. For type "email", pass a valid email. Example: hello@orum.io'
+            code: missing_contacts_value
+    Address1:
+      title: Address1
+      type: string
+      description: Address line 1.
+      maxLength: 255
+      x-orum-error-invalid:
+        message: Address1 is invalid. Ensure it is a string with a maximum length of 255 characters.
+        code: invalid_address1
+    PersonPatchPostalAddressRequest:
+      title: PersonPatchPostalAddressRequest
+      type: object
+      required:
+      - type
+      description: Address.
+      properties:
+        type:
+          allOf:
+          - $ref: '#/components/schemas/AddressTypePerson'
+          x-orum-error-invalid:
+            message: Address type is invalid. Valid type for person is "home".
+            code: invalid_addresses_type
+        address1:
+          $ref: '#/components/schemas/Address1'
+        address2:
+          $ref: '#/components/schemas/Address2'
+        city:
+          $ref: '#/components/schemas/City'
+        state:
+          allOf:
+          - $ref: '#/components/schemas/State'
+          x-orum-error-invalid:
+            known-error: invalid_state
+        country:
+          allOf:
+          - $ref: '#/components/schemas/Country'
+          x-orum-error-invalid:
+            known-error: invalid_country
+        zip5:
+          allOf:
+          - $ref: '#/components/schemas/Zip5'
+          x-orum-error-invalid:
+            known-error: invalid_zip5
+  securitySchemes:
+    oauth2:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: https://api-sandbox.orum.io/oauth/token
+          scopes:
+            read:persons: Read persons
+            write:persons: Write persons
+            read:businesses: Read businesses
+            write:businesses: Write businesses
+            read:external-accounts: Read external accounts
+            write:external-accounts: Write external accounts
+            read:cards: Read cards
+            write:cards: Write cards
+            read:transfers: Read transfers
+            write:transfers: Write transfers
+            read:transfer-groups: Read transfer groups
+            write:transfer-groups: Write transfer groups
+            read:schedules: Read schedules
+            write:schedules: Write schedules
+            read:routing-number-eligibility: Read routing number eligibility
+            read:balances: Read balances
+            read:reports: Read reports
+            write:reports: Write reports
+            read:booktransfers: Read book transfers
+            write:booktransfers: Write book transfers
+            read:subledgers: Read subledgers
+            write:subledgers: Write subledgers
+            read:verify-accounts: Read verify accounts
+            write:verify-accounts: Write verify accounts
+            read:webhook-configurations: Read webhook configurations
+            write:webhook-configurations: Write webhook configurations
+            read:webhook-secret: Read webhook secret
+            write:webhook-secret: Write webhook secret
+            invoke:webhook: Invoke webhook

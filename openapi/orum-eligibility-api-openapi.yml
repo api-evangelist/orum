@@ -1,0 +1,235 @@
+openapi: 3.0.1
+info:
+  title: Orum Authentication Eligibility API
+  description: Orum API.
+  version: v2022-09-21
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+servers:
+- url: https://api-sandbox.orum.io
+- url: https://vault.api-sandbox.orum.io
+tags:
+- name: Eligibility
+paths:
+  /deliver/eligibility:
+    post:
+      tags:
+      - Eligibility
+      operationId: post-eligibility
+      summary: Check if a routing number is eligible for RTP or FedNow
+      description: Returns routing number eligibility
+      parameters:
+      - name: Orum-Version
+        in: header
+        required: true
+        schema:
+          $ref: '#/components/schemas/OrumVersion'
+        x-orum-error-invalid:
+          known-error: version_invalid
+        x-orum-error-missing:
+          known-error: version_missing
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EligibilityRequest'
+        required: true
+      responses:
+        '200':
+          description: 200 response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EligibilityResponse'
+        '400':
+          description: invalid request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        default:
+          description: unexpected error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      security:
+      - oauth2:
+        - read:routing-number-eligibility
+    get:
+      tags:
+      - Eligibility
+      operationId: get-eligibility
+      summary: A list of RTP and FedNow Eligible Routing Numbers
+      description: Returns all routing numbers that are eligible for RTP and FedNow
+      parameters:
+      - name: Orum-Version
+        in: header
+        required: true
+        schema:
+          $ref: '#/components/schemas/OrumVersion'
+        x-orum-error-invalid:
+          known-error: version_invalid
+        x-orum-error-missing:
+          known-error: version_missing
+      responses:
+        '200':
+          description: 200 response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetEligibilityResponse'
+        '401':
+          description: unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        default:
+          description: unexpected error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      security:
+      - oauth2:
+        - read:routing-number-eligibility
+components:
+  schemas:
+    AbaRoutingNumber:
+      title: AbaRoutingNumber
+      type: string
+      pattern: ^\d{9}$
+      description: 9-digit American Bankers Association (ABA) routing number.
+    OrumVersion:
+      type: string
+      description: Version of Deliver and Verify APIs. Use v2022-09-21.
+      enum:
+      - v2022-09-21
+    RtpAndFedNow:
+      type: object
+      required:
+      - rtp
+      - fednow
+      properties:
+        rtp:
+          type: boolean
+        fednow:
+          type: boolean
+    EligibilityResponse:
+      title: EligibilityResponse
+      type: object
+      required:
+      - routing_numbers
+      properties:
+        routing_numbers:
+          type: array
+          items:
+            $ref: '#/components/schemas/EligibilityRoutingNumber'
+    Eligible:
+      type: boolean
+      description: Describes if the routing number is RTP or Fednow eligible or not
+    EligibilityRoutingNumber:
+      title: EligibilityRoutingNumber
+      type: object
+      required:
+      - routing_number
+      - eligible
+      - rtp
+      - fednow
+      properties:
+        routing_number:
+          $ref: '#/components/schemas/AbaRoutingNumber'
+        eligible:
+          $ref: '#/components/schemas/Eligible'
+        rtp:
+          $ref: '#/components/schemas/RTPEligible'
+        fednow:
+          $ref: '#/components/schemas/FednowEligible'
+    EligibilityRequest:
+      title: EligibilityRequest
+      type: object
+      required:
+      - routing_numbers
+      properties:
+        routing_numbers:
+          type: array
+          x-orum-error-missing:
+            message: Routing numbers is required
+            code: missing_routing_numbers
+          x-orum-error-invalid:
+            known-error: invalid_routing_numbers
+          items:
+            $ref: '#/components/schemas/PostEligibilityAbaRoutingNumber'
+    GetEligibilityResponse:
+      type: object
+      additionalProperties:
+        $ref: '#/components/schemas/RtpAndFedNow'
+      example:
+        011000138:
+          rtp: true
+          fednow: true
+    PostEligibilityAbaRoutingNumber:
+      title: PostEligibilityAbaRoutingNumber
+      type: string
+      pattern: ^\d{9}$
+      description: 9-digit American Bankers Association (ABA) routing number.
+      x-orum-error-invalid:
+        known-error: invalid_routing_numbers
+    FednowEligible:
+      type: boolean
+      description: Describes if the routing number is Fednow eligible or not
+    ErrorResponse:
+      type: object
+      properties:
+        error_code:
+          type: string
+        message:
+          type: string
+        details:
+          type: object
+          description: additional details about the error.
+          nullable: true
+      required:
+      - error_code
+      - message
+    RTPEligible:
+      type: boolean
+      description: Describes if the routing number is RTP eligible or not
+  securitySchemes:
+    oauth2:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: https://api-sandbox.orum.io/oauth/token
+          scopes:
+            read:persons: Read persons
+            write:persons: Write persons
+            read:businesses: Read businesses
+            write:businesses: Write businesses
+            read:external-accounts: Read external accounts
+            write:external-accounts: Write external accounts
+            read:cards: Read cards
+            write:cards: Write cards
+            read:transfers: Read transfers
+            write:transfers: Write transfers
+            read:transfer-groups: Read transfer groups
+            write:transfer-groups: Write transfer groups
+            read:schedules: Read schedules
+            write:schedules: Write schedules
+            read:routing-number-eligibility: Read routing number eligibility
+            read:balances: Read balances
+            read:reports: Read reports
+            write:reports: Write reports
+            read:booktransfers: Read book transfers
+            write:booktransfers: Write book transfers
+            read:subledgers: Read subledgers
+            write:subledgers: Write subledgers
+            read:verify-accounts: Read verify accounts
+            write:verify-accounts: Write verify accounts
+            read:webhook-configurations: Read webhook configurations
+            write:webhook-configurations: Write webhook configurations
+            read:webhook-secret: Read webhook secret
+            write:webhook-secret: Write webhook secret
+            invoke:webhook: Invoke webhook

@@ -1,0 +1,874 @@
+openapi: 3.0.1
+info:
+  title: Orum Authentication Verify API
+  description: Orum API.
+  version: v2022-09-21
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+servers:
+- url: https://api-sandbox.orum.io
+- url: https://vault.api-sandbox.orum.io
+tags:
+- name: Verify
+paths:
+  /verify/accounts:
+    post:
+      tags:
+      - Verify
+      operationId: post-verify-accounts
+      summary: Post verify accounts
+      description: Request account verification.
+      parameters:
+      - name: Orum-Version
+        in: header
+        required: true
+        schema:
+          $ref: '#/components/schemas/OrumVersion'
+        x-orum-error-invalid:
+          known-error: version_invalid
+        x-orum-error-missing:
+          known-error: version_missing
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VerifyAccountRequest'
+        required: true
+      responses:
+        200:
+          description: 200 response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VerifyAccountResponse'
+        400:
+          description: invalid request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        403:
+          description: forbidden.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        default:
+          description: unexpected error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      security:
+      - oauth2:
+        - write:verify-accounts
+    get:
+      tags:
+      - Verify
+      operationId: get-verify-accounts
+      summary: Get all verify accounts
+      description: Get all verify accounts, sorted by most recently created.
+      parameters:
+      - name: Orum-Version
+        in: header
+        required: true
+        schema:
+          $ref: '#/components/schemas/OrumVersion'
+        x-orum-error-invalid:
+          known-error: version_invalid
+        x-orum-error-missing:
+          known-error: version_missing
+      - name: index
+        description: Index for paginated results
+        in: query
+        required: false
+        schema:
+          type: integer
+          default: 0
+          minimum: 0
+        x-orum-error-invalid:
+          known-error: index
+      - name: size
+        description: Max number of results to return
+        in: query
+        required: false
+        schema:
+          type: integer
+          default: 100
+          minimum: 0
+          maximum: 500
+        x-orum-error-invalid:
+          known-error: size
+      - name: id
+        description: Filter results by the account id
+        in: query
+        required: false
+        schema:
+          type: string
+          format: uuid
+        x-orum-error-invalid:
+          message: Account ID is invalid. Pass in a valid uuid
+          code: invalid_account_id
+      - name: start_time
+        description: Filter results created at or after this time
+        in: query
+        required: false
+        schema:
+          type: string
+          format: date-time
+        x-orum-error-invalid:
+          message: Start time is invalid. Pass in a valid date-time that conforms to the RFC3339 format.
+          code: invalid_start_time
+      - name: end_time
+        description: Filter results created before this time
+        in: query
+        required: false
+        schema:
+          type: string
+          format: date-time
+        x-orum-error-invalid:
+          message: End time is invalid. Pass in a valid date-time that conforms to the RFC3339 format.
+          code: invalid_end_time
+      - name: account_number
+        description: Filter results by account number
+        in: query
+        required: false
+        schema:
+          allOf:
+          - $ref: '#/components/schemas/UsBankAccountNumber'
+        x-orum-error-invalid:
+          message: Account Number is invalid. Please enter a valid US bank account number.
+          code: invalid_account_number
+      - name: verification_status
+        description: Filter results by account status
+        in: query
+        required: false
+        explode: true
+        schema:
+          type: array
+          items:
+            allOf:
+            - $ref: '#/components/schemas/VerificationStatus'
+          x-orum-error-invalid:
+            message: Verification Status is invalid. Please use a valid verification status.
+            code: invalid_verification_status
+      - name: ownership_status
+        description: Filter results by account ownership status
+        in: query
+        required: false
+        explode: true
+        schema:
+          type: array
+          items:
+            allOf:
+            - $ref: '#/components/schemas/OwnershipStatus'
+          x-orum-error-invalid:
+            message: Ownership Status is invalid. Please use a valid ownership status.
+            code: invalid_ownership_status
+      - name: control_status
+        description: Filter results by account control status
+        in: query
+        required: false
+        explode: true
+        schema:
+          type: array
+          items:
+            allOf:
+            - $ref: '#/components/schemas/ControlStatus'
+          x-orum-error-invalid:
+            message: Control Status is invalid. Please use a valid control status.
+            code: invalid_control_status
+      - name: debit_status
+        description: Filter results by account debit status
+        in: query
+        required: false
+        explode: true
+        schema:
+          type: array
+          items:
+            allOf:
+            - $ref: '#/components/schemas/DebitStatus'
+          x-orum-error-invalid:
+            message: Debit Status is invalid. Please use a valid debit status.
+            code: invalid_debit_status
+      responses:
+        200:
+          description: 200 response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VerifyAccountsResponse'
+        400:
+          description: invalid request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        default:
+          description: unexpected error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      security:
+      - oauth2:
+        - read:verify-accounts
+  /verify/accounts/{id}:
+    get:
+      tags:
+      - Verify
+      operationId: get-verify-account
+      summary: Get a verify account
+      description: Get a single verify account.
+      parameters:
+      - name: Orum-Version
+        in: header
+        required: true
+        schema:
+          $ref: '#/components/schemas/OrumVersion'
+        x-orum-error-invalid:
+          known-error: version_invalid
+        x-orum-error-missing:
+          known-error: version_missing
+      - name: id
+        in: path
+        description: Orum generated unique id for the account you are fetching.
+        required: true
+        schema:
+          $ref: '#/components/schemas/OrumId'
+        x-orum-error-invalid:
+          known-error: unknown_id
+      responses:
+        200:
+          description: 200 response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VerifyAccountResponse'
+        400:
+          description: invalid request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        404:
+          description: not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        default:
+          description: unexpected error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      security:
+      - oauth2:
+        - read:verify-accounts
+  /verify/accounts/{id}/control:
+    post:
+      tags:
+      - Verify
+      operationId: post-verify-account-control
+      summary: Verify account control
+      description: Verify control for a single verify account.
+      parameters:
+      - name: Orum-Version
+        in: header
+        required: true
+        schema:
+          $ref: '#/components/schemas/OrumVersion'
+        x-orum-error-invalid:
+          known-error: version_invalid
+        x-orum-error-missing:
+          known-error: version_missing
+      - name: id
+        in: path
+        required: true
+        description: Orum generated unique id for the account you are verifying.
+        schema:
+          $ref: '#/components/schemas/OrumId'
+        x-orum-error-invalid:
+          known-error: unknown_id
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VerifyAccountControlRequest'
+        required: true
+      responses:
+        200:
+          description: 200 response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VerifyAccountResponse'
+        400:
+          description: invalid request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ControlErrorResponse'
+        404:
+          description: not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        429:
+          description: too many requests.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        default:
+          description: unexpected error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      security:
+      - oauth2:
+        - write:verify-accounts
+  /verify/accounts/{id}/debits:
+    post:
+      tags:
+      - Verify
+      operationId: post-verify-account-debit
+      summary: Verify account debit status
+      description: Verify debit status for a single verify account.
+      parameters:
+      - name: Orum-Version
+        in: header
+        required: true
+        schema:
+          $ref: '#/components/schemas/OrumVersion'
+        x-orum-error-invalid:
+          known-error: version_invalid
+        x-orum-error-missing:
+          known-error: version_missing
+      - name: id
+        in: path
+        required: true
+        description: Orum generated unique id for the account you are verifying.
+        schema:
+          $ref: '#/components/schemas/OrumId'
+        x-orum-error-invalid:
+          known-error: unknown_id
+      responses:
+        200:
+          description: 200 response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VerifyAccountResponse'
+        400:
+          description: invalid request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        404:
+          description: not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        429:
+          description: too many requests.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        default:
+          description: unexpected error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      security:
+      - oauth2:
+        - write:verify-accounts
+components:
+  schemas:
+    Email:
+      type: string
+      format: email
+      description: Email address to notify once the statement code is sent to the account to verify account control.
+    OwnershipPerson:
+      description: Ownership details for a person
+      type: object
+      required:
+      - first_name
+      - last_name
+      properties:
+        first_name:
+          type: string
+        last_name:
+          type: string
+        phone_number:
+          type: string
+        first_name_match:
+          $ref: '#/components/schemas/OwnershipResult'
+        last_name_match:
+          $ref: '#/components/schemas/OwnershipResult'
+        phone_number_match:
+          $ref: '#/components/schemas/OwnershipResult'
+        ssn_match:
+          $ref: '#/components/schemas/OwnershipResult'
+    VerifyAccountsResponse:
+      title: VerifyAccountsResponse
+      type: object
+      required:
+      - accounts
+      properties:
+        accounts:
+          type: array
+          description: An array of verify accounts.
+          items:
+            $ref: '#/components/schemas/VerifyAccountResponseBase'
+    OwnershipBusiness:
+      description: Ownership details for a business
+      type: object
+      required:
+      - business_name
+      properties:
+        business_name:
+          type: string
+        phone_number:
+          type: string
+        business_name_match:
+          $ref: '#/components/schemas/OwnershipResult'
+        phone_number_match:
+          $ref: '#/components/schemas/OwnershipResult'
+        tax_id_match:
+          $ref: '#/components/schemas/OwnershipResult'
+    ErrorResponse:
+      type: object
+      properties:
+        error_code:
+          type: string
+        message:
+          type: string
+        details:
+          type: object
+          description: additional details about the error.
+          nullable: true
+      required:
+      - error_code
+      - message
+    OwnershipResult:
+      type: string
+      description: Result of Ownership match
+      enum:
+      - match
+      - not_a_match
+      - not_found
+    AbaRoutingNumber:
+      title: AbaRoutingNumber
+      type: string
+      pattern: ^\d{9}$
+      description: 9-digit American Bankers Association (ABA) routing number.
+    ControlErrorResponse:
+      type: object
+      properties:
+        error_code:
+          type: string
+        message:
+          type: string
+        attempts_remaining:
+          type: integer
+    VerificationStatusReason:
+      type: string
+      description: Status reason for failed, invalid, and closed accounts.
+      enum:
+      - blocked_account
+      - closed_account
+      - deceased_party
+      - duplicated_transfer
+      - invalid_account
+      - invalid_field
+      - invalid_routing
+      - regulatory_error
+      - unavailable_financial_institution
+      - unexpected_error
+      - unsupported_transfer
+    VerifyAccountResponseBase:
+      title: VerifyAccountResponseBase
+      type: object
+      required:
+      - id
+      - created_at
+      - updated_at
+      - account_number
+      - routing_number
+      - account_holder_name
+      - verification_status
+      properties:
+        id:
+          $ref: '#/components/schemas/OrumId'
+        created_at:
+          $ref: '#/components/schemas/CreatedAt'
+        updated_at:
+          $ref: '#/components/schemas/UpdatedAt'
+        account_number:
+          $ref: '#/components/schemas/UsBankAccountNumber'
+        routing_number:
+          $ref: '#/components/schemas/AbaRoutingNumber'
+        account_holder_name:
+          $ref: '#/components/schemas/AccountHolderName'
+        email:
+          $ref: '#/components/schemas/Email'
+        verification_status:
+          $ref: '#/components/schemas/VerificationStatus'
+        status_reason:
+          $ref: '#/components/schemas/VerificationStatusReason'
+        ownership_status:
+          $ref: '#/components/schemas/OwnershipStatus'
+        person:
+          $ref: '#/components/schemas/OwnershipPerson'
+        business:
+          $ref: '#/components/schemas/OwnershipBusiness'
+        control_status:
+          $ref: '#/components/schemas/ControlStatus'
+        debit_status:
+          $ref: '#/components/schemas/DebitStatus'
+        debit_status_reason:
+          $ref: '#/components/schemas/DebitStatusReason'
+        estimated_verification_date:
+          $ref: '#/components/schemas/EstimatedVerificationDate'
+        sender_name:
+          $ref: '#/components/schemas/SenderName'
+    VerifyAccountRequest:
+      title: VerifyAccountRequest
+      type: object
+      required:
+      - account_number
+      - routing_number
+      - account_holder_name
+      properties:
+        type:
+          allOf:
+          - $ref: '#/components/schemas/VerifyAccountType'
+          x-orum-error-invalid:
+            message: Type is invalid. Pass in either 'status', 'control', 'status_ownership' or 'control_ownership'.
+            code: invalid_type
+          x-oapi-codegen-extra-tags:
+            csv: type,omitempty
+        account_number:
+          allOf:
+          - $ref: '#/components/schemas/UsBankAccountNumber'
+          x-orum-error-missing:
+            message: Account number is required. Pass an account number with 4 to 17 digits.
+            code: missing_account_number
+          x-orum-error-invalid:
+            message: Account number is invalid. Pass an account number with 4 to 17 digits.
+            code: invalid_account_number
+          x-oapi-codegen-extra-tags:
+            csv: account_number
+          example: 00101044595
+        routing_number:
+          allOf:
+          - $ref: '#/components/schemas/AbaRoutingNumber'
+          x-orum-error-missing:
+            message: Routing number is required. Pass a valid 9-digit routing number.
+            code: missing_routing_number
+          x-orum-error-invalid:
+            message: Routing number is invalid. Pass a valid 9-digit routing number.
+            code: invalid_routing_number
+          x-oapi-codegen-extra-tags:
+            csv: routing_number
+          example: '021000021'
+        account_holder_name:
+          allOf:
+          - $ref: '#/components/schemas/AccountHolderName'
+          x-orum-error-missing:
+            message: Account holder name is required.
+            code: missing_account_holder_name
+          x-orum-error-invalid:
+            message: Account holder name is invalid. Accepted values are letters, numbers, spaces, hyphens, apostrophes, periods and diacritics.
+            code: invalid_account_holder_name
+          x-oapi-codegen-extra-tags:
+            csv: account_holder_name
+          example: John Doe
+        email:
+          allOf:
+          - $ref: '#/components/schemas/Email'
+          x-orum-error-missing:
+            message: Email is required.
+            code: missing_email
+          x-orum-error-invalid:
+            message: Email address provided is invalid.
+            code: invalid_email
+          x-oapi-codegen-extra-tags:
+            csv: email,omitempty
+        person:
+          allOf:
+          - $ref: '#/components/schemas/OwnershipPersonRequest'
+          x-orum-error-invalid:
+            message: Person is invalid.
+            code: invalid_person
+          example:
+            first_name: John
+            last_name: Doe
+            ssn: '123121234'
+            phone_number: '+11234567890'
+        business:
+          allOf:
+          - $ref: '#/components/schemas/OwnershipBusinessRequest'
+          x-orum-error-invalid:
+            message: Business is invalid.
+            code: invalid_business
+          example:
+            business_name: Acme
+            tax_id: '123456789'
+            phone_number: '+11234567890'
+        sender_name:
+          allOf:
+          - $ref: '#/components/schemas/SenderName'
+          x-orum-error-invalid:
+            message: Sender name is invalid.
+            code: invalid_sender_name
+          example: Acme
+    DebitStatus:
+      type: string
+      description: Status of account debit.
+      enum:
+      - pending
+      - valid
+      - blocked
+      - failed
+    VerificationStatus:
+      type: string
+      description: Status of account verification.
+      enum:
+      - pending
+      - valid
+      - closed
+      - invalid
+      - failed
+    DebitStatusReason:
+      type: string
+      description: Status reason for failed and blocked accounts.
+      enum:
+      - blocked_account
+      - closed_account
+      - deceased_party
+      - duplicated_transfer
+      - invalid_account
+      - invalid_field
+      - invalid_routing
+      - regulatory_error
+      - unavailable_financial_institution
+      - unexpected_error
+      - unsupported_transfer
+      - debit_blocked
+      - unauthorized_transfer
+    OrumVersion:
+      type: string
+      description: Version of Deliver and Verify APIs. Use v2022-09-21.
+      enum:
+      - v2022-09-21
+    OwnershipPersonRequest:
+      description: Ownership details for a person
+      type: object
+      required:
+      - first_name
+      - last_name
+      properties:
+        first_name:
+          type: string
+          maxLength: 255
+          minLength: 1
+          x-orum-error-missing:
+            message: First name is required.
+            code: missing_first_name
+          x-orum-error-invalid:
+            message: First name is invalid.
+            code: invalid_first_name
+          example: John
+        last_name:
+          type: string
+          maxLength: 255
+          minLength: 1
+          x-orum-error-missing:
+            message: Last name is required.
+            code: missing_last_name
+          x-orum-error-invalid:
+            message: Last name is invalid.
+            code: invalid_last_name
+          example: Doe
+        phone_number:
+          type: string
+          maxLength: 12
+          minLength: 1
+          pattern: ^\+1[0-9]{10}$
+          x-orum-error-invalid:
+            message: Phone number is invalid.
+            code: invalid_phone_number
+          example: '+12125551212'
+        ssn:
+          type: string
+          maxLength: 9
+          minLength: 4
+          pattern: ^\d+$
+          x-orum-error-invalid:
+            message: SSN is invalid
+            code: invalid_ssn
+          example: '123121234'
+    EstimatedVerificationDate:
+      type: string
+      description: Estimated date that the account verification will be complete. Time will always be midnight and should be ignored.
+      format: date-time
+      example: '2023-07-13T00:00:00.000Z'
+    VerifyAccountControlRequest:
+      title: VerifyAccountControlRequest
+      type: object
+      required:
+      - statement_code
+      properties:
+        statement_code:
+          allOf:
+          - $ref: '#/components/schemas/StatementCode'
+          x-orum-error-missing:
+            message: Statement code is required. Pass the statement code from the account statement descriptor.
+            code: missing_statement_code
+          x-orum-error-invalid:
+            message: Statement code is invalid. Pass the statement code from the account statement descriptor.
+            code: invalid_statement_code
+    SenderName:
+      type: string
+      description: Name of sender initiating the verification request. This name will appear on the statement and should be recognizable to the account holder. Accepts alphanumeric characters and hyphens, dashes, periods, apostrophes, spaces, and diacritics.
+      pattern: ^([ ’!"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~¡¢£¤¥¦§¨©ª«¬®¯°±²³´µ¶·¸¹º»¼½¾¿ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖ×ØÙÚÛÜÝÞßàáâãäåæçèéêëìíîïðñòóôõö÷øùúûüýþÿĀāĂăĄąĆćĈĉĊċČčĎďĐđĒēĔĕĖėĘęĚěĜĝĞğĠġĢģĤĥĦħĨĩĪīĬĭĮįİıĲĳĴĵĶķĸĹĺĻļĽľĿŀŁłŃńŅņŇňŉŊŋŌōŎŏŐőŒœŔŕŖŗŘřŚśŜŝŞşŠšŢţŤťŦŧŨũŪūŬŭŮůŰűŲųŴŵŶŷŸŹźŻżŽžſ]*|)$
+      maxLength: 255
+      minLength: 1
+    ControlStatus:
+      type: string
+      description: Status of account control.
+      enum:
+      - pending
+      - valid
+      - canceled
+    UsBankAccountNumber:
+      title: UsBankAccountNumber
+      type: string
+      pattern: ^(?:\d-{0,1}){3,16}\d$
+      description: Account number for US bank account. 4 to 17 digits are acceptable.
+    CreatedAt:
+      type: string
+      description: Timestamp when the resource was created.
+      format: date-time
+    UpdatedAt:
+      type: string
+      description: Timestamp when the resource was last updated.
+      format: date-time
+    StatementCode:
+      title: StatementCode
+      type: string
+      pattern: ^[a-zA-Z0-9]{4}$
+      description: Text from the account statement descriptor to verify account control.
+    OrumId:
+      type: string
+      description: Orum generated unique id for the resource.
+      format: uuid
+    OwnershipStatus:
+      type: string
+      description: Status of account ownership.
+      enum:
+      - pending
+      - full
+      - partial
+      - not_a_match
+      - not_found
+    AccountHolderName:
+      type: string
+      description: Name of account holder. Accepts alphanumeric characters and hyphens, dashes, periods, apostrophes, spaces, and diacritics.
+      pattern: ^([ ’!"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~¡¢£¤¥¦§¨©ª«¬®¯°±²³´µ¶·¸¹º»¼½¾¿ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖ×ØÙÚÛÜÝÞßàáâãäåæçèéêëìíîïðñòóôõö÷øùúûüýþÿĀāĂăĄąĆćĈĉĊċČčĎďĐđĒēĔĕĖėĘęĚěĜĝĞğĠġĢģĤĥĦħĨĩĪīĬĭĮįİıĲĳĴĵĶķĸĹĺĻļĽľĿŀŁłŃńŅņŇňŉŊŋŌōŎŏŐőŒœŔŕŖŗŘřŚśŜŝŞşŠšŢţŤťŦŧŨũŪūŬŭŮůŰűŲųŴŵŶŷŸŹźŻżŽžſ]*|)$
+      maxLength: 255
+      minLength: 1
+    OwnershipBusinessRequest:
+      description: Ownership details for a business
+      type: object
+      required:
+      - business_name
+      properties:
+        business_name:
+          type: string
+          maxLength: 512
+          minLength: 1
+          x-orum-error-missing:
+            message: Business name is required.
+            code: missing_business_name
+          x-orum-error-invalid:
+            message: Business name is invalid.
+            code: invalid_business_name
+        tax_id:
+          type: string
+          maxLength: 9
+          minLength: 4
+          pattern: ^\d+$
+          x-orum-error-invalid:
+            message: Tax ID is invalid.
+            code: invalid_tax_id
+        phone_number:
+          type: string
+          maxLength: 12
+          minLength: 1
+          pattern: ^\+1[0-9]{10}$
+          x-orum-error-invalid:
+            message: Phone number is invalid.
+            code: invalid_phone_number
+    VerifyAccountType:
+      type: string
+      description: The type of verify request to make. If not provided, we will default to "status".
+      enum:
+      - status
+      - control
+      - status_ownership
+      - control_ownership
+    VerifyAccountResponse:
+      title: VerifyAccountResponse
+      type: object
+      required:
+      - account
+      properties:
+        account:
+          $ref: '#/components/schemas/VerifyAccountResponseBase'
+  securitySchemes:
+    oauth2:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: https://api-sandbox.orum.io/oauth/token
+          scopes:
+            read:persons: Read persons
+            write:persons: Write persons
+            read:businesses: Read businesses
+            write:businesses: Write businesses
+            read:external-accounts: Read external accounts
+            write:external-accounts: Write external accounts
+            read:cards: Read cards
+            write:cards: Write cards
+            read:transfers: Read transfers
+            write:transfers: Write transfers
+            read:transfer-groups: Read transfer groups
+            write:transfer-groups: Write transfer groups
+            read:schedules: Read schedules
+            write:schedules: Write schedules
+            read:routing-number-eligibility: Read routing number eligibility
+            read:balances: Read balances
+            read:reports: Read reports
+            write:reports: Write reports
+            read:booktransfers: Read book transfers
+            write:booktransfers: Write book transfers
+            read:subledgers: Read subledgers
+            write:subledgers: Write subledgers
+            read:verify-accounts: Read verify accounts
+            write:verify-accounts: Write verify accounts
+            read:webhook-configurations: Read webhook configurations
+            write:webhook-configurations: Write webhook configurations
+            read:webhook-secret: Read webhook secret
+            write:webhook-secret: Write webhook secret
+            invoke:webhook: Invoke webhook

@@ -1,0 +1,1123 @@
+openapi: 3.0.1
+info:
+  title: Orum Authentication Businesses API
+  description: Orum API.
+  version: v2022-09-21
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+servers:
+- url: https://api-sandbox.orum.io
+- url: https://vault.api-sandbox.orum.io
+tags:
+- name: Businesses
+paths:
+  /deliver/businesses:
+    post:
+      tags:
+      - Businesses
+      operationId: post-business
+      summary: Create a business
+      description: Create a business object to represent a business customer.
+      parameters:
+      - name: Orum-Version
+        in: header
+        required: true
+        schema:
+          $ref: '#/components/schemas/OrumVersion'
+        x-orum-error-invalid:
+          known-error: version_invalid
+        x-orum-error-missing:
+          known-error: version_missing
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BusinessRequest'
+        required: true
+      responses:
+        '200':
+          description: 200 response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BusinessResponse'
+        '400':
+          description: invalid request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        default:
+          description: unexpected error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      security:
+      - oauth2:
+        - write:businesses
+    get:
+      tags:
+      - Businesses
+      operationId: get-businesses
+      summary: Get all businesses
+      description: Get all business objects.
+      parameters:
+      - name: Orum-Version
+        in: header
+        required: true
+        schema:
+          $ref: '#/components/schemas/OrumVersion'
+        x-orum-error-invalid:
+          known-error: version_invalid
+        x-orum-error-missing:
+          known-error: version_missing
+      - name: index
+        description: Index for paginated results
+        in: query
+        required: false
+        schema:
+          type: integer
+          default: 0
+          minimum: 0
+        x-orum-error-invalid:
+          known-error: index
+      - name: size
+        description: Max number of results to return
+        in: query
+        required: false
+        schema:
+          type: integer
+          default: 100
+          minimum: 0
+          maximum: 500
+        x-orum-error-invalid:
+          known-error: size
+      - name: customer_reference_id
+        description: Filter by customer reference id
+        in: query
+        required: false
+        schema:
+          $ref: '#/components/schemas/CustomerReferenceId'
+      - name: status
+        description: Filter by customer statuses (multiple allowed)
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            $ref: '#/components/schemas/BusinessStatus'
+        explode: true
+        x-orum-error-invalid:
+          known-error: invalid_business_status
+      - name: start_time
+        description: Filter results created at or after this time
+        in: query
+        required: false
+        schema:
+          type: string
+          format: date-time
+        x-orum-error-invalid:
+          known-error: invalid_start_time
+      - name: end_time
+        description: Filter results created before this time
+        in: query
+        required: false
+        schema:
+          type: string
+          format: date-time
+        x-orum-error-invalid:
+          known-error: invalid_end_time
+      - name: legal_name
+        description: Filter by legal name
+        in: query
+        required: false
+        schema:
+          allOf:
+          - $ref: '#/components/schemas/LegalName'
+        x-orum-error-invalid:
+          known-error: invalid_legal_name
+      - name: account_number
+        in: query
+        description: Filter by account number
+        required: false
+        schema:
+          allOf:
+          - $ref: '#/components/schemas/UsBankAccountNumber'
+        x-orum-error-invalid:
+          known-error: invalid_account_number
+      - name: id
+        description: Filter results by the business id
+        in: query
+        required: false
+        schema:
+          type: string
+          format: uuid
+        x-orum-error-invalid:
+          message: Orum ID is invalid. Pass in a valid uuid
+          code: invalid_orum_id
+      responses:
+        '200':
+          description: 200 response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BusinessesResponse'
+        '400':
+          description: invalid request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        default:
+          description: unexpected error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      security:
+      - oauth2:
+        - read:businesses
+    put:
+      tags:
+      - Businesses
+      operationId: put-business-using-reference-id
+      summary: Update a business by reference id
+      description: Update a business object using reference id.
+      parameters:
+      - name: Orum-Version
+        in: header
+        required: true
+        schema:
+          $ref: '#/components/schemas/OrumVersion'
+        x-orum-error-invalid:
+          known-error: version_invalid
+        x-orum-error-missing:
+          known-error: version_missing
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PutBusinessRequest'
+        required: true
+      responses:
+        '200':
+          description: 200 response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PutBusinessResponse'
+        '400':
+          description: invalid request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        default:
+          description: unexpected error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      security:
+      - oauth2:
+        - write:businesses
+  /deliver/businesses/{id}:
+    get:
+      tags:
+      - Businesses
+      operationId: get-business
+      summary: Get a business by id
+      description: Get a business object.
+      parameters:
+      - name: Orum-Version
+        in: header
+        required: true
+        schema:
+          $ref: '#/components/schemas/OrumVersion'
+        x-orum-error-invalid:
+          known-error: version_invalid
+        x-orum-error-missing:
+          known-error: version_missing
+      - name: id
+        description: Orum generated unique id for the business you are fetching.
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/OrumId'
+        x-orum-error-invalid:
+          known-error: unknown_id_business
+      responses:
+        '200':
+          description: 200 response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BusinessResponse'
+        '404':
+          description: not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        default:
+          description: unexpected error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      security:
+      - oauth2:
+        - read:businesses
+    put:
+      tags:
+      - Businesses
+      operationId: put-business
+      summary: Update a business by id
+      description: Update a business object by id.
+      parameters:
+      - name: Orum-Version
+        in: header
+        required: true
+        schema:
+          $ref: '#/components/schemas/OrumVersion'
+        x-orum-error-invalid:
+          known-error: version_invalid
+        x-orum-error-missing:
+          known-error: version_missing
+      - name: id
+        description: Orum generated unique id for the business you are updating.
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/OrumId'
+        x-orum-error-invalid:
+          known-error: unknown_id_business
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PutBusinessRequest'
+        required: true
+      responses:
+        '200':
+          description: 200 response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PutBusinessResponse'
+        '400':
+          description: invalid request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        default:
+          description: unexpected error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      security:
+      - oauth2:
+        - write:businesses
+    patch:
+      tags:
+      - Businesses
+      operationId: patch-business
+      summary: Partial update a business by id
+      description: Update individual fields on a business object.
+      parameters:
+      - name: Orum-Version
+        in: header
+        required: true
+        schema:
+          $ref: '#/components/schemas/OrumVersion'
+        x-orum-error-invalid:
+          known-error: version_invalid
+        x-orum-error-missing:
+          known-error: version_missing
+      - name: id
+        description: Orum generated unique id for the business you are updating.
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/OrumId'
+        x-orum-error-invalid:
+          known-error: unknown_id_business
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchBusinessRequest'
+        required: true
+      responses:
+        '200':
+          description: 200 response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BusinessResponse'
+        '400':
+          description: invalid request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        default:
+          description: unexpected error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      security:
+      - oauth2:
+        - write:businesses
+    delete:
+      tags:
+      - Businesses
+      operationId: delete-business
+      summary: Closes a business by id
+      description: Close a business object so they are unable to transact.
+      parameters:
+      - name: Orum-Version
+        in: header
+        required: true
+        schema:
+          $ref: '#/components/schemas/OrumVersion'
+        x-orum-error-invalid:
+          known-error: version_invalid
+        x-orum-error-missing:
+          known-error: version_missing
+      - name: id
+        description: Orum generated unique id for the business you are updating.
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/OrumId'
+        x-orum-error-invalid:
+          known-error: unknown_id_business
+      responses:
+        '200':
+          description: 200 response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BusinessResponse'
+        '400':
+          description: invalid request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        default:
+          description: unexpected error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      security:
+      - oauth2:
+        - write:businesses
+components:
+  schemas:
+    ContactTypeBusiness:
+      title: ContactTypeBusiness
+      type: string
+      description: Type of contact information associated with a business - 'email', 'phone' or 'website'.
+      enum:
+      - email
+      - phone
+      - website
+    PatchBusinessRequest:
+      title: PatchBusinessRequest
+      type: object
+      properties:
+        legal_name:
+          allOf:
+          - $ref: '#/components/schemas/LegalName'
+          type: string
+          nullable: true
+          x-orum-error-invalid:
+            known-error: invalid_legal_name
+        business_name:
+          allOf:
+          - $ref: '#/components/schemas/BusinessName'
+          type: string
+          nullable: true
+        entity_type:
+          allOf:
+          - $ref: '#/components/schemas/BusinessEntityType'
+          type: string
+          nullable: true
+        tax_id:
+          allOf:
+          - $ref: '#/components/schemas/TaxId'
+          type: string
+          nullable: true
+        tax_id_type:
+          allOf:
+          - $ref: '#/components/schemas/TaxIdType'
+          type: string
+          nullable: true
+        account_holder_name:
+          allOf:
+          - $ref: '#/components/schemas/OptionalAccountHolderName'
+          type: string
+          nullable: true
+        incorporation_date:
+          allOf:
+          - $ref: '#/components/schemas/IncorporationDate'
+          type: string
+          nullable: true
+        addresses:
+          type: array
+          description: 'Incorporated address information for the business. "type" is required if you are updating other address fields. Note: This field is required for payouts, deposits, or account-to-account transfers. Orum requires a physical address for all registered businesses; aligned with standards mandated by FinCEN and the FDIC. A physical address is a tangible building address, such as a home, office, or office suite. A PO Box is a mailing address, but not a physical address.'
+          items:
+            $ref: '#/components/schemas/BusinessPatchPostalAddressRequest'
+          maxItems: 1
+          nullable: true
+          x-orum-error-invalid:
+            message: Addresses array is invalid. Pass an array containing an address object.
+            code: invalid_addresses
+        contacts:
+          type: array
+          description: List of contact information for the business. 'email', 'phone', or 'website' are required. A maximum of three persons or businesses can have the same phone number.
+          items:
+            $ref: '#/components/schemas/PatchContactRequestBusiness'
+          minItems: 0
+          maxItems: 3
+          nullable: true
+          x-orum-error-invalid:
+            message: Contacts array is invalid. Pass an array of contact information containing phone, website, and/or email contact types.
+            code: invalid_contacts
+        metadata:
+          allOf:
+          - $ref: '#/components/schemas/Metadata'
+          type: object
+          nullable: true
+          x-orum-error-invalid:
+            message: Metadata must be a valid JSON object.
+            code: invalid_metadata
+    IncorporationDate:
+      title: IncorporationDate
+      type: string
+      pattern: ^((16|17|18|19|20)\d\d)-(0[1-9]|1[0-2])-(([01])[0-9]|2[0-9]|3[0-1])$
+      description: Date the business was incorporated, in YYYY-MM-DD format.
+      x-orum-error-invalid:
+        message: Incorporation date is invalid. Expecting format YYYY-MM-DD.
+        code: invalid_incorporation_date
+    BusinessResponseBase:
+      title: BusinessResponseBase
+      type: object
+      required:
+      - id
+      - customer_reference_id
+      - legal_name
+      - status
+      - created_at
+      - updated_at
+      properties:
+        id:
+          $ref: '#/components/schemas/OrumId'
+        customer_reference_id:
+          $ref: '#/components/schemas/CustomerReferenceId'
+        legal_name:
+          type: string
+          description: The legal name of the business as it appears on official registration forms. Accepts alphanumeric characters and hyphens, dashes, periods, apostrophes, spaces, hashes, colons, forward slashes, and diacritics.
+        business_name:
+          type: string
+          description: A trade name or pseudonym used by the business that is not its officially registered company name. Accepts alphanumeric characters and hyphens, dashes, periods, apostrophes, spaces, hashes, colons, forward slashes, and diacritics.
+        entity_type:
+          type: string
+          description: Describes the type of business entity.
+        tax_id_type:
+          type: string
+          description: 'The type of tax ID number associated with the business. Note: This field is required for payouts, deposits, or account-to-account transfers.'
+        account_holder_name:
+          type: string
+          description: Name of the owner or primary person associated with the business.
+        incorporation_date:
+          type: string
+          description: Date the business was incorporated, in YYYY-MM-DD format.
+        status:
+          $ref: '#/components/schemas/BusinessStatus'
+        addresses:
+          type: array
+          description: 'Incorporated address information for the business. Note: This field is required for payouts, deposits, or account-to-account transfers. Orum requires a physical address for all registered businesses; aligned with standards mandated by FinCEN and the FDIC. A physical address is a tangible building address, such as a home, office, or office suite. A PO Box is a mailing address, but not a physical address.'
+          items:
+            $ref: '#/components/schemas/PostalAddressResponse'
+          minItems: 1
+          maxItems: 1
+        contacts:
+          type: array
+          description: List of contact information for the business.
+          items:
+            $ref: '#/components/schemas/ContactResponseBusiness'
+          minItems: 1
+          maxItems: 3
+        created_at:
+          $ref: '#/components/schemas/CreatedAt'
+        updated_at:
+          $ref: '#/components/schemas/UpdatedAt'
+        closed_at:
+          $ref: '#/components/schemas/ClosedAt'
+        metadata:
+          type: object
+          description: Additional data you would like to provide on the resource. The field supports valid JSON of up to 5 key-value pairs with a maximum of 20 characters for the key and 50 characters for the value. Do not include any sensitive information.
+    PutBusinessRequest:
+      title: PutBusinessBase
+      allOf:
+      - $ref: '#/components/schemas/BusinessRequest'
+      - type: object
+        properties:
+          metadata:
+            allOf:
+            - $ref: '#/components/schemas/MetadataPut'
+            type: object
+            nullable: true
+            x-orum-error-invalid:
+              message: Metadata must be a valid JSON object.
+              code: invalid_metadata
+    AddressType:
+      title: AddressType
+      type: string
+      description: Type of address.
+      enum:
+      - home
+      - legal
+    Address2:
+      title: Address2
+      type: string
+      description: Address line 2.
+      maxLength: 255
+      x-orum-error-invalid:
+        message: Address2 is invalid. Ensure it is a string with a maximum length of 255 characters.
+        code: invalid_address2
+    BusinessResponse:
+      title: BusinessResponse
+      type: object
+      required:
+      - business
+      properties:
+        business:
+          allOf:
+          - $ref: '#/components/schemas/BusinessResponseBase'
+    ErrorResponse:
+      type: object
+      properties:
+        error_code:
+          type: string
+        message:
+          type: string
+        details:
+          type: object
+          description: additional details about the error.
+          nullable: true
+      required:
+      - error_code
+      - message
+    OptionalAccountHolderName:
+      type: string
+      description: Name of account holder. Accepts alphanumeric characters and hyphens, dashes, periods, apostrophes, spaces, and diacritics.
+      pattern: ^([ ’!"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~¡¢£¤¥¦§¨©ª«¬®¯°±²³´µ¶·¸¹º»¼½¾¿ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖ×ØÙÚÛÜÝÞßàáâãäåæçèéêëìíîïðñòóôõö÷øùúûüýþÿĀāĂăĄąĆćĈĉĊċČčĎďĐđĒēĔĕĖėĘęĚěĜĝĞğĠġĢģĤĥĦħĨĩĪīĬĭĮįİıĲĳĴĵĶķĸĹĺĻļĽľĿŀŁłŃńŅņŇňŉŊŋŌōŎŏŐőŒœŔŕŖŗŘřŚśŜŝŞşŠšŢţŤťŦŧŨũŪūŬŭŮůŰűŲųŴŵŶŷŸŹźŻżŽžſ]*|)$
+      maxLength: 255
+    BusinessEntityType:
+      title: BusinessEntityType
+      type: string
+      nullable: true
+      description: Describes the type of business entity.
+      enum:
+      - sole_proprietorship
+      - partnership
+      - limited_liability_partnership
+      - limited_liability_company
+      - c_corporation
+      - s_corporation
+      - b_corporation
+      - nonprofit_corporation
+      x-orum-error-invalid:
+        message: Entity type is invalid. Valid entity type is "sole_proprietorship", "partnership", "limited_liability_partnership", "limited_liability_company", "c_corporation", "s_corporation", "b_corporation", or "nonprofit_corporation".
+        code: invalid_entity_type
+    ContactResponseBusiness:
+      title: ContactResponse
+      type: object
+      required:
+      - id
+      - type
+      - value
+      - created_at
+      - updated_at
+      description: Contact information.
+      properties:
+        id:
+          $ref: '#/components/schemas/OrumId'
+        type:
+          $ref: '#/components/schemas/ContactTypeBusiness'
+        value:
+          type: string
+          description: A standard set of values that indicate the contact type.
+        created_at:
+          $ref: '#/components/schemas/CreatedAt'
+        updated_at:
+          $ref: '#/components/schemas/UpdatedAt'
+    TaxId:
+      title: TaxId
+      type: string
+      pattern: ^\d{9}$
+      description: '9-digit corporate tax id of business - can be Taxpayer Identification Number (TIN) or Employer Identification Number (EIN). Note: This field is required for payouts, deposits, or account-to-account transfers.'
+      x-orum-error-invalid:
+        message: Invalid tax id. Expecting 9-digit numeric id.
+        code: invalid_tax_id
+    City:
+      title: City
+      type: string
+      description: City.
+      maxLength: 255
+    Zip5:
+      title: Zip5
+      type: string
+      description: 5-digit ZIP Code. Numeric values (0-9) only.
+      pattern: ^\d{5}$
+    BusinessStatus:
+      title: BusinessStatus
+      type: string
+      description: Status of Business.
+      enum:
+      - created
+      - verified
+      - rejected
+      - restricted
+      - closed
+    ContactRequestBusiness:
+      title: ContactRequestBusiness
+      type: object
+      required:
+      - type
+      - value
+      description: Contact information.
+      properties:
+        type:
+          allOf:
+          - $ref: '#/components/schemas/ContactTypeBusiness'
+          x-orum-error-invalid:
+            message: Type field is invalid. Valid type is "phone", "website" or "email".
+            code: invalid_contacts_type
+          x-orum-error-missing:
+            message: Type field is required. Valid types are "phone", "website" or "email".
+            code: missing_contacts_type
+        value:
+          type: string
+          description: Email, phone number or website.
+          maxLength: 255
+          x-orum-error-invalid:
+            message: Value for contact type is invalid. Pass a string value.
+            code: invalid_contacts_value
+          x-orum-error-missing:
+            message: 'Value for contact type is missing. For type "phone", pass a valid 10-digit US phone number. For type "website", pass a website with a valid top-level domain. For type "email", pass a valid email. Example: hello@orum.io'
+            code: missing_contacts_value
+    OrumVersion:
+      type: string
+      description: Version of Deliver and Verify APIs. Use v2022-09-21.
+      enum:
+      - v2022-09-21
+    PatchContactRequestBusiness:
+      title: PatchContactRequestBusiness
+      type: object
+      required:
+      - type
+      description: Contact information.
+      properties:
+        type:
+          $ref: '#/components/schemas/ContactTypeBusiness'
+        value:
+          type: string
+          description: Email, phone number or website.
+          maxLength: 255
+    BusinessName:
+      title: BusinessName
+      type: string
+      description: A trade name or pseudonym used by the business that is not its officially registered company name. Accepts alphanumeric characters and hyphens, dashes, periods, apostrophes, spaces, hashes, colons, forward slashes, and diacritics.
+      pattern: ^([ ’!"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~¡¢£¤¥¦§¨©ª«¬®¯°±²³´µ¶·¸¹º»¼½¾¿ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖ×ØÙÚÛÜÝÞßàáâãäåæçèéêëìíîïðñòóôõö÷øùúûüýþÿĀāĂăĄąĆćĈĉĊċČčĎďĐđĒēĔĕĖėĘęĚěĜĝĞğĠġĢģĤĥĦħĨĩĪīĬĭĮįİıĲĳĴĵĶķĸĹĺĻļĽľĿŀŁłŃńŅņŇňŉŊŋŌōŎŏŐőŒœŔŕŖŗŘřŚśŜŝŞşŠšŢţŤťŦŧŨũŪūŬŭŮůŰűŲųŴŵŶŷŸŹźŻżŽžſ]*|)$
+      maxLength: 255
+      x-orum-error-invalid:
+        message: Business name is invalid. Accepted values are alphanumeric characters, spaces, hyphens, apostrophes, periods and diacritics.
+        code: invalid_business_name
+    BusinessesResponse:
+      title: BusinessesResponse
+      type: object
+      required:
+      - businesses
+      properties:
+        businesses:
+          type: array
+          description: List of businesses.
+          items:
+            allOf:
+            - $ref: '#/components/schemas/BusinessResponseBase'
+    CreatedAt:
+      type: string
+      description: Timestamp when the resource was created.
+      format: date-time
+    UsBankAccountNumber:
+      title: UsBankAccountNumber
+      type: string
+      pattern: ^(?:\d-{0,1}){3,16}\d$
+      description: Account number for US bank account. 4 to 17 digits are acceptable.
+    Metadata:
+      type: object
+      description: Additional data you would like to provide on the resource. The field supports valid JSON of up to 5 key-value pairs with a maximum of 20 characters for the key and 50 characters for the value. Do not include any sensitive information.
+    AddressTypeBusiness:
+      title: AddressTypeBusiness
+      type: string
+      description: Type of address. Always 'legal' for business object.
+      enum:
+      - legal
+    UpdatedAt:
+      type: string
+      description: Timestamp when the resource was last updated.
+      format: date-time
+    State:
+      title: State
+      type: string
+      pattern: ^[A-Z]{2}$
+      description: Uppercase two-character state code of the address.
+    PutBusinessResponseBase:
+      title: PutBusinessResponseBase
+      allOf:
+      - $ref: '#/components/schemas/BusinessResponseBase'
+      - type: object
+        properties:
+          metadata:
+            $ref: '#/components/schemas/MetadataPut'
+    BusinessRequest:
+      title: BusinessRequest
+      type: object
+      required:
+      - customer_reference_id
+      - legal_name
+      properties:
+        customer_reference_id:
+          allOf:
+          - $ref: '#/components/schemas/CustomerReferenceId'
+          x-orum-error-missing:
+            known-error: missing_customer_reference_id
+          x-orum-error-invalid:
+            known-error: invalid_customer_reference_id
+        legal_name:
+          allOf:
+          - $ref: '#/components/schemas/LegalName'
+          x-orum-error-missing:
+            message: Legal name is required. Accepted values are alphanumeric characters, spaces, hyphens, apostrophes, periods and diacritics.
+            code: missing_legal_name
+          x-orum-error-invalid:
+            known-error: invalid_legal_name
+        business_name:
+          allOf:
+          - $ref: '#/components/schemas/BusinessName'
+          type: string
+          nullable: true
+        entity_type:
+          allOf:
+          - $ref: '#/components/schemas/BusinessEntityType'
+          type: string
+          nullable: true
+        tax_id:
+          allOf:
+          - $ref: '#/components/schemas/TaxId'
+          type: string
+          nullable: true
+        tax_id_type:
+          allOf:
+          - $ref: '#/components/schemas/TaxIdType'
+          type: string
+          nullable: true
+        account_holder_name:
+          allOf:
+          - $ref: '#/components/schemas/OptionalAccountHolderName'
+          type: string
+          nullable: true
+        incorporation_date:
+          allOf:
+          - $ref: '#/components/schemas/IncorporationDate'
+          type: string
+          nullable: true
+        addresses:
+          type: array
+          description: 'Incorporated address information for the business. Note: This field is required for payouts, deposits, or account-to-account transfers. Orum requires a physical address for all registered businesses; aligned with standards mandated by FinCEN and the FDIC. A physical address is a tangible building address, such as a home, office, or office suite. A PO Box is a mailing address, but not a physical address.'
+          items:
+            $ref: '#/components/schemas/BusinessPostalAddressRequest'
+          minItems: 1
+          maxItems: 1
+          nullable: true
+          x-orum-error-invalid:
+            message: Addresses array is invalid. Pass an array containing an address object.
+            code: invalid_addresses
+        contacts:
+          type: array
+          description: List of contact information for the business. 'email', 'phone', or 'website' are required. A maximum of three persons or businesses can have the same phone number.
+          items:
+            $ref: '#/components/schemas/ContactRequestBusiness'
+          minItems: 1
+          maxItems: 3
+          nullable: true
+          x-orum-error-invalid:
+            message: Contacts array is invalid. Pass an array of contact information containing phone, website, and/or email contact types.
+            code: invalid_contacts
+        metadata:
+          allOf:
+          - $ref: '#/components/schemas/Metadata'
+          type: object
+          nullable: true
+          x-orum-error-invalid:
+            message: Metadata must be a valid JSON object.
+            code: invalid_metadata
+    PostalAddressResponse:
+      title: PostalAddressResponse
+      type: object
+      required:
+      - id
+      - type
+      - address1
+      - city
+      - state
+      - country
+      - zip5
+      - created_at
+      - updated_at
+      description: Address.
+      properties:
+        id:
+          $ref: '#/components/schemas/OrumId'
+        type:
+          $ref: '#/components/schemas/AddressType'
+        address1:
+          $ref: '#/components/schemas/Address1'
+        address2:
+          $ref: '#/components/schemas/Address2'
+        city:
+          $ref: '#/components/schemas/City'
+        state:
+          $ref: '#/components/schemas/State'
+        country:
+          $ref: '#/components/schemas/Country'
+        zip5:
+          $ref: '#/components/schemas/Zip5'
+        created_at:
+          $ref: '#/components/schemas/CreatedAt'
+        updated_at:
+          $ref: '#/components/schemas/UpdatedAt'
+    TaxIdType:
+      title: TaxIdType
+      type: string
+      description: 'The type of tax ID number associated with the business. Note: This field is required for payouts, deposits, or account-to-account transfers.'
+      enum:
+      - tin
+      - ein
+      x-orum-error-invalid:
+        message: Tax id type is invalid. Valid tax id type is "tin" or "ein".
+        code: invalid_tax_id_type
+    LegalName:
+      title: LegalName
+      type: string
+      description: The legal name of the business as it appears on official registration forms. Accepts alphanumeric characters and hyphens, dashes, periods, apostrophes, spaces, hashes, colons, forward slashes, and diacritics.
+      pattern: ^[^\s][ ’!"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~¡¢£¤¥¦§¨©ª«¬®¯°±²³´µ¶·¸¹º»¼½¾¿ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖ×ØÙÚÛÜÝÞßàáâãäåæçèéêëìíîïðñòóôõö÷øùúûüýþÿĀāĂăĄąĆćĈĉĊċČčĎďĐđĒēĔĕĖėĘęĚěĜĝĞğĠġĢģĤĥĦħĨĩĪīĬĭĮįİıĲĳĴĵĶķĸĹĺĻļĽľĿŀŁłŃńŅņŇňŉŊŋŌōŎŏŐőŒœŔŕŖŗŘřŚśŜŝŞşŠšŢţŤťŦŧŨũŪūŬŭŮůŰűŲųŴŵŶŷŸŹźŻżŽžſ]+$
+      maxLength: 255
+    OrumId:
+      type: string
+      description: Orum generated unique id for the resource.
+      format: uuid
+    ClosedAt:
+      type: string
+      description: Timestamp when the status of the resource was set to "closed".
+      format: date-time
+    MetadataPut:
+      type: object
+      description: Additional data you would like to provide on the resource. The field supports valid JSON of up to 5 key-value pairs with a maximum of 20 characters for the key and 50 characters for the value. Do not include any sensitive information.
+    Country:
+      title: Country
+      type: string
+      description: 2-character ISO country code.
+      enum:
+      - US
+    BusinessPostalAddressRequest:
+      title: BusinessPostalAddressRequest
+      type: object
+      required:
+      - type
+      - address1
+      - city
+      - state
+      - country
+      - zip5
+      description: Address.
+      properties:
+        type:
+          allOf:
+          - $ref: '#/components/schemas/AddressTypeBusiness'
+          x-orum-error-invalid:
+            known-error: invalid_addresses_type
+          x-orum-error-missing:
+            known-error: missing_addresses_type
+        address1:
+          allOf:
+          - $ref: '#/components/schemas/Address1'
+          x-orum-error-invalid:
+            known-error: invalid_address1
+          x-orum-error-missing:
+            message: Address1 is required.
+            code: missing_address1
+        address2:
+          allOf:
+          - $ref: '#/components/schemas/Address2'
+          x-orum-error-invalid:
+            known-error: invalid_address2
+        city:
+          allOf:
+          - $ref: '#/components/schemas/City'
+          x-orum-error-invalid:
+            known-error: invalid_city
+          x-orum-error-missing:
+            known-error: missing_city
+        state:
+          allOf:
+          - $ref: '#/components/schemas/State'
+          x-orum-error-invalid:
+            known-error: invalid_state
+          x-orum-error-missing:
+            known-error: missing_state
+        country:
+          allOf:
+          - $ref: '#/components/schemas/Country'
+          x-orum-error-invalid:
+            known-error: invalid_country
+          x-orum-error-missing:
+            known-error: missing_country
+        zip5:
+          allOf:
+          - $ref: '#/components/schemas/Zip5'
+          x-orum-error-invalid:
+            known-error: invalid_zip5
+          x-orum-error-missing:
+            known-error: missing_zip5
+    BusinessPatchPostalAddressRequest:
+      title: BusinessPatchPostalAddressRequest
+      type: object
+      required:
+      - type
+      description: Address.
+      properties:
+        type:
+          allOf:
+          - $ref: '#/components/schemas/AddressTypeBusiness'
+          x-orum-error-invalid:
+            known-error: invalid_addresses_type
+          x-orum-error-missing:
+            known-error: missing_addresses_type
+        address1:
+          allOf:
+          - $ref: '#/components/schemas/Address1'
+          x-orum-error-invalid:
+            known-error: invalid_address1
+        address2:
+          allOf:
+          - $ref: '#/components/schemas/Address2'
+          x-orum-error-invalid:
+            known-error: invalid_address2
+        city:
+          allOf:
+          - $ref: '#/components/schemas/City'
+          x-orum-error-invalid:
+            known-error: invalid_city
+        state:
+          allOf:
+          - $ref: '#/components/schemas/State'
+          x-orum-error-invalid:
+            known-error: invalid_state
+        country:
+          allOf:
+          - $ref: '#/components/schemas/Country'
+          x-orum-error-invalid:
+            known-error: invalid_country
+        zip5:
+          allOf:
+          - $ref: '#/components/schemas/Zip5'
+          x-orum-error-invalid:
+            known-error: invalid_zip
+    CustomerReferenceId:
+      title: CustomerReferenceId
+      type: string
+      description: Unique reference id for the customer (business or person) resource. Generated by you.
+      minLength: 1
+      maxLength: 255
+    Address1:
+      title: Address1
+      type: string
+      description: Address line 1.
+      maxLength: 255
+      x-orum-error-invalid:
+        message: Address1 is invalid. Ensure it is a string with a maximum length of 255 characters.
+        code: invalid_address1
+    PutBusinessResponse:
+      title: PutBusinessResponse
+      type: object
+      required:
+      - business
+      properties:
+        business:
+          $ref: '#/components/schemas/PutBusinessResponseBase'
+  securitySchemes:
+    oauth2:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: https://api-sandbox.orum.io/oauth/token
+          scopes:
+            read:persons: Read persons
+            write:persons: Write persons
+            read:businesses: Read businesses
+            write:businesses: Write businesses
+            read:external-accounts: Read external accounts
+            write:external-accounts: Write external accounts
+            read:cards: Read cards
+            write:cards: Write cards
+            read:transfers: Read transfers
+            write:transfers: Write transfers
+            read:transfer-groups: Read transfer groups
+            write:transfer-groups: Write transfer groups
+            read:schedules: Read schedules
+            write:schedules: Write schedules
+            read:routing-number-eligibility: Read routing number eligibility
+            read:balances: Read balances
+            read:reports: Read reports
+            write:reports: Write reports
+            read:booktransfers: Read book transfers
+            write:booktransfers: Write book transfers
+            read:subledgers: Read subledgers
+            write:subledgers: Write subledgers
+            read:verify-accounts: Read verify accounts
+            write:verify-accounts: Write verify accounts
+            read:webhook-configurations: Read webhook configurations
+            write:webhook-configurations: Write webhook configurations
+            read:webhook-secret: Read webhook secret
+            write:webhook-secret: Write webhook secret
+            invoke:webhook: Invoke webhook

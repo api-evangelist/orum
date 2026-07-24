@@ -1,0 +1,623 @@
+openapi: 3.0.1
+info:
+  title: Orum Authentication Schedules API
+  description: Orum API.
+  version: v2022-09-21
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+servers:
+- url: https://api-sandbox.orum.io
+- url: https://vault.api-sandbox.orum.io
+tags:
+- name: Schedules
+paths:
+  /deliver/schedules:
+    post:
+      tags:
+      - Schedules
+      operationId: post-schedule
+      summary: Create a schedule
+      description: Schedule recurring transfers.
+      parameters:
+      - name: Orum-Version
+        in: header
+        required: true
+        schema:
+          $ref: '#/components/schemas/OrumVersion'
+        x-orum-error-invalid:
+          known-error: version_invalid
+        x-orum-error-missing:
+          known-error: version_missing
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ScheduleRequest'
+        required: true
+      responses:
+        '200':
+          description: 200 response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ScheduleResponse'
+        '400':
+          description: invalid request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        default:
+          description: unexpected error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      security:
+      - oauth2:
+        - write:schedules
+    get:
+      tags:
+      - Schedules
+      operationId: get-schedules
+      summary: Get all schedules
+      description: Get all schedule objects.
+      parameters:
+      - name: Orum-Version
+        in: header
+        required: true
+        schema:
+          $ref: '#/components/schemas/OrumVersion'
+        x-orum-error-invalid:
+          known-error: version_invalid
+        x-orum-error-missing:
+          known-error: version_missing
+      - name: index
+        description: Index for paginated results
+        in: query
+        required: false
+        schema:
+          type: integer
+          default: 0
+          minimum: 0
+        x-orum-error-invalid:
+          known-error: index
+      - name: size
+        description: Max number of results to return
+        in: query
+        required: false
+        schema:
+          type: integer
+          default: 100
+          minimum: 0
+          maximum: 500
+        x-orum-error-invalid:
+          known-error: size
+      - name: status
+        description: Filter results by schedule status
+        in: query
+        required: false
+        schema:
+          $ref: '#/components/schemas/ScheduleStatus'
+        x-orum-error-invalid:
+          message: Invalid schedule status. It must be either active or inactive.
+          code: invalid_schedule_status
+      responses:
+        '200':
+          description: 200 response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SchedulesResponse'
+        '400':
+          description: invalid request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        default:
+          description: unexpected error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      security:
+      - oauth2:
+        - read:schedules
+  /deliver/schedules/rrule:
+    post:
+      tags:
+      - Schedules
+      operationId: post-validate-rrule
+      summary: Validate and parse RRULE string
+      description: Validates an RRULE string and returns its human readable form along with next occurrence dates.
+      parameters:
+      - name: Orum-Version
+        in: header
+        required: true
+        schema:
+          $ref: '#/components/schemas/OrumVersion'
+        x-orum-error-invalid:
+          known-error: version_invalid
+        x-orum-error-missing:
+          known-error: version_missing
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RruleValidationRequest'
+        required: true
+      responses:
+        '200':
+          description: 200 response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RruleValidationResponse'
+        '400':
+          description: invalid request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        default:
+          description: unexpected error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      security:
+      - oauth2:
+        - write:schedules
+  /deliver/schedules/{id}:
+    get:
+      tags:
+      - Schedules
+      operationId: get-schedule
+      summary: Get schedule by id
+      description: Retrieve a single schedule
+      parameters:
+      - name: Orum-Version
+        in: header
+        required: true
+        schema:
+          $ref: '#/components/schemas/OrumVersion'
+        x-orum-error-invalid:
+          known-error: version_invalid
+        x-orum-error-missing:
+          known-error: version_missing
+      - name: id
+        description: Orum generated unique id for the schedule you are fetching.
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/OrumId'
+        x-orum-error-invalid:
+          known-error: invalid_schedule_id
+        x-orum-error-missing:
+          known-error: missing_schedule_id
+      responses:
+        '200':
+          description: 200 response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ScheduleResponse'
+        '404':
+          description: not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        default:
+          description: unexpected error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      security:
+      - oauth2:
+        - read:schedules
+    delete:
+      tags:
+      - Schedules
+      operationId: delete-schedule
+      summary: delete a schedule that matches the id
+      description: Delete a single schedule
+      parameters:
+      - name: Orum-Version
+        in: header
+        required: true
+        schema:
+          $ref: '#/components/schemas/OrumVersion'
+        x-orum-error-invalid:
+          known-error: version_invalid
+        x-orum-error-missing:
+          known-error: version_missing
+      - name: id
+        description: Orum generated unique id for the schedule you are deleting.
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/OrumId'
+        x-orum-error-invalid:
+          known-error: invalid_schedule_id
+        x-orum-error-missing:
+          known-error: missing_schedule_id
+      responses:
+        '200':
+          description: 200 response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ScheduleResponse'
+        '404':
+          description: not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        default:
+          description: unexpected error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      security:
+      - oauth2:
+        - write:schedules
+components:
+  schemas:
+    ScheduleStatus:
+      title: ScheduleStatus
+      type: string
+      description: Describes the current status of the schedule.
+      enum:
+      - active
+      - inactive
+    ScheduleRecurrence:
+      type: string
+      description: Recurrence of the schedule in iCalendar RRULE format
+      example: RRULE:FREQ=WEEKLY;INTERVAL=1;BYDAY=MO,WE,FR
+    ErrorResponse:
+      type: object
+      properties:
+        error_code:
+          type: string
+        message:
+          type: string
+        details:
+          type: object
+          description: additional details about the error.
+          nullable: true
+      required:
+      - error_code
+      - message
+    TransferAmount:
+      title: TransferAmount
+      type: integer
+      description: 'Transfer amount in integral cents (example: 100 = $1). Must be greater than zero.'
+      minimum: 1
+    ScheduleReferenceId:
+      title: ScheduleReferenceId
+      type: string
+      description: Unique reference id for the Schedule. Generated by you.
+      minLength: 1
+    RruleValidationRequest:
+      title: RruleValidationRequest
+      type: object
+      properties:
+        start_date:
+          allOf:
+          - $ref: '#/components/schemas/ScheduleStartDate'
+          x-orum-error-missing:
+            known-error: missing_schedule_start_date
+          x-orum-error-invalid:
+            known-error: invalid_schedule_start_date
+        recurrence:
+          allOf:
+          - $ref: '#/components/schemas/ScheduleRecurrence'
+          x-orum-error-missing:
+            known-error: missing_schedule_recurrence
+          x-orum-error-invalid:
+            known-error: invalid_schedule_recurrence
+        occurrence_count:
+          type: integer
+          minimum: 1
+          maximum: 5
+          description: Number of occurrences to return. Defaults to 2 if not specified.
+          x-orum-error-invalid:
+            known-error: invalid_occurrence_count
+      required:
+      - start_date
+      - recurrence
+    SourceTransferParty:
+      title: Source
+      type: object
+      description: For use cases that require a Source, information about the transfer funding source, which will be debited.
+      properties:
+        customer_reference_id:
+          type: string
+          description: Unique reference ID for the customer (person or business) associated with the external account being debited.
+          minLength: 1
+          x-orum-error-missing:
+            known-error: missing_source_customer_reference_id
+          x-orum-error-invalid:
+            known-error: invalid_source_customer_reference_id
+        account_reference_id:
+          type: string
+          description: Unique reference ID for the external account being debited.
+          minLength: 1
+          x-orum-error-missing:
+            known-error: missing_source_account_reference_id
+          x-orum-error-invalid:
+            known-error: invalid_source_account_reference_id
+        statement_display_name:
+          type: string
+          description: The name that will appear on the bank account statement of the account being debited. The field supports 16 alphanumeric characters for ACH, and 140 for RTP.
+          nullable: true
+      required:
+      - account_reference_id
+      - customer_reference_id
+    OrumVersion:
+      type: string
+      description: Version of Deliver and Verify APIs. Use v2022-09-21.
+      enum:
+      - v2022-09-21
+    SchedulesResponse:
+      title: SchedulesResponse
+      type: object
+      required:
+      - schedules
+      properties:
+        schedules:
+          type: array
+          description: List of schedules.
+          items:
+            $ref: '#/components/schemas/ScheduleResponseBaseObject'
+    ScheduleResponse:
+      title: ScheduleResponse
+      type: object
+      required:
+      - schedule
+      properties:
+        schedule:
+          $ref: '#/components/schemas/ScheduleResponseBaseObject'
+    Currency:
+      title: Currency
+      type: string
+      description: Currency code in ISO 4217 format. Only USD is supported.
+      enum:
+      - USD
+    ScheduleStartDate:
+      type: string
+      description: The date when the schedule starts, in YYYY-MM-DD format.
+      format: date
+      example: '2025-01-01'
+    CreatedAt:
+      type: string
+      description: Timestamp when the resource was created.
+      format: date-time
+    ScheduleRequest:
+      title: ScheduleRequest
+      type: object
+      properties:
+        schedule_reference_id:
+          allOf:
+          - $ref: '#/components/schemas/ScheduleReferenceId'
+          x-orum-error-missing:
+            known-error: missing_schedule_reference_id
+          x-orum-error-invalid:
+            known-error: invalid_schedule_reference_id
+        amount:
+          allOf:
+          - $ref: '#/components/schemas/TransferAmount'
+          x-orum-error-missing:
+            known-error: missing_amount
+          x-orum-error-invalid:
+            known-error: invalid_amount
+        currency:
+          allOf:
+          - $ref: '#/components/schemas/Currency'
+          x-orum-error-missing:
+            known-error: missing_currency
+          x-orum-error-invalid:
+            known-error: invalid_currency
+        speed:
+          allOf:
+          - $ref: '#/components/schemas/TransferSpeed'
+          x-orum-error-missing:
+            known-error: missing_speed
+          x-orum-error-invalid:
+            known-error: invalid_speed
+        source:
+          allOf:
+          - $ref: '#/components/schemas/SourceTransferParty'
+          nullable: true
+          type: object
+        destination:
+          allOf:
+          - $ref: '#/components/schemas/DestinationTransferParty'
+          type: object
+          nullable: true
+        start_date:
+          allOf:
+          - $ref: '#/components/schemas/ScheduleStartDate'
+          x-orum-error-missing:
+            known-error: missing_schedule_start_date
+          x-orum-error-invalid:
+            known-error: invalid_schedule_start_date
+        recurrence:
+          allOf:
+          - $ref: '#/components/schemas/ScheduleRecurrence'
+          x-orum-error-missing:
+            known-error: missing_schedule_recurrence
+          x-orum-error-invalid:
+            known-error: invalid_schedule_recurrence
+      required:
+      - schedule_reference_id
+      - amount
+      - currency
+      - speed
+      - start_date
+      - recurrence
+    UpdatedAt:
+      type: string
+      description: Timestamp when the resource was last updated.
+      format: date-time
+    ScheduleNextPaymentDate:
+      type: string
+      description: The date when the schedule will execute
+      format: date
+      example: '2025-01-01'
+    RruleValidationResponse:
+      title: RruleValidationResponse
+      type: object
+      properties:
+        start_date:
+          $ref: '#/components/schemas/ScheduleStartDate'
+        rrule_string:
+          type: string
+          description: The original RRULE string
+        rrule_readable:
+          type: string
+          description: Human readable form of the RRULE
+        occurrences:
+          type: array
+          description: List of next occurrence dates
+          items:
+            type: string
+            format: date
+      required:
+      - start_date
+      - recurrence
+      - occurrences
+      - rrule_string
+      - rrule_readable
+    ScheduleHumanReadableCadence:
+      title: ScheduleHumanReadableCadence
+      type: string
+      description: The human-readable cadence of the schedule.
+      example: Weekly on Monday, Wednesday, and Friday
+    OrumId:
+      type: string
+      description: Orum generated unique id for the resource.
+      format: uuid
+    DestinationTransferParty:
+      title: TransferDestination
+      type: object
+      description: Information about the transfer funds destination, which will be credited.
+      properties:
+        customer_reference_id:
+          type: string
+          description: Unique reference ID for the customer (person or business) associated with the external account being credited.
+          minLength: 1
+          x-orum-error-missing:
+            known-error: missing_destination_customer_reference_id
+          x-orum-error-invalid:
+            known-error: invalid_destination_customer_reference_id
+        account_reference_id:
+          type: string
+          description: Unique reference ID for the account being credited.
+          minLength: 1
+          x-orum-error-missing:
+            known-error: missing_destination_account_reference_id
+          x-orum-error-invalid:
+            known-error: invalid_destination_account_reference_id
+        statement_display_name:
+          type: string
+          description: The name that will appear on the bank account statement of the account being credited. The field supports 16 alphanumeric characters for ACH, and 140 for RTP.
+          nullable: true
+      required:
+      - account_reference_id
+      - customer_reference_id
+    ScheduleResponseBaseObject:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/OrumId'
+        schedule_reference_id:
+          $ref: '#/components/schemas/ScheduleReferenceId'
+        status:
+          $ref: '#/components/schemas/ScheduleStatus'
+        amount:
+          $ref: '#/components/schemas/TransferAmount'
+        currency:
+          $ref: '#/components/schemas/Currency'
+        speed:
+          $ref: '#/components/schemas/TransferSpeed'
+        source:
+          $ref: '#/components/schemas/SourceTransferParty'
+        destination:
+          $ref: '#/components/schemas/DestinationTransferParty'
+        start_date:
+          $ref: '#/components/schemas/ScheduleStartDate'
+        recurrence:
+          $ref: '#/components/schemas/ScheduleRecurrence'
+        next_payment_date:
+          $ref: '#/components/schemas/ScheduleNextPaymentDate'
+        created_at:
+          $ref: '#/components/schemas/CreatedAt'
+        updated_at:
+          $ref: '#/components/schemas/UpdatedAt'
+        rrule_readable:
+          $ref: '#/components/schemas/ScheduleHumanReadableCadence'
+      required:
+      - id
+      - schedule_reference_id
+      - status
+      - amount
+      - currency
+      - speed
+      - start_date
+      - recurrence
+      - next_payment_date
+      - created_at
+      - updated_at
+      - rrule_readable
+    TransferSpeed:
+      title: TransferSpeed
+      type: string
+      description: Speed of transfer.
+      enum:
+      - asap
+      - standard
+      - same_day
+      - wire
+  securitySchemes:
+    oauth2:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: https://api-sandbox.orum.io/oauth/token
+          scopes:
+            read:persons: Read persons
+            write:persons: Write persons
+            read:businesses: Read businesses
+            write:businesses: Write businesses
+            read:external-accounts: Read external accounts
+            write:external-accounts: Write external accounts
+            read:cards: Read cards
+            write:cards: Write cards
+            read:transfers: Read transfers
+            write:transfers: Write transfers
+            read:transfer-groups: Read transfer groups
+            write:transfer-groups: Write transfer groups
+            read:schedules: Read schedules
+            write:schedules: Write schedules
+            read:routing-number-eligibility: Read routing number eligibility
+            read:balances: Read balances
+            read:reports: Read reports
+            write:reports: Write reports
+            read:booktransfers: Read book transfers
+            write:booktransfers: Write book transfers
+            read:subledgers: Read subledgers
+            write:subledgers: Write subledgers
+            read:verify-accounts: Read verify accounts
+            write:verify-accounts: Write verify accounts
+            read:webhook-configurations: Read webhook configurations
+            write:webhook-configurations: Write webhook configurations
+            read:webhook-secret: Read webhook secret
+            write:webhook-secret: Write webhook secret
+            invoke:webhook: Invoke webhook

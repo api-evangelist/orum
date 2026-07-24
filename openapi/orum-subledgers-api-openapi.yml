@@ -1,0 +1,351 @@
+openapi: 3.0.1
+info:
+  title: Orum Authentication Subledgers API
+  description: Orum API.
+  version: v2022-09-21
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+servers:
+- url: https://api-sandbox.orum.io
+- url: https://vault.api-sandbox.orum.io
+tags:
+- name: Subledgers
+paths:
+  /deliver/subledgers:
+    post:
+      tags:
+      - Subledgers
+      operationId: post-subledger
+      summary: Create a subledger
+      description: Create a subledger object to represent a separate pool of funds attached to an existing customer
+      parameters:
+      - name: Orum-Version
+        in: header
+        required: true
+        schema:
+          $ref: '#/components/schemas/OrumVersion'
+        x-orum-error-invalid:
+          known-error: version_invalid
+        x-orum-error-missing:
+          known-error: version_missing
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SubledgerRequest'
+        required: true
+      responses:
+        '200':
+          description: 200 response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SubledgerResponse'
+        '400':
+          description: invalid request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        default:
+          description: unexpected error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      security:
+      - oauth2:
+        - write:subledgers
+    get:
+      tags:
+      - Subledgers
+      operationId: get-subledgers
+      summary: Get all subledgers
+      description: Get all subledger objects.
+      parameters:
+      - name: Orum-Version
+        in: header
+        required: true
+        schema:
+          $ref: '#/components/schemas/OrumVersion'
+        x-orum-error-invalid:
+          known-error: version_invalid
+        x-orum-error-missing:
+          known-error: version_missing
+      - name: index
+        description: Index for paginated results
+        in: query
+        required: false
+        schema:
+          type: integer
+          default: 0
+          minimum: 0
+        x-orum-error-invalid:
+          known-error: index
+      - name: size
+        description: Max number of results to return
+        in: query
+        required: false
+        schema:
+          type: integer
+          default: 100
+          minimum: 0
+          maximum: 500
+        x-orum-error-invalid:
+          known-error: size
+      - name: subledger_reference_id
+        description: Filter results by subledger reference id
+        in: query
+        required: false
+        schema:
+          $ref: '#/components/schemas/SubledgerReferenceId'
+      responses:
+        '200':
+          description: 200 response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SubledgersResponse'
+        '400':
+          description: invalid request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        default:
+          description: unexpected error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      security:
+      - oauth2:
+        - read:subledgers
+  /deliver/subledgers/{id}:
+    get:
+      tags:
+      - Subledgers
+      operationId: get-subledger
+      summary: Get a subledger
+      description: Get a subledger by id
+      parameters:
+      - name: Orum-Version
+        in: header
+        required: true
+        schema:
+          $ref: '#/components/schemas/OrumVersion'
+        x-orum-error-invalid:
+          known-error: version_invalid
+        x-orum-error-missing:
+          known-error: version_missing
+      - name: id
+        in: path
+        required: true
+        description: Subledger ID
+        schema:
+          type: string
+          format: uuid
+          description: The unique identifier for the subledger in UUID format.
+        x-orum-error-invalid:
+          known-error: unknown_id_subledger
+      responses:
+        200:
+          description: successful response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SubledgerResponse'
+        400:
+          description: invalid request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        404:
+          description: not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        default:
+          description: unexpected error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      security:
+      - oauth2:
+        - read:subledgers
+components:
+  schemas:
+    SubledgerRequest:
+      title: SubledgerRequest
+      type: object
+      required:
+      - subledger_reference_id
+      - customer_reference_id
+      properties:
+        subledger_reference_id:
+          allOf:
+          - $ref: '#/components/schemas/SubledgerReferenceId'
+          x-orum-error-missing:
+            known-error: missing_subledger_reference_id
+          x-orum-error-invalid:
+            known-error: invalid_subledger_reference_id
+        customer_reference_id:
+          allOf:
+          - $ref: '#/components/schemas/CustomerReferenceId'
+          x-orum-error-missing:
+            known-error: missing_customer_reference_id
+          x-orum-error-invalid:
+            known-error: invalid_customer_reference_id
+    OrumVersion:
+      type: string
+      description: Version of Deliver and Verify APIs. Use v2022-09-21.
+      enum:
+      - v2022-09-21
+    SubledgerResponseBase:
+      type: object
+      required:
+      - id
+      - subledger_reference_id
+      - customer_reference_id
+      - customer_resource_type
+      - status
+      - created_at
+      - updated_at
+      properties:
+        id:
+          $ref: '#/components/schemas/OrumId'
+        subledger_reference_id:
+          $ref: '#/components/schemas/SubledgerReferenceId'
+        customer_reference_id:
+          $ref: '#/components/schemas/CustomerReferenceId'
+        customer_resource_type:
+          $ref: '#/components/schemas/EndCustomerResourceType'
+        status:
+          $ref: '#/components/schemas/SubledgerStatus'
+        created_at:
+          $ref: '#/components/schemas/CreatedAt'
+        updated_at:
+          $ref: '#/components/schemas/UpdatedAt'
+        closed_at:
+          $ref: '#/components/schemas/ClosedAt'
+    CreatedAt:
+      type: string
+      description: Timestamp when the resource was created.
+      format: date-time
+    EndCustomerResourceType:
+      type: string
+      description: Type of customer resource - business, person, or enterprise.
+      enum:
+      - business
+      - person
+      - enterprise
+    SubledgerReferenceId:
+      title: SubledgerReferenceId
+      type: string
+      description: Unique reference id for the subledger resource. Generated by you.
+      minLength: 1
+      maxLength: 255
+    UpdatedAt:
+      type: string
+      description: Timestamp when the resource was last updated.
+      format: date-time
+    CustomerReferenceId:
+      title: CustomerReferenceId
+      type: string
+      description: Unique reference id for the customer (business or person) resource. Generated by you.
+      minLength: 1
+      maxLength: 255
+    SubledgerStatus:
+      title: SubledgerStatus
+      type: string
+      description: Status of subledger in Orum system.
+      enum:
+      - created
+    ClosedAt:
+      type: string
+      description: Timestamp when the status of the resource was set to "closed".
+      format: date-time
+    ErrorResponse:
+      type: object
+      properties:
+        error_code:
+          type: string
+        message:
+          type: string
+        details:
+          type: object
+          description: additional details about the error.
+          nullable: true
+      required:
+      - error_code
+      - message
+    OrumId:
+      type: string
+      description: Orum generated unique id for the resource.
+      format: uuid
+    SubledgerResponse:
+      title: SubledgerResponse
+      type: object
+      required:
+      - subledger
+      properties:
+        subledger:
+          allOf:
+          - $ref: '#/components/schemas/SubledgerResponseBase'
+    SubledgersResponse:
+      title: SubledgersResponse
+      type: object
+      required:
+      - subledgers
+      properties:
+        subledgers:
+          type: array
+          description: List of subledgers.
+          items:
+            $ref: '#/components/schemas/SubledgerResponseBase'
+  securitySchemes:
+    oauth2:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: https://api-sandbox.orum.io/oauth/token
+          scopes:
+            read:persons: Read persons
+            write:persons: Write persons
+            read:businesses: Read businesses
+            write:businesses: Write businesses
+            read:external-accounts: Read external accounts
+            write:external-accounts: Write external accounts
+            read:cards: Read cards
+            write:cards: Write cards
+            read:transfers: Read transfers
+            write:transfers: Write transfers
+            read:transfer-groups: Read transfer groups
+            write:transfer-groups: Write transfer groups
+            read:schedules: Read schedules
+            write:schedules: Write schedules
+            read:routing-number-eligibility: Read routing number eligibility
+            read:balances: Read balances
+            read:reports: Read reports
+            write:reports: Write reports
+            read:booktransfers: Read book transfers
+            write:booktransfers: Write book transfers
+            read:subledgers: Read subledgers
+            write:subledgers: Write subledgers
+            read:verify-accounts: Read verify accounts
+            write:verify-accounts: Write verify accounts
+            read:webhook-configurations: Read webhook configurations
+            write:webhook-configurations: Write webhook configurations
+            read:webhook-secret: Read webhook secret
+            write:webhook-secret: Write webhook secret
+            invoke:webhook: Invoke webhook

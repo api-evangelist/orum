@@ -1,0 +1,367 @@
+openapi: 3.0.1
+info:
+  title: Orum Authentication Transfer Groups API
+  description: Orum API.
+  version: v2022-09-21
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+servers:
+- url: https://api-sandbox.orum.io
+- url: https://vault.api-sandbox.orum.io
+tags:
+- name: Transfer Groups
+paths:
+  /deliver/transfer-groups:
+    post:
+      tags:
+      - Transfer Groups
+      operationId: post-transfer-group
+      summary: Create a Transfer Group
+      description: Create a Transfer Group object.
+      parameters:
+      - name: Orum-Version
+        in: header
+        required: true
+        schema:
+          $ref: '#/components/schemas/OrumVersion'
+        x-orum-error-invalid:
+          known-error: version_invalid
+        x-orum-error-missing:
+          known-error: version_missing
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TransferGroupRequest'
+        required: true
+      responses:
+        '200':
+          description: successful response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransferGroupResponse'
+        '400':
+          description: invalid request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        default:
+          description: unexpected error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      security:
+      - oauth2:
+        - write:transfer-groups
+    get:
+      tags:
+      - Transfer Groups
+      operationId: get-transfer-groups
+      summary: Get all Transfer Groups
+      description: Get all Transfer Group objects, sorted by most recently created transfer groups
+      parameters:
+      - name: Orum-Version
+        in: header
+        required: true
+        schema:
+          $ref: '#/components/schemas/OrumVersion'
+        x-orum-error-invalid:
+          known-error: version_invalid
+        x-orum-error-missing:
+          known-error: version_missing
+      - name: index
+        description: Index for paginated results
+        in: query
+        required: false
+        schema:
+          type: integer
+          minimum: 0
+          default: 0
+        x-orum-error-invalid:
+          known-error: index
+      - name: size
+        description: Max number of results to return
+        in: query
+        required: false
+        schema:
+          type: integer
+          minimum: 0
+          maximum: 500
+          default: 100
+        x-orum-error-invalid:
+          known-error: size
+      - name: transfer_group_reference_id
+        description: Filter results by reference id.
+        in: query
+        required: false
+        schema:
+          type: string
+        x-orum-error-missing:
+          known-error: invalid_transfer_group_reference_id
+      responses:
+        '200':
+          description: 200 response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransferGroupsResponse'
+        '400':
+          description: invalid request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        default:
+          description: unexpected error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      security:
+      - oauth2:
+        - read:transfer-groups
+  /deliver/transfer-groups/{id}:
+    get:
+      tags:
+      - Transfer Groups
+      operationId: get-transfer-group
+      summary: Get a Transfer Group
+      description: Get a Transfer Group object by ID
+      parameters:
+      - name: Orum-Version
+        in: header
+        required: true
+        schema:
+          $ref: '#/components/schemas/OrumVersion'
+        x-orum-error-invalid:
+          known-error: version_invalid
+        x-orum-error-missing:
+          known-error: version_missing
+      - name: id
+        in: path
+        required: true
+        description: Transfer Group ID
+        schema:
+          type: string
+          format: uuid
+          description: The unique identifier for the transfer group in UUID format.
+        x-orum-error-invalid:
+          known-error: unknown_id_transfer_group
+      responses:
+        '200':
+          description: successful response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransferGroupResponse'
+        '400':
+          description: invalid request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        default:
+          description: unexpected error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      security:
+      - oauth2:
+        - read:transfer-groups
+components:
+  schemas:
+    OrumVersion:
+      type: string
+      description: Version of Deliver and Verify APIs. Use v2022-09-21.
+      enum:
+      - v2022-09-21
+    TransferGroup:
+      title: TransferGroup
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/OrumId'
+        created_at:
+          $ref: '#/components/schemas/CreatedAt'
+        updated_at:
+          $ref: '#/components/schemas/UpdatedAt'
+        transfer_group_reference_id:
+          $ref: '#/components/schemas/TransferGroupReferenceID'
+        source:
+          $ref: '#/components/schemas/TransferGroupSourceObject'
+        destination:
+          $ref: '#/components/schemas/TransferGroupDestinationObject'
+      required:
+      - id
+      - created_at
+      - updated_at
+      - transfer_group_reference_id
+    CreatedAt:
+      type: string
+      description: Timestamp when the resource was created.
+      format: date-time
+    UpdatedAt:
+      type: string
+      description: Timestamp when the resource was last updated.
+      format: date-time
+    TransferGroupDestinationObject:
+      title: Destination
+      type: object
+      description: Information about the ultimate destination of the transfer group.
+      properties:
+        account_reference_id:
+          type: string
+          minLength: 1
+          description: Unique id of the account on the Enterprise platform
+          x-orum-error-missing:
+            known-error: missing_transfer_group_destination_account_reference_id
+          x-orum-error-invalid:
+            known-error: invalid_transfer_group_destination_account_reference_id
+        customer_reference_id:
+          type: string
+          minLength: 1
+          description: Unique id of the customer on the Enterprise platform
+          x-orum-error-missing:
+            known-error: missing_transfer_group_destination_customer_reference_id
+          x-orum-error-invalid:
+            known-error: invalid_transfer_group_destination_customer_reference_id
+      required:
+      - account_reference_id
+      - customer_reference_id
+    TransferGroupsResponse:
+      title: TransferGroupsResponse
+      type: object
+      properties:
+        transfer_groups:
+          type: array
+          items:
+            $ref: '#/components/schemas/TransferGroup'
+      required:
+      - transfer_groups
+    TransferGroupSourceObject:
+      title: Source
+      type: object
+      description: Information about the ultimate source of the transfer group.
+      properties:
+        account_reference_id:
+          type: string
+          minLength: 1
+          description: Unique id of the account on the Enterprise platform
+          x-orum-error-missing:
+            known-error: missing_transfer_group_source_account_reference_id
+          x-orum-error-invalid:
+            known-error: invalid_transfer_group_source_account_reference_id
+        customer_reference_id:
+          type: string
+          minLength: 1
+          description: Unique id of the customer on the Enterprise platform
+          x-orum-error-missing:
+            known-error: missing_transfer_group_source_customer_reference_id
+          x-orum-error-invalid:
+            known-error: invalid_transfer_group_source_customer_reference_id
+      required:
+      - account_reference_id
+      - customer_reference_id
+    TransferGroupResponse:
+      title: TransferGroupResponse
+      type: object
+      properties:
+        transfer_group:
+          $ref: '#/components/schemas/TransferGroup'
+      required:
+      - transfer_group
+    ErrorResponse:
+      type: object
+      properties:
+        error_code:
+          type: string
+        message:
+          type: string
+        details:
+          type: object
+          description: additional details about the error.
+          nullable: true
+      required:
+      - error_code
+      - message
+    TransferGroupReferenceID:
+      title: TransferGroupReferenceID
+      type: string
+      minLength: 1
+      description: Unique reference id for the transfer group
+      x-orum-error-invalid:
+        known-error: invalid_transfer_group_reference_id
+    OrumId:
+      type: string
+      description: Orum generated unique id for the resource.
+      format: uuid
+    TransferGroupRequest:
+      title: TransferGroupRequest
+      type: object
+      properties:
+        transfer_group_reference_id:
+          allOf:
+          - $ref: '#/components/schemas/TransferGroupReferenceID'
+          x-orum-error-missing:
+            known-error: missing_transfer_group_reference_id
+          x-orum-error-invalid:
+            known-error: invalid_transfer_group_reference_id
+        source:
+          allOf:
+          - $ref: '#/components/schemas/TransferGroupSourceObject'
+          type: object
+          nullable: true
+        destination:
+          allOf:
+          - $ref: '#/components/schemas/TransferGroupDestinationObject'
+          type: object
+          nullable: true
+      required:
+      - transfer_group_reference_id
+  securitySchemes:
+    oauth2:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: https://api-sandbox.orum.io/oauth/token
+          scopes:
+            read:persons: Read persons
+            write:persons: Write persons
+            read:businesses: Read businesses
+            write:businesses: Write businesses
+            read:external-accounts: Read external accounts
+            write:external-accounts: Write external accounts
+            read:cards: Read cards
+            write:cards: Write cards
+            read:transfers: Read transfers
+            write:transfers: Write transfers
+            read:transfer-groups: Read transfer groups
+            write:transfer-groups: Write transfer groups
+            read:schedules: Read schedules
+            write:schedules: Write schedules
+            read:routing-number-eligibility: Read routing number eligibility
+            read:balances: Read balances
+            read:reports: Read reports
+            write:reports: Write reports
+            read:booktransfers: Read book transfers
+            write:booktransfers: Write book transfers
+            read:subledgers: Read subledgers
+            write:subledgers: Write subledgers
+            read:verify-accounts: Read verify accounts
+            write:verify-accounts: Write verify accounts
+            read:webhook-configurations: Read webhook configurations
+            write:webhook-configurations: Write webhook configurations
+            read:webhook-secret: Read webhook secret
+            write:webhook-secret: Write webhook secret
+            invoke:webhook: Invoke webhook
