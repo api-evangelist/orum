@@ -1,0 +1,49 @@
+generated: '2026-07-20'
+method: derived
+source: openapi/orum-openapi-original.yml
+entities:
+  - name: person
+    description: An individual customer (KYC).
+  - name: business
+    description: A business customer (KYB).
+  - name: external_account
+    description: A bank account linked to a person or business.
+  - name: card
+    description: A card object for card-based money movement.
+  - name: transfer
+    description: A money movement between a source and destination party.
+  - name: transfer_group
+    description: A grouping of related transfers.
+  - name: subledger
+    description: A segregated pool of funds attached to a customer.
+  - name: schedule
+    description: A recurring transfer schedule (RRULE-based).
+  - name: verify_account
+    description: A bank account verification request (Verify product).
+  - name: webhook_configuration
+    description: A subscription to webhook event delivery.
+relationships:
+  - from: external_account
+    to: person
+    type: belongs_to
+    via: person_id
+  - from: external_account
+    to: business
+    type: belongs_to
+    via: business_id
+  - from: transfer
+    to: external_account
+    type: references
+    via: source/destination party
+  - from: transfer
+    to: transfer_group
+    type: belongs_to
+    via: transfer_group_id
+  - from: subledger
+    to: person
+    type: belongs_to
+    via: customer
+  - from: schedule
+    to: transfer
+    type: has_many
+    via: schedule_id

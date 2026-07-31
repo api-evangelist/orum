@@ -1,0 +1,185 @@
+generated: '2026-07-20'
+method: searched
+source: openapi/orum-openapi-original.yml
+docs: https://docs.orum.io/guides/api-authentication
+schemes:
+- name: oauth2
+  source: openapi/orum-openapi-original.yml
+  flows:
+  - flow: clientCredentials
+    tokenUrl: https://api-sandbox.orum.io/oauth/token
+scopes:
+- scope: invoke:webhook
+  description: Invoke webhook
+  flows:
+  - clientCredentials
+  sources:
+  - openapi/orum-openapi-original.yml
+- scope: read:balances
+  description: Read balances
+  flows:
+  - clientCredentials
+  sources:
+  - openapi/orum-openapi-original.yml
+- scope: read:booktransfers
+  description: Read book transfers
+  flows:
+  - clientCredentials
+  sources:
+  - openapi/orum-openapi-original.yml
+- scope: read:businesses
+  description: Read businesses
+  flows:
+  - clientCredentials
+  sources:
+  - openapi/orum-openapi-original.yml
+- scope: read:cards
+  description: Read cards
+  flows:
+  - clientCredentials
+  sources:
+  - openapi/orum-openapi-original.yml
+- scope: read:external-accounts
+  description: Read external accounts
+  flows:
+  - clientCredentials
+  sources:
+  - openapi/orum-openapi-original.yml
+- scope: read:persons
+  description: Read persons
+  flows:
+  - clientCredentials
+  sources:
+  - openapi/orum-openapi-original.yml
+- scope: read:reports
+  description: Read reports
+  flows:
+  - clientCredentials
+  sources:
+  - openapi/orum-openapi-original.yml
+- scope: read:routing-number-eligibility
+  description: Read routing number eligibility
+  flows:
+  - clientCredentials
+  sources:
+  - openapi/orum-openapi-original.yml
+- scope: read:schedules
+  description: Read schedules
+  flows:
+  - clientCredentials
+  sources:
+  - openapi/orum-openapi-original.yml
+- scope: read:subledgers
+  description: Read subledgers
+  flows:
+  - clientCredentials
+  sources:
+  - openapi/orum-openapi-original.yml
+- scope: read:transfer-groups
+  description: Read transfer groups
+  flows:
+  - clientCredentials
+  sources:
+  - openapi/orum-openapi-original.yml
+- scope: read:transfers
+  description: Read transfers
+  flows:
+  - clientCredentials
+  sources:
+  - openapi/orum-openapi-original.yml
+- scope: read:verify-accounts
+  description: Read verify accounts
+  flows:
+  - clientCredentials
+  sources:
+  - openapi/orum-openapi-original.yml
+- scope: read:webhook-configurations
+  description: Read webhook configurations
+  flows:
+  - clientCredentials
+  sources:
+  - openapi/orum-openapi-original.yml
+- scope: read:webhook-secret
+  description: Read webhook secret
+  flows:
+  - clientCredentials
+  sources:
+  - openapi/orum-openapi-original.yml
+- scope: write:booktransfers
+  description: Write book transfers
+  flows:
+  - clientCredentials
+  sources:
+  - openapi/orum-openapi-original.yml
+- scope: write:businesses
+  description: Write businesses
+  flows:
+  - clientCredentials
+  sources:
+  - openapi/orum-openapi-original.yml
+- scope: write:cards
+  description: Write cards
+  flows:
+  - clientCredentials
+  sources:
+  - openapi/orum-openapi-original.yml
+- scope: write:external-accounts
+  description: Write external accounts
+  flows:
+  - clientCredentials
+  sources:
+  - openapi/orum-openapi-original.yml
+- scope: write:persons
+  description: Write persons
+  flows:
+  - clientCredentials
+  sources:
+  - openapi/orum-openapi-original.yml
+- scope: write:reports
+  description: Write reports
+  flows:
+  - clientCredentials
+  sources:
+  - openapi/orum-openapi-original.yml
+- scope: write:schedules
+  description: Write schedules
+  flows:
+  - clientCredentials
+  sources:
+  - openapi/orum-openapi-original.yml
+- scope: write:subledgers
+  description: Write subledgers
+  flows:
+  - clientCredentials
+  sources:
+  - openapi/orum-openapi-original.yml
+- scope: write:transfer-groups
+  description: Write transfer groups
+  flows:
+  - clientCredentials
+  sources:
+  - openapi/orum-openapi-original.yml
+- scope: write:transfers
+  description: Write transfers
+  flows:
+  - clientCredentials
+  sources:
+  - openapi/orum-openapi-original.yml
+- scope: write:verify-accounts
+  description: Write verify accounts
+  flows:
+  - clientCredentials
+  sources:
+  - openapi/orum-openapi-original.yml
+- scope: write:webhook-configurations
+  description: Write webhook configurations
+  flows:
+  - clientCredentials
+  sources:
+  - openapi/orum-openapi-original.yml
+- scope: write:webhook-secret
+  description: Write webhook secret
+  flows:
+  - clientCredentials
+  sources:
+  - openapi/orum-openapi-original.yml

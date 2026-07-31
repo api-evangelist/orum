@@ -1,0 +1,131 @@
+# Developer Docs
+
+## Docs
+
+- [Request Access Token](https://docs.orum.io/api-reference/auth/post-oauth-token.md)
+- [Get Balance](https://docs.orum.io/api-reference/deliver/balance/get-balance.md): Get balance object.
+- [Get subledger account balance](https://docs.orum.io/api-reference/deliver/balance/subledgers/get-subledger-balance.md): Get subledger account balance object.
+- [Gets all subledger account balances](https://docs.orum.io/api-reference/deliver/balance/subledgers/get-subledger-balances.md): Gets all subledger account balance object.
+- [Get a book transfer](https://docs.orum.io/api-reference/deliver/booktransfers/get-booktransfer.md): Get a book transfer by id
+- [Get all booktransfers](https://docs.orum.io/api-reference/deliver/booktransfers/get-booktransfers.md): Get all book transfer objects.
+- [Create a book transfer](https://docs.orum.io/api-reference/deliver/booktransfers/post-booktransfer.md): Create a book transfer
+- [Close Business By ID](https://docs.orum.io/api-reference/deliver/businesses/delete-business.md): Close a business object so they are unable to transact.
+- [Get Business By ID](https://docs.orum.io/api-reference/deliver/businesses/get-business.md): Get a business object.
+- [Get All Businesses](https://docs.orum.io/api-reference/deliver/businesses/get-businesses.md): Get all business objects.
+- [Partial Update Business By ID](https://docs.orum.io/api-reference/deliver/businesses/patch-business.md): Update individual fields on a business object.
+- [Create Business](https://docs.orum.io/api-reference/deliver/businesses/post-business.md): Create a business object to represent a business customer.
+- [Update Business By ID](https://docs.orum.io/api-reference/deliver/businesses/put-business.md): Update a business object by id.
+- [Update Business By Customers Reference ID](https://docs.orum.io/api-reference/deliver/businesses/put-business-using-reference-id.md): Update a business object using reference id.
+- [Close A Card By ID](https://docs.orum.io/api-reference/deliver/cards/delete-card.md): Close a card object so they are unable to transact.
+- [Get A Card By ID](https://docs.orum.io/api-reference/deliver/cards/get-card.md): Get a card object by id.
+- [Get All Cards](https://docs.orum.io/api-reference/deliver/cards/get-cards.md): Get all cards by filter.
+- [Create A Card](https://docs.orum.io/api-reference/deliver/cards/post-card.md): Create a card object.
+- [A List of RTP and FedNow Eligible Routing Numbers](https://docs.orum.io/api-reference/deliver/eligibility/get-eligibility.md): Returns all routing numbers that are eligible for RTP and FedNow
+- [Check If Routing Number Is Eligible For RTP Or FedNow](https://docs.orum.io/api-reference/deliver/eligibility/post-eligibility.md): Returns routing number eligibility
+- [Close External Account By ID](https://docs.orum.io/api-reference/deliver/external-accounts/delete-external-account.md): Close an external account object so they are unable to transact.
+- [Get All External Accounts For Specific Business](https://docs.orum.io/api-reference/deliver/external-accounts/get-business-external-accounts.md): Get all external account objects, associated with a specific business
+- [Get an external account by id](https://docs.orum.io/api-reference/deliver/external-accounts/get-external-account.md): Get an external account object.
+- [Get All External Accounts](https://docs.orum.io/api-reference/deliver/external-accounts/get-external-accounts.md): Get all external account objects.
+- [Get All External Accounts For Specific Person](https://docs.orum.io/api-reference/deliver/external-accounts/get-person-external-accounts.md): Get all external account objects, associated with a specific person
+- [Partial Update External Account By ID](https://docs.orum.io/api-reference/deliver/external-accounts/patch-external-account.md): Update individual fields on an external account object.
+- [Create External Account](https://docs.orum.io/api-reference/deliver/external-accounts/post-external-account.md): Create an external account object.
+- [Update External Account By ID](https://docs.orum.io/api-reference/deliver/external-accounts/put-external-account.md): Update an external account object.
+- [Update External Account By Customer Reference ID](https://docs.orum.io/api-reference/deliver/external-accounts/put-external-account-using-reference-id.md): Update an external account object using its reference id.
+- [Close Person By ID](https://docs.orum.io/api-reference/deliver/persons/delete-person.md): Close a person object so they are unable to transact.
+- [Get Person By ID](https://docs.orum.io/api-reference/deliver/persons/get-person.md): Get a person object.
+- [Get All Persons](https://docs.orum.io/api-reference/deliver/persons/get-persons.md): Get all persons objects.
+- [Partial Update Person By ID](https://docs.orum.io/api-reference/deliver/persons/patch-person.md): Update individual fields on person object.
+- [Create Person](https://docs.orum.io/api-reference/deliver/persons/post-person.md): Create a person object to represent a human customer.
+- [Update Person By ID](https://docs.orum.io/api-reference/deliver/persons/put-person.md): Update a person object by its id.
+- [Update Person By Customer Reference ID](https://docs.orum.io/api-reference/deliver/persons/put-person-using-reference-id.md): Update a person object using its reference id.
+- [Delete Report](https://docs.orum.io/api-reference/deliver/reports/delete-report.md): Delete a single report.
+- [Download Report](https://docs.orum.io/api-reference/deliver/reports/get-report-download.md): Download a single report.
+- [Get Reconciliation Report](https://docs.orum.io/api-reference/deliver/reports/get-report-recon.md): Get a single reconciliation report by ID.
+- [Get Balance Statement Summary Report](https://docs.orum.io/api-reference/deliver/reports/get-reports-balances.md): Get a balance statement summary report for the requested start and end date.
+- [Get All Reconciliation Reports](https://docs.orum.io/api-reference/deliver/reports/get-reports-recon.md): Get all reconciliation reports.
+- [Create Reconciliation Report](https://docs.orum.io/api-reference/deliver/reports/post-report-recon.md): Create a reconciliation report for the requested start and end date.
+- [Deactivate schedule](https://docs.orum.io/api-reference/deliver/schedules/delete-schedule.md): Sets the schedule's status to inactive
+- [Get schedule by id](https://docs.orum.io/api-reference/deliver/schedules/get-schedule.md): Retrieve a single schedule
+- [Get all schedules](https://docs.orum.io/api-reference/deliver/schedules/get-schedules.md): Get all schedule objects.
+- [Create a schedule](https://docs.orum.io/api-reference/deliver/schedules/post-schedule.md): Schedule recurring transfers.
+- [Validate and parse RRULE string](https://docs.orum.io/api-reference/deliver/schedules/post-validate-rrule.md): Validates an RRULE string and returns its human readable form along with next occurrence dates.
+- [Get a subledger](https://docs.orum.io/api-reference/deliver/subledgers/get-subledger.md): Get a subledger by id
+- [Get all subledgers](https://docs.orum.io/api-reference/deliver/subledgers/get-subledgers.md): Get all subledger objects.
+- [Create a subledger](https://docs.orum.io/api-reference/deliver/subledgers/post-subledger.md): Create a subledger object to represent a separate pool of funds attached to an existing customer
+- [Get Transfer Group By ID](https://docs.orum.io/api-reference/deliver/transfer-groups/get-transfer-group.md): Get a Transfer Group object by ID
+- [Get All Transfer Groups](https://docs.orum.io/api-reference/deliver/transfer-groups/get-transfer-groups.md): Get all Transfer Group objects, sorted by most recently created transfer groups
+- [Create Transfer Group](https://docs.orum.io/api-reference/deliver/transfer-groups/post-transfer-group.md): Create a Transfer Group object.
+- [Get Transfer By ID](https://docs.orum.io/api-reference/deliver/transfers/get-transfer.md): Get a transfer object.
+- [Get Transfer History by ID](https://docs.orum.io/api-reference/deliver/transfers/get-transfer-history.md): Get the history of status changes for a transfer.
+- [Get All Transfers](https://docs.orum.io/api-reference/deliver/transfers/get-transfers.md): Get all transfer objects.
+- [Update Transfer Metadata By ID](https://docs.orum.io/api-reference/deliver/transfers/patch-transfer-metadata.md): Update the metadata on a transfer.
+- [Create Transfer](https://docs.orum.io/api-reference/deliver/transfers/post-transfer.md): Initiate a transfer between a source party and destination party.
+- [Cancel Transfer By ID](https://docs.orum.io/api-reference/deliver/transfers/post-transfer-cancel.md): Initiates a transfer cancellation request if the transfer is eligible.
+- [Get Verify Account](https://docs.orum.io/api-reference/verify/get-verify-account.md): Get a single verify account.
+- [Get All Verify Accounts](https://docs.orum.io/api-reference/verify/get-verify-accounts.md): Get all verify accounts, sorted by most recently created.
+- [Verify Account Control](https://docs.orum.io/api-reference/verify/post-verify-account-control.md): Verify control for a single verify account.
+- [Post Verify Accounts](https://docs.orum.io/api-reference/verify/post-verify-accounts.md): Request account verification.
+- [Delete Webhook Configuration](https://docs.orum.io/api-reference/webhooks/delete-webhook-configurations.md)
+- [Event Types and Payloads](https://docs.orum.io/api-reference/webhooks/event-types-and-payloads.md): Learn about the event types and payloads for webhooks.
+- [Retrieve List Of Webhook Configurations](https://docs.orum.io/api-reference/webhooks/get-webhook-configurations.md)
+- [Retrieve Public-Private Key Pair](https://docs.orum.io/api-reference/webhooks/get-webhook-secret.md)
+- [Overview And Set Up](https://docs.orum.io/api-reference/webhooks/overview.md): Learn how to receive and use webhooks.
+- [Invoke A Test Webhook Event](https://docs.orum.io/api-reference/webhooks/post-invoke.md)
+- [Create Webhook Configuration](https://docs.orum.io/api-reference/webhooks/post-webhook-configuration.md)
+- [Initialize Public-Private Key Pair](https://docs.orum.io/api-reference/webhooks/post-webhook-secret.md)
+- [Update Webhook Configuration](https://docs.orum.io/api-reference/webhooks/put-webhook-configurations.md)
+- [Overview](https://docs.orum.io/api-reference/webhooks/secure-webhooks.md): Learn how to secure your webhooks.
+- [Changelog](https://docs.orum.io/changelog/product-updates.md): Discover the latest features and improvements in Orum.
+- [Authentication](https://docs.orum.io/guides/api-authentication.md): Obtain credentials and get started with Orum’s APIs
+- [Businesses](https://docs.orum.io/guides/businesses-sandbox-environment.md): Sandbox Experience
+- [Balance](https://docs.orum.io/guides/deliver/balance.md): Check your funding balance with Orum.
+- [Businesses](https://docs.orum.io/guides/deliver/businesses.md): Understand statuses, required verification, and possible errors for Businesses.
+- [Cards](https://docs.orum.io/guides/deliver/cards.md): Initiate payments to and from cards on the Visa and Mastercard networks.
+- [Data Retention](https://docs.orum.io/guides/deliver/data-retention.md): Understand Orum's data retention policies.
+- [Errors](https://docs.orum.io/guides/deliver/errors.md): Understand the success or failure of your API requests.
+- [External Accounts](https://docs.orum.io/guides/deliver/external-accounts.md): Initiate payments to bank accounts.
+- [Pagination](https://docs.orum.io/guides/deliver/pagination.md): Understand how to paginate responses.
+- [Persons](https://docs.orum.io/guides/deliver/persons.md): Understand statuses, required verification, and possible errors for Persons.
+- [Rail Eligibility](https://docs.orum.io/guides/deliver/rail-eligibility.md): Understand if a bank account is RTP or FedNow eligible.
+- [Rate Limits](https://docs.orum.io/guides/deliver/rate-limits.md): Orum utilizes a Token Bucket Algorithm.
+- [Resources](https://docs.orum.io/guides/deliver/resources.md): Understand what else you can do with Resources: Persons, Businesses, & Accounts
+- [Subledgers](https://docs.orum.io/guides/deliver/subledgers.md): Segregate balances into unique ledgers.
+- [Cancellations](https://docs.orum.io/guides/deliver/transfers/cancellations.md): How to cancel a transfer.
+- [Hold Times & Funds Availability](https://docs.orum.io/guides/deliver/transfers/hold-times-and-funds-availability.md): Understand hold times and settlement for ACH and Cards.
+- [Network Reason Codes](https://docs.orum.io/guides/deliver/transfers/network-reason-codes.md): Understand why a transfer failed.
+- [Payment Descriptors](https://docs.orum.io/guides/deliver/transfers/payment-descriptors.md): Customize the description that displays on your user’s bank account statements.
+- [Processing Windows & Cutoffs](https://docs.orum.io/guides/deliver/transfers/processing-windows-and-cutoffs.md): Learn about Orum's processing windows and cutoff times for ACH, RTP, FedNow, and Cards
+- [Returns & Chargebacks](https://docs.orum.io/guides/deliver/transfers/returns-and-chargebacks.md): Understand ACH returns and card chargebacks.
+- [Scheduling](https://docs.orum.io/guides/deliver/transfers/scheduling.md): Schedule payments to occur at a recurrence.
+- [Speeds](https://docs.orum.io/guides/deliver/transfers/speeds.md): Understand Orum's available transfer speeds.
+- [Transfers Overview](https://docs.orum.io/guides/deliver/transfers/transfers-overview.md): Understand how to manage transfers executed via the Deliver API.
+- [External Accounts](https://docs.orum.io/guides/external-accounts-sandbox-environment.md): Sandbox Experience
+- [MCP Server](https://docs.orum.io/guides/mcp-server.md): Connect AI models to Orum's API.
+- [Manage Resources](https://docs.orum.io/guides/monitor/manage-resources.md): Understand what else you can do with Resources in Monitor.
+- [Cancellations](https://docs.orum.io/guides/monitor/money-movement/cancellations.md): Cancel transfers from Monitor.
+- [Payment Initiation](https://docs.orum.io/guides/monitor/money-movement/payment-initiation.md): Execute no code instant payments as well as ACH transfers through Monitor.
+- [Scheduling](https://docs.orum.io/guides/monitor/money-movement/scheduling.md): Create, view, and manage schedules in Monitor
+- [Top Ups](https://docs.orum.io/guides/monitor/money-movement/top-ups.md): Easily add funds to your FBO balance via top-ups.
+- [Overview](https://docs.orum.io/guides/monitor/monitor-overview.md): Monitor money movement in real time with the first portal built to optimize and orchestrate payment operations
+- [Reporting](https://docs.orum.io/guides/monitor/reporting.md): Understand the reports that are available in Monitor.
+- [Search & Filter](https://docs.orum.io/guides/monitor/search-and-filter.md): Pinpoint the details you need to reconcile balances, troubleshoot customer issues, and export data.
+- [Webhook Best Practices](https://docs.orum.io/guides/monitor/webhooks/webhook-best-practices.md): Best practices for implementing secure and reliable webhooks.
+- [Webhook Management](https://docs.orum.io/guides/monitor/webhooks/webhook-management.md): Manage webhooks through the Monitor interface.
+- [Webhook Troubleshooting](https://docs.orum.io/guides/monitor/webhooks/webhook-troubleshooting.md): Diagnose and resolve common webhook issues.
+- [OpenAPI Spec](https://docs.orum.io/guides/openapi-specifications.md)
+- [Persons ](https://docs.orum.io/guides/persons-sandbox-environment.md): Sandbox Experience
+- [Overview](https://docs.orum.io/guides/sandbox.md): Getting started with Sandbox
+- [Transfers](https://docs.orum.io/guides/transfers-sandbox-experience.md): Sandbox Experience
+- [Verify](https://docs.orum.io/guides/verify-sandbox-experience.md): Sandbox Experience
+- [Account Control](https://docs.orum.io/guides/verify/account-control.md): Ensure an end user has control of the bank account.
+- [Account Ownership](https://docs.orum.io/guides/verify/account-ownership.md): Determine whether the first name and/or last name or business name provided matches data tied to the bank account being verified.
+- [Account Status](https://docs.orum.io/guides/verify/account-status.md): Verify Account Status instantly – with 100% coverage of all bank accounts in the U.S.
+- [Requirements For Production Access](https://docs.orum.io/guides/verify/production-access.md): Understand what's required to get production access for Verify.
+- [Reason Codes](https://docs.orum.io/guides/verify/reason-codes.md): Reasons for failed, invalid, and closed bank accounts.
+- [Versioning](https://docs.orum.io/guides/versioning.md)
+- [Welcome](https://docs.orum.io/guides/welcome.md): Orum transforms payment technology for businesses, revolutionizing payment speed, certainty, and orchestration through unified API-based solutions.
+
+## OpenAPI Specs
+
+- [oas](https://docs.orum.io/api-reference/oas.yaml)
+- [oas-with-internal-removed](https://docs.orum.io/api-reference/oas-with-internal-removed.yaml)

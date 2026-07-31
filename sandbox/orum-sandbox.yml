@@ -1,0 +1,34 @@
+generated: '2026-07-20'
+method: searched
+source: https://docs.orum.io/guides/sandbox
+environments:
+  sandbox:
+    api_host: https://api-sandbox.orum.io
+    portal: https://monitor-sandbox.orum.io
+    token_url: https://api-sandbox.orum.io/oauth/token
+  production:
+    api_host: https://api.orum.io
+    portal: https://monitor.orum.io
+access:
+  note: >-
+    Contact service@orum.io to access Monitor. Sandbox access is granted
+    automatically; create sandbox API Credentials (client_id/client_secret) in
+    Monitor under Developer Tools -> API Authentication. Max two credential
+    sets per Enterprise per environment.
+differences:
+  - Sandbox requests do not trigger real money movement, KYC/KYB, or account verification.
+  - Sandbox transfers complete instantly regardless of the speed parameter.
+  - You must fund your sandbox account and track your own balance ledger.
+  - Do not send real PII or financial information to sandbox.
+simulation:
+  docs:
+    - https://docs.orum.io/guides/businesses-sandbox-environment
+    - https://docs.orum.io/guides/persons-sandbox-environment
+    - https://docs.orum.io/guides/external-accounts-sandbox-environment
+    - https://docs.orum.io/guides/transfers-sandbox-experience
+    - https://docs.orum.io/guides/verify-sandbox-experience
+  note: >-
+    Sandbox lets you simulate resource statuses (person/business verification,
+    external account states, transfer status transitions, verify outcomes).
+    Orum does not publish fixed magic test account/routing numbers; statuses are
+    simulated per the sandbox guides above. No test values are invented here.

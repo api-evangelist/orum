@@ -1,0 +1,20 @@
+generated: '2026-07-20'
+method: searched
+source: https://docs.orum.io/guides/versioning
+versioning:
+  scheme: date-header
+  header: 'Orum-Version'
+  current: v2022-09-21
+  deprecated: [v2021-10-01]
+  docs: https://docs.orum.io/guides/versioning
+  policy: >-
+    New API versions are released only for breaking, backward-incompatible
+    changes. Non-breaking additions (new endpoints, optional fields, new enums,
+    new webhook event_types) ship without a version bump and are announced in the changelog.
+deprecation:
+  policy_url: https://docs.orum.io/guides/versioning
+  sunset_header: false
+changelog: https://docs.orum.io/changelog/product-updates
+status_page: null
+sla: null
+deprecated_operations: []

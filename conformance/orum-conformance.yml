@@ -1,0 +1,24 @@
+generated: '2026-07-20'
+method: derived
+source: openapi/orum-openapi-original.yml
+standards:
+  - id: oauth2
+    conforms: true
+    evidence: securitySchemes.oauth2 with clientCredentials flow (openapi)
+  - id: oauth2-client-credentials
+    conforms: true
+    evidence: tokenUrl https://api-sandbox.orum.io/oauth/token, 29 scopes
+  - id: rfc9457-problem-details
+    conforms: false
+    evidence: errors use a custom application/json envelope (error_code/message/details), not application/problem+json
+  - id: json-api
+    conforms: false
+  - id: openapi-3-0
+    conforms: true
+    evidence: openapi 3.0.1 document published at docs.orum.io/api-reference/oas.yaml
+  - id: rfc8594-sunset-header
+    conforms: false
+    evidence: versioning uses Orum-Version request header; no Sunset response header documented
+  - id: webhooks-signed
+    conforms: true
+    evidence: webhook payloads are signed; public/private key pair via /webhooks/secret

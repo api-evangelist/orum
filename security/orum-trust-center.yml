@@ -1,0 +1,13 @@
+generated: '2026-07-20'
+method: searched
+probe: true
+url: https://security.orum.io
+title: Orum Trust Center
+certifications: []
+notes: >-
+  security.orum.io returns HTTP 200 and is titled "Orum Trust Center" (a
+  JavaScript-rendered trust portal). Named certifications could not be extracted
+  from the rendered shell and are not asserted here (no fabrication). No
+  Compliance pointer emitted without verified certification names.
+evidence:
+  - {source: https://security.orum.io, status: 200, keywords: [trust center]}

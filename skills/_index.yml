@@ -1,0 +1,16 @@
+generated: '2026-07-20'
+method: generated
+source: openapi/orum-openapi-original.yml
+skills:
+  - file: orum-send-a-payment.md
+    name: Send a payment with Orum Deliver
+    api: openapi/orum-openapi-original.yml
+    operations: [post-oauth-token, post-person, post-external-account, post-eligibility, post-transfer, get-transfer, get-transfer-history]
+  - file: orum-verify-a-bank-account.md
+    name: Verify a bank account with Orum Verify
+    api: openapi/orum-openapi-original.yml
+    operations: [post-oauth-token, post-verify-accounts, get-verify-account, post-verify-account-control, get-verify-accounts]
+  - file: orum-configure-webhooks.md
+    name: Configure and secure Orum webhooks
+    api: openapi/orum-openapi-original.yml
+    operations: [post-oauth-token, post-webhook-secret, get-webhook-secret, post-webhook-configuration, get-webhook-configurations, post-invoke]

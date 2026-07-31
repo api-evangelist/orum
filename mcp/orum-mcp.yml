@@ -1,0 +1,18 @@
+generated: '2026-07-20'
+method: searched
+status: published
+source: https://docs.orum.io/guides/mcp-server
+server:
+  name: orum-openapi-mcp-server
+  transport: stdio
+  package: "@orum-io/openapi-mcp-server"
+  command: npx
+  args: ["-y", "@orum-io/openapi-mcp-server"]
+  auth:
+    type: oauth2-client-credentials
+    env: [OAUTH_CLIENT_ID_OAUTH2, OAUTH_CLIENT_SECRET_OAUTH2]
+  environment: sandbox-only
+  notes: >-
+    Official OpenAPI-generated MCP server. Currently supported only against the
+    Orum sandbox (api-sandbox.orum.io). Tools are generated 1:1 from the Orum
+    OpenAPI operations; see openapi/orum-openapi-original.yml for the full set.

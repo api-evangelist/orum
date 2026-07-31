@@ -1,0 +1,23 @@
+generated: '2026-07-20'
+method: probed
+source: live DNS/TLS/HTTP probes of apis.yml + OpenAPI hosts
+hosts:
+- host: orum.io
+  https: true
+  tls_version: TLSv1.3
+  cert_expires: Aug 28 03:32:51 2026 GMT
+  hsts: null
+- host: api-sandbox.orum.io
+  https: true
+  tls_version: TLSv1.3
+  cert_expires: Aug 28 03:32:51 2026 GMT
+  hsts: null
+- host: vault.api-sandbox.orum.io
+  https: false
+domains:
+- domain: orum.io
+  dnssec: true
+  caa: []
+  spf: true
+  dmarc: true
+  dmarc_policy: quarantine

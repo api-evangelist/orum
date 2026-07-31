@@ -1,0 +1,18 @@
+generated: '2026-07-20'
+method: searched
+source: https://docs.orum.io/changelog/product-updates
+scheme: dated
+current_api_version: v2022-09-21
+entries:
+  - date: '2025-07-09'
+    type: added
+    highlight: New Subledger Details Page in Monitor (customer reference id, customer type).
+  - date: '2025-06-26'
+    type: added
+    highlight: Manage webhook configurations through the Monitor portal (create/view/update/delete).
+  - date: '2025-06-24'
+    type: added
+    highlight: Transfer Details Page overhaul plus new Transfer History endpoint (get-transfer-history).
+  - date: '2025-06-11'
+    type: improved
+    highlight: Move funds to or from your Orum balance via Monitor.

@@ -1,0 +1,17 @@
+generated: '2026-07-20'
+method: searched
+source: https://www.npmjs.com/package/@orum-io/openapi-mcp-server
+notes: >-
+  Orum publishes no first-party client SDK libraries; its GitHub org (orum-io)
+  exposes only the OpenAPI spec and an auto-generated MCP server. The single
+  published package is the OpenAPI-generated MCP server (not a client SDK), so no
+  SDKs pointer is emitted.
+packages:
+  - language: javascript
+    registry: npm
+    name: "@orum-io/openapi-mcp-server"
+    url: https://www.npmjs.com/package/@orum-io/openapi-mcp-server
+    install: npx -y @orum-io/openapi-mcp-server
+    version: 1.20.0
+    official: true
+    kind: mcp-server

@@ -1,0 +1,1106 @@
+generated: '2026-07-20'
+method: generated
+source: openapi/orum-openapi-original.yml
+description: Recommended x-agentic-access execution contracts, classified heuristically from
+  the OpenAPI. A governance starting point for exposing this API to AI agents — review and bind
+  audience per deployment. See research/curity/agentic-governance/.
+summary:
+  operations: 71
+  by_action_class:
+    acting: 38
+    connected: 33
+  by_consequence:
+    write: 32
+    read: 33
+    physical: 5
+    safety-critical: 1
+  human_in_the_loop_required: 1
+operations:
+- path: /oauth/token
+  method: post
+  operationId: post-oauth-token
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /deliver/reports/recon
+  method: post
+  operationId: post-reports-recon
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - write:reports
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /deliver/reports/recon
+  method: get
+  operationId: get-reports-recon
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - read:reports
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /deliver/reports/recon/{id}
+  method: get
+  operationId: get-recon-report
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - read:reports
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /deliver/reports/{id}
+  method: delete
+  operationId: delete-report
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - write:reports
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /deliver/reports/{id}/download
+  method: get
+  operationId: get-report-download
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - read:reports
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /deliver/reports/balances
+  method: get
+  operationId: get-reports-balances
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - read:reports
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /deliver/persons
+  method: post
+  operationId: post-person
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - write:persons
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /deliver/persons
+  method: get
+  operationId: get-persons
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - read:persons
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /deliver/persons
+  method: put
+  operationId: put-person-using-reference-id
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - write:persons
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /deliver/persons/{id}
+  method: get
+  operationId: get-person
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - read:persons
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /deliver/persons/{id}
+  method: put
+  operationId: put-person
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - write:persons
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /deliver/persons/{id}
+  method: patch
+  operationId: patch-person
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - write:persons
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /deliver/persons/{id}
+  method: delete
+  operationId: delete-person
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - write:persons
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /deliver/businesses
+  method: post
+  operationId: post-business
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - write:businesses
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /deliver/businesses
+  method: get
+  operationId: get-businesses
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - read:businesses
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /deliver/businesses
+  method: put
+  operationId: put-business-using-reference-id
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - write:businesses
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /deliver/businesses/{id}
+  method: get
+  operationId: get-business
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - read:businesses
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /deliver/businesses/{id}
+  method: put
+  operationId: put-business
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - write:businesses
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /deliver/businesses/{id}
+  method: patch
+  operationId: patch-business
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - write:businesses
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /deliver/businesses/{id}
+  method: delete
+  operationId: delete-business
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - write:businesses
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /deliver/external/accounts
+  method: post
+  operationId: post-external-account
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - write:external-accounts
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /deliver/external/accounts
+  method: get
+  operationId: get-external-accounts
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - read:external-accounts
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /deliver/external/accounts
+  method: put
+  operationId: put-external-account-using-reference-id
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - write:external-accounts
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /deliver/external/accounts/{id}
+  method: get
+  operationId: get-external-account
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - read:external-accounts
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /deliver/external/accounts/{id}
+  method: put
+  operationId: put-external-account
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - write:external-accounts
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /deliver/external/accounts/{id}
+  method: patch
+  operationId: patch-external-account
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - write:external-accounts
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /deliver/external/accounts/{id}
+  method: delete
+  operationId: delete-external-account
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - write:external-accounts
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /deliver/persons/{id}/external/accounts
+  method: get
+  operationId: get-person-external-accounts
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - read:external-accounts
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /deliver/businesses/{id}/external/accounts
+  method: get
+  operationId: get-business-external-accounts
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - read:external-accounts
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /deliver/cards
+  method: post
+  operationId: post-card
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - write:cards
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /deliver/cards
+  method: get
+  operationId: get-cards
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - read:cards
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /deliver/cards/{id}
+  method: get
+  operationId: get-card
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - read:cards
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /deliver/cards/{id}
+  method: delete
+  operationId: delete-card
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - write:cards
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /deliver/subledgers
+  method: post
+  operationId: post-subledger
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - write:subledgers
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /deliver/subledgers
+  method: get
+  operationId: get-subledgers
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - read:subledgers
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /deliver/subledgers/{id}
+  method: get
+  operationId: get-subledger
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - read:subledgers
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /deliver/schedules
+  method: post
+  operationId: post-schedule
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - write:schedules
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /deliver/schedules
+  method: get
+  operationId: get-schedules
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - read:schedules
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /deliver/schedules/rrule
+  method: post
+  operationId: post-validate-rrule
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - write:schedules
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /deliver/schedules/{id}
+  method: get
+  operationId: get-schedule
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - read:schedules
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /deliver/schedules/{id}
+  method: delete
+  operationId: delete-schedule
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - write:schedules
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /deliver/transfers
+  method: post
+  operationId: post-transfer
+  x-agentic-access:
+    action-class: acting
+    consequence: physical
+    subject: required
+    scope:
+    - write:transfers
+    audience: null
+    token:
+      max-ttl: 300
+      exchange: true
+      purpose-required: true
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /deliver/transfers
+  method: get
+  operationId: get-transfers
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - read:transfers
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /deliver/transfers/{id}
+  method: get
+  operationId: get-transfer
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - read:transfers
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /deliver/transfers/{id}
+  method: patch
+  operationId: patch-transfer-metadata
+  x-agentic-access:
+    action-class: acting
+    consequence: physical
+    subject: required
+    scope:
+    - write:transfers
+    audience: null
+    token:
+      max-ttl: 300
+      exchange: true
+      purpose-required: true
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /deliver/transfers/{id}/cancel
+  method: post
+  operationId: post-transfer-cancel
+  x-agentic-access:
+    action-class: acting
+    consequence: physical
+    subject: required
+    scope:
+    - write:transfers
+    audience: null
+    token:
+      max-ttl: 300
+      exchange: true
+      purpose-required: true
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /deliver/transfers/{id}/history
+  method: get
+  operationId: get-transfer-history
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - read:transfers
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /deliver/eligibility
+  method: post
+  operationId: post-eligibility
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - read:routing-number-eligibility
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /deliver/eligibility
+  method: get
+  operationId: get-eligibility
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - read:routing-number-eligibility
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /deliver/transfer-groups
+  method: post
+  operationId: post-transfer-group
+  x-agentic-access:
+    action-class: acting
+    consequence: physical
+    subject: required
+    scope:
+    - write:transfer-groups
+    audience: null
+    token:
+      max-ttl: 300
+      exchange: true
+      purpose-required: true
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /deliver/transfer-groups
+  method: get
+  operationId: get-transfer-groups
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - read:transfer-groups
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /deliver/transfer-groups/{id}
+  method: get
+  operationId: get-transfer-group
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - read:transfer-groups
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /deliver/booktransfers
+  method: post
+  operationId: post-book-transfer
+  x-agentic-access:
+    action-class: acting
+    consequence: physical
+    subject: required
+    scope:
+    - write:booktransfers
+    audience: null
+    token:
+      max-ttl: 300
+      exchange: true
+      purpose-required: true
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /deliver/booktransfers
+  method: get
+  operationId: get-book-transfers
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - read:booktransfers
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /deliver/booktransfers/{id}
+  method: get
+  operationId: get-book-transfer
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - read:booktransfers
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /deliver/balance
+  method: get
+  operationId: get-balance
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - read:balances
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /deliver/balance/subledgers/{id}
+  method: get
+  operationId: get-subledger-balance
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - read:balances
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /deliver/balance/subledgers
+  method: get
+  operationId: get-all-subledger-balance
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - read:balances
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /verify/accounts
+  method: post
+  operationId: post-verify-accounts
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - write:verify-accounts
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /verify/accounts
+  method: get
+  operationId: get-verify-accounts
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - read:verify-accounts
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /verify/accounts/{id}
+  method: get
+  operationId: get-verify-account
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - read:verify-accounts
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /verify/accounts/{id}/control
+  method: post
+  operationId: post-verify-account-control
+  x-agentic-access:
+    action-class: acting
+    consequence: safety-critical
+    subject: required
+    scope:
+    - write:verify-accounts
+    audience: null
+    token:
+      max-ttl: 120
+      exchange: true
+      purpose-required: true
+      proof-of-possession: true
+    escalation:
+      human-in-the-loop: required
+    audit: required
+- path: /verify/accounts/{id}/debits
+  method: post
+  operationId: post-verify-account-debit
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - write:verify-accounts
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /webhooks/configurations
+  method: post
+  operationId: post-webhook-configuration
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - write:webhook-configurations
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /webhooks/configurations
+  method: get
+  operationId: get-webhook-configurations
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - read:webhook-configurations
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /webhooks/configurations/{id}
+  method: put
+  operationId: put-webhook-configurations
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - write:webhook-configurations
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /webhooks/configurations/{id}
+  method: delete
+  operationId: delete-webhook-configurations
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - write:webhook-configurations
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /webhooks/secret
+  method: post
+  operationId: post-webhook-secret
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - write:webhook-secret
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /webhooks/secret
+  method: get
+  operationId: get-webhook-secret
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - read:webhook-secret
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /webhooks/invoke
+  method: post
+  operationId: post-invoke
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - invoke:webhook
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required

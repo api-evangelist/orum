@@ -1,0 +1,39 @@
+generated: '2026-07-20'
+method: searched
+source: https://docs.orum.io
+authentication:
+  style: oauth2-client-credentials
+  token_url: https://api-sandbox.orum.io/oauth/token
+  usage: Bearer access token; see authentication/orum-authentication.yml
+idempotency:
+  supported: false
+  note: >-
+    No Idempotency-Key request header is documented in the OpenAPI or docs.
+    Idempotency is only referenced as a webhook-consumer best practice, not a
+    provider write-idempotency contract. No Idempotency pointer emitted.
+pagination:
+  style: offset
+  params:
+    size: {max: 500, default: 100, min: 0}
+    index: {default: 0, min: 0}
+  order: reverse-chronological
+  docs: https://docs.orum.io/guides/deliver/pagination
+versioning:
+  style: request-header
+  header: 'Orum-Version'
+  current: v2022-09-21
+  ref: lifecycle/orum-lifecycle.yml
+rate_limiting:
+  algorithm: token-bucket
+  signal: 'HTTP 429 with body error_code=too_many_requests'
+  docs: https://docs.orum.io/guides/deliver/rate-limits
+error_envelope:
+  fields: [error_code, message, details]
+  content_type: application/json
+  ref: errors/orum-problem-types.yml
+webhooks:
+  signed: true
+  ref: asyncapi/orum-webhooks.yml
+metadata:
+  supported: true
+  note: transfers and other resources accept a metadata object; see PATCH /deliver/transfers/{id} (patch-transfer-metadata)

@@ -1,0 +1,23 @@
+generated: '2026-07-20'
+method: searched
+source: openapi/orum-openapi-original.yml
+docs: https://docs.orum.io/guides/api-authentication
+notes: >-
+  OAuth 2.0 client-credentials. Create client_id/client_secret in Monitor
+  (Developer Tools -> API Authentication); max two credential sets per Enterprise
+  per environment. Exchange at /oauth/token for a bearer access token; the secret
+  is shown only once. Rotate by generating a new set before deleting the old.
+summary:
+  types:
+  - oauth2
+  oauth2_flows:
+  - clientCredentials
+schemes:
+- name: oauth2
+  type: oauth2
+  flows:
+  - flow: clientCredentials
+    tokenUrl: https://api-sandbox.orum.io/oauth/token
+    scopes: 29
+  sources:
+  - openapi/orum-openapi-original.yml

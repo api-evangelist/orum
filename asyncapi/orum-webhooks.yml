@@ -1,0 +1,41 @@
+generated: '2026-07-20'
+method: searched
+source: https://docs.orum.io/api-reference/webhooks/event-types-and-payloads
+spec_type: Webhooks
+transport: https-post
+security:
+  signed: true
+  scheme: public/private key pair via POST/GET /webhooks/secret; verify signature header
+  docs: https://docs.orum.io/api-reference/webhooks/secure-webhooks
+management:
+  api:
+    - post-webhook-configuration
+    - get-webhook-configurations
+    - put-webhook-configurations
+    - delete-webhook-configurations
+    - post-invoke
+  portal: https://docs.orum.io/guides/monitor/webhooks/webhook-management
+event_types:
+  - person_created
+  - person_verified
+  - person_rejected
+  - person_restricted
+  - person_unverified
+  - person_closed
+  - business_created
+  - business_verified
+  - business_rejected
+  - business_restricted
+  - business_unverified
+  - business_closed
+  - external_account_created
+  - external_account_verified
+  - external_account_rejected
+  - external_account_restricted
+  - external_account_unverified
+  - external_account_closed
+  - transfer_updated
+  - book_transfer_updated
+  - transfer_group_updated
+  - subledger_created
+  - verify_account_updated

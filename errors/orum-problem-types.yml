@@ -1,0 +1,38 @@
+generated: '2026-07-20'
+method: derived
+source: openapi/orum-openapi-original.yml
+format: custom
+envelope:
+  fields: [error_code, message, details]
+  required: [error_code, message]
+  content_type: application/json
+docs: https://docs.orum.io/guides/errors
+problems:
+  - status: 400
+    error_code: bad_request
+    title: Bad Request
+    schema: API_Errors_BadRequest
+  - status: 401
+    error_code: unauthorized
+    title: Unauthorized
+    schema: API_Errors_Unauthorized
+  - status: 403
+    error_code: forbidden
+    title: Forbidden
+    schema: API_Errors_Forbidden
+  - status: 404
+    error_code: not_found
+    title: Not Found
+    schema: API_Errors_NotFound
+  - status: 429
+    error_code: too_many_requests
+    title: Too Many Requests
+    remediation: Token-bucket rate limit exceeded; back off and retry per Average/Burst
+    schema: null
+  - status: 500
+    error_code: internal_server_error
+    title: Internal Server Error
+    schema: API_Errors_InternalServerError
+related:
+  - https://docs.orum.io/guides/deliver/transfers/network-reason-codes.md
+  - https://docs.orum.io/guides/verify/reason-codes.md

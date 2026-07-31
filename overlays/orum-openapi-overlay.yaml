@@ -1,0 +1,16 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for Orum API
+  version: 1.0.0
+extends: openapi/orum-openapi-original.yml
+actions:
+  - target: $.info
+    update:
+      x-apievangelist-enriched: '2026-07-20'
+      x-apievangelist-products: [Deliver, Verify, Monitor]
+      x-apievangelist-auth: oauth2-client-credentials
+      x-apievangelist-versioning-header: 'Orum-Version'
+  - target: $.servers
+    update:
+      - url: https://api.orum.io
+        description: Production (added by API Evangelist; spec ships sandbox servers only)

@@ -1,8 +1,28 @@
 aid: orum
+accessModel:
+  pricing: unknown
+  onboarding: self-serve
+  trial: false
+  try_now: false
+  public: false
+  label: Self-serve signup
+  confidence: medium
+  source:
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/orum.png
 name: Orum
-description: 'Orum is a company surfaced as a portfolio company of accel, bain-capital-ventures, craft-ventures
-  and added to the API Evangelist network as a stub for enrichment. Sector: ai. This profile is a lead
-  awaiting the enrichment pipeline.'
+description: >-
+  Orum is a payments infrastructure company that lets businesses move money and
+  verify bank accounts through a single unified API. Its Deliver product provides
+  "Direct to Fed" money movement across FedNow, RTP, Same Day ACH, ACH, Wires,
+  and Visa Direct; Verify instantly confirms bank account status, ownership, and
+  control; and Monitor is a portal for orchestrating and reconciling payment
+  operations in real time. The REST API uses OAuth 2.0 client-credentials, offers
+  signed webhooks for money-movement events, and ships a published OpenAPI spec
+  and an OpenAPI-generated MCP server. Orum is backed by Accel, Bain Capital
+  Ventures, and Craft Ventures.
 url: https://raw.githubusercontent.com/api-evangelist/orum/refs/heads/main/apis.yml
 x-type: company
 x-source: vc-portfolio
@@ -10,15 +30,191 @@ x-backed-by:
 - accel
 - bain-capital-ventures
 - craft-ventures
-x-tier: stub
-x-tier-reason: portfolio-lead
+x-tier: active
+x-tier-reason: enriched-api-provider
 specificationVersion: '0.20'
 created: '2026-07-17'
-modified: '2026-07-17'
+modified: '2026-07-20'
 tags:
 - Company
-- Ai
-apis: []
+- Payments
+- Fintech
+- Banking
+- Instant Payments
+- ACH
+- Money Movement
+- Bank Account Verification
+apis:
+- aid: orum:orum-authentication-api
+  name: Orum Authentication API
+  description: The Authentication API from Orum — 1 operation(s) for authentication.
+  humanURL: https://docs.orum.io
+  baseURL: https://api.orum.io
+  tags:
+  - Authentication
+  properties:
+  - type: OpenAPI
+    url: openapi/orum-authentication-api-openapi.yml
+- aid: orum:orum-balance-api
+  name: Orum Balance API
+  description: The Balance API from Orum — 3 operation(s) for balance.
+  humanURL: https://docs.orum.io
+  baseURL: https://api.orum.io
+  tags:
+  - Balance
+  properties:
+  - type: OpenAPI
+    url: openapi/orum-balance-api-openapi.yml
+- aid: orum:orum-book-transfers-api
+  name: Orum Book Transfers API
+  description: The Book Transfers API from Orum — 2 operation(s) for book transfers.
+  humanURL: https://docs.orum.io
+  baseURL: https://api.orum.io
+  tags:
+  - Book Transfers
+  properties:
+  - type: OpenAPI
+    url: openapi/orum-book-transfers-api-openapi.yml
+- aid: orum:orum-businesses-api
+  name: Orum Businesses API
+  description: The Businesses API from Orum — 2 operation(s) for businesses.
+  humanURL: https://docs.orum.io
+  baseURL: https://api.orum.io
+  tags:
+  - Businesses
+  properties:
+  - type: OpenAPI
+    url: openapi/orum-businesses-api-openapi.yml
+- aid: orum:orum-cards-api
+  name: Orum Cards API
+  description: The Cards API from Orum — 2 operation(s) for cards.
+  humanURL: https://docs.orum.io
+  baseURL: https://api.orum.io
+  tags:
+  - Cards
+  properties:
+  - type: OpenAPI
+    url: openapi/orum-cards-api-openapi.yml
+- aid: orum:orum-configure-webhooks-api
+  name: Orum Configure webhooks API
+  description: The Configure webhooks API from Orum — 2 operation(s) for configure webhooks.
+  humanURL: https://docs.orum.io
+  baseURL: https://api.orum.io
+  tags:
+  - Configure webhooks
+  properties:
+  - type: OpenAPI
+    url: openapi/orum-configure-webhooks-api-openapi.yml
+- aid: orum:orum-eligibility-api
+  name: Orum Eligibility API
+  description: The Eligibility API from Orum — 1 operation(s) for eligibility.
+  humanURL: https://docs.orum.io
+  baseURL: https://api.orum.io
+  tags:
+  - Eligibility
+  properties:
+  - type: OpenAPI
+    url: openapi/orum-eligibility-api-openapi.yml
+- aid: orum:orum-external-accounts-api
+  name: Orum External Accounts API
+  description: The External Accounts API from Orum — 4 operation(s) for external accounts.
+  humanURL: https://docs.orum.io
+  baseURL: https://api.orum.io
+  tags:
+  - External Accounts
+  properties:
+  - type: OpenAPI
+    url: openapi/orum-external-accounts-api-openapi.yml
+- aid: orum:orum-persons-api
+  name: Orum Persons API
+  description: The Persons API from Orum — 2 operation(s) for persons.
+  humanURL: https://docs.orum.io
+  baseURL: https://api.orum.io
+  tags:
+  - Persons
+  properties:
+  - type: OpenAPI
+    url: openapi/orum-persons-api-openapi.yml
+- aid: orum:orum-reports-api
+  name: Orum Reports API
+  description: The Reports API from Orum — 5 operation(s) for reports.
+  humanURL: https://docs.orum.io
+  baseURL: https://api.orum.io
+  tags:
+  - Reports
+  properties:
+  - type: OpenAPI
+    url: openapi/orum-reports-api-openapi.yml
+- aid: orum:orum-schedules-api
+  name: Orum Schedules API
+  description: The Schedules API from Orum — 3 operation(s) for schedules.
+  humanURL: https://docs.orum.io
+  baseURL: https://api.orum.io
+  tags:
+  - Schedules
+  properties:
+  - type: OpenAPI
+    url: openapi/orum-schedules-api-openapi.yml
+- aid: orum:orum-secure-webhooks-api
+  name: Orum Secure webhooks API
+  description: The Secure webhooks API from Orum — 1 operation(s) for secure webhooks.
+  humanURL: https://docs.orum.io
+  baseURL: https://api.orum.io
+  tags:
+  - Secure webhooks
+  properties:
+  - type: OpenAPI
+    url: openapi/orum-secure-webhooks-api-openapi.yml
+- aid: orum:orum-subledgers-api
+  name: Orum Subledgers API
+  description: The Subledgers API from Orum — 2 operation(s) for subledgers.
+  humanURL: https://docs.orum.io
+  baseURL: https://api.orum.io
+  tags:
+  - Subledgers
+  properties:
+  - type: OpenAPI
+    url: openapi/orum-subledgers-api-openapi.yml
+- aid: orum:orum-transfer-groups-api
+  name: Orum Transfer Groups API
+  description: The Transfer Groups API from Orum — 2 operation(s) for transfer groups.
+  humanURL: https://docs.orum.io
+  baseURL: https://api.orum.io
+  tags:
+  - Transfer Groups
+  properties:
+  - type: OpenAPI
+    url: openapi/orum-transfer-groups-api-openapi.yml
+- aid: orum:orum-transfers-api
+  name: Orum Transfers API
+  description: The Transfers API from Orum — 4 operation(s) for transfers.
+  humanURL: https://docs.orum.io
+  baseURL: https://api.orum.io
+  tags:
+  - Transfers
+  properties:
+  - type: OpenAPI
+    url: openapi/orum-transfers-api-openapi.yml
+- aid: orum:orum-trigger-webhooks-api
+  name: Orum Trigger webhooks API
+  description: The Trigger webhooks API from Orum — 1 operation(s) for trigger webhooks.
+  humanURL: https://docs.orum.io
+  baseURL: https://api.orum.io
+  tags:
+  - Trigger webhooks
+  properties:
+  - type: OpenAPI
+    url: openapi/orum-trigger-webhooks-api-openapi.yml
+- aid: orum:orum-verify-api
+  name: Orum Verify API
+  description: The Verify API from Orum — 4 operation(s) for verify.
+  humanURL: https://docs.orum.io
+  baseURL: https://api.orum.io
+  tags:
+  - Verify
+  properties:
+  - type: OpenAPI
+    url: openapi/orum-verify-api-openapi.yml
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
@@ -27,3 +223,62 @@ maintainers:
 common:
 - type: Website
   url: https://orum.io/
+- type: DeveloperPortal
+  url: https://docs.orum.io
+- type: Documentation
+  url: https://docs.orum.io
+- type: APIReference
+  url: https://docs.orum.io/api-reference
+- type: GettingStarted
+  url: https://docs.orum.io/guides/welcome
+- type: Support
+  url: mailto:service@orum.io
+- type: GitHubOrganization
+  url: https://github.com/orum-io
+- type: OpenAPI
+  url: openapi/orum-openapi-original.yml
+- type: Overlay
+  url: overlays/orum-openapi-overlay.yaml
+- type: Authentication
+  url: authentication/orum-authentication.yml
+- type: OAuthScopes
+  url: scopes/orum-scopes.yml
+- type: MCPServer
+  url: mcp/orum-mcp.yml
+- type: LLMsTxt
+  url: llms/orum-llms.txt
+- type: AgentSkill
+  url: skills/_index.yml
+- type: AgenticAccess
+  url: agentic-access/orum-agentic-access.yml
+- type: Packages
+  url: packages/orum-packages.yml
+- type: Conventions
+  url: conventions/orum-conventions.yml
+- type: DataModel
+  url: data-model/orum-data-model.yml
+- type: ErrorCatalog
+  url: errors/orum-problem-types.yml
+- type: Conformance
+  url: conformance/orum-conformance.yml
+- type: Lifecycle
+  url: lifecycle/orum-lifecycle.yml
+- type: Deprecation
+  url: lifecycle/orum-lifecycle.yml
+- type: ChangeLog
+  url: changelog/orum-changelog.yml
+- type: Sandbox
+  url: sandbox/orum-sandbox.yml
+- type: RateLimits
+  url: https://docs.orum.io/guides/deliver/rate-limits
+- type: Webhooks
+  url: asyncapi/orum-webhooks.yml
+- type: DomainSecurity
+  url: security/orum-domain-security.yml
+- type: TrustCenter
+  url: security/orum-trust-center.yml
+x-enrichment:
+  date: '2026-07-20'
+  status: enriched
+  artifacts_added: 20
+  pass: local-v1
