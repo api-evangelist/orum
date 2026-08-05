@@ -26,6 +26,14 @@ description: >-
 url: https://raw.githubusercontent.com/api-evangelist/orum/refs/heads/main/apis.yml
 x-type: company
 x-source: vc-portfolio
+x-disambiguation: >-
+  This is orum.io — payments infrastructure (FedNow/RTP/Same Day ACH/Wires/Visa Direct money
+  movement, bank-account verification). NOT orum.com, which is an unrelated AI sales dialer
+  profiled at `all/orum-com`. Two different companies with the same name. This repo keeps the
+  bare `orum` slug because it is already referenced by four published paper bundles
+  (accel-api-portfolio, bain-capital-ventures-api-portfolio, agentic-readiness-of-venture,
+  state-of-us-payments-apis) and ~25k generated pages; renaming it to `orum-io` was considered
+  and declined 2026-08-04.
 x-backed-by:
 - accel
 - bain-capital-ventures
