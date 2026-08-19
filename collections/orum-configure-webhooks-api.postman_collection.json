@@ -1,0 +1,760 @@
+{
+  "item": [
+    {
+      "id": "aa8c55a3-b33c-42fa-9c21-26c7350cee16",
+      "name": "Configure webhooks",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "d450596e-32b1-4e9a-a70e-e9553f7f07ec",
+          "name": "Create webhook configuration",
+          "request": {
+            "name": "Create webhook configuration",
+            "description": {},
+            "url": {
+              "path": [
+                "webhooks",
+                "configurations"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "Orum-Version",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "read:persons write:persons read:businesses write:businesses read:external-accounts write:external-accounts read:cards write:cards read:transfers write:transfers read:transfer-groups write:transfer-groups read:schedules write:schedules read:routing-number-eligibility read:balances read:reports write:reports read:booktransfers write:booktransfers read:subledgers write:subledgers read:verify-accounts write:verify-accounts read:webhook-configurations write:webhook-configurations read:webhook-secret write:webhook-secret invoke:webhook"
+                },
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://api-sandbox.orum.io/oauth/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"event_types\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"url\": \"<string>\",\n  \"enabled\": \"<boolean>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "3f77b0d4-7a49-4671-be0e-bf95deb16428",
+              "name": "200 response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "webhooks",
+                    "configurations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Orum-Version",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"event_types\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"url\": \"<string>\",\n  \"enabled\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"webhook_configuration\": {\n    \"id\": \"string\",\n    \"enterprise_name\": \"string\",\n    \"event_types\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"enabled\": true,\n    \"url\": \"string\",\n    \"data_version\": \"v2021-10-01\",\n    \"created_at\": \"string\",\n    \"created_by\": \"string\",\n    \"updated_at\": \"string\",\n    \"updated_by\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "cfc43fce-21c4-4b80-9442-162e5eb6bd86",
+              "name": "unauthorized request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "webhooks",
+                    "configurations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Orum-Version",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"event_types\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"url\": \"<string>\",\n  \"enabled\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error_code\": \"string\",\n  \"message\": \"string\",\n  \"details\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ec6a6d51-50a2-4c41-9f0f-1adf84a6e871",
+          "name": "Retrieve list of webhook configurations",
+          "request": {
+            "name": "Retrieve list of webhook configurations",
+            "description": {},
+            "url": {
+              "path": [
+                "webhooks",
+                "configurations"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "Orum-Version",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "read:persons write:persons read:businesses write:businesses read:external-accounts write:external-accounts read:cards write:cards read:transfers write:transfers read:transfer-groups write:transfer-groups read:schedules write:schedules read:routing-number-eligibility read:balances read:reports write:reports read:booktransfers write:booktransfers read:subledgers write:subledgers read:verify-accounts write:verify-accounts read:webhook-configurations write:webhook-configurations read:webhook-secret write:webhook-secret invoke:webhook"
+                },
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://api-sandbox.orum.io/oauth/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "2eb098ad-51ae-48f5-b8f3-c857280b54c9",
+              "name": "200 response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "webhooks",
+                    "configurations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Orum-Version",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"webhook_configurations\": [\n    {\n      \"id\": \"string\",\n      \"enterprise_name\": \"string\",\n      \"event_types\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"enabled\": false,\n      \"url\": \"string\",\n      \"data_version\": \"v2022-09-21\",\n      \"created_at\": \"string\",\n      \"created_by\": \"string\",\n      \"updated_at\": \"string\",\n      \"updated_by\": \"string\"\n    },\n    {\n      \"id\": \"string\",\n      \"enterprise_name\": \"string\",\n      \"event_types\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"enabled\": true,\n      \"url\": \"string\",\n      \"data_version\": \"v2022-09-21\",\n      \"created_at\": \"string\",\n      \"created_by\": \"string\",\n      \"updated_at\": \"string\",\n      \"updated_by\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9320d753-901c-4843-9d3a-820cfef63d3f",
+              "name": "unauthorized request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "webhooks",
+                    "configurations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Orum-Version",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error_code\": \"string\",\n  \"message\": \"string\",\n  \"details\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e5041df5-90a1-46b0-a82f-2e963528febf",
+          "name": "Update webhook configuration",
+          "request": {
+            "name": "Update webhook configuration",
+            "description": {},
+            "url": {
+              "path": [
+                "webhooks",
+                "configurations",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "Orum-Version",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "read:persons write:persons read:businesses write:businesses read:external-accounts write:external-accounts read:cards write:cards read:transfers write:transfers read:transfer-groups write:transfer-groups read:schedules write:schedules read:routing-number-eligibility read:balances read:reports write:reports read:booktransfers write:booktransfers read:subledgers write:subledgers read:verify-accounts write:verify-accounts read:webhook-configurations write:webhook-configurations read:webhook-secret write:webhook-secret invoke:webhook"
+                },
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://api-sandbox.orum.io/oauth/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"event_types\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"url\": \"<string>\",\n  \"enabled\": \"<boolean>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "d28eb23f-1ac1-4b8e-87a5-9d254215acf8",
+              "name": "200 response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "webhooks",
+                    "configurations",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Orum-Version",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"event_types\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"url\": \"<string>\",\n  \"enabled\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"webhook_configuration\": {\n    \"id\": \"string\",\n    \"enterprise_name\": \"string\",\n    \"event_types\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"enabled\": true,\n    \"url\": \"string\",\n    \"data_version\": \"v2021-10-01\",\n    \"created_at\": \"string\",\n    \"created_by\": \"string\",\n    \"updated_at\": \"string\",\n    \"updated_by\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8e124252-f73e-46e8-b376-a3fec88b9526",
+              "name": "unauthorized request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "webhooks",
+                    "configurations",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Orum-Version",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"event_types\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"url\": \"<string>\",\n  \"enabled\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error_code\": \"string\",\n  \"message\": \"string\",\n  \"details\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "db69bd19-edb9-4664-9016-2f7a4ca8493f",
+          "name": "Delete webhook configuration",
+          "request": {
+            "name": "Delete webhook configuration",
+            "description": {},
+            "url": {
+              "path": [
+                "webhooks",
+                "configurations",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "Orum-Version",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "read:persons write:persons read:businesses write:businesses read:external-accounts write:external-accounts read:cards write:cards read:transfers write:transfers read:transfer-groups write:transfer-groups read:schedules write:schedules read:routing-number-eligibility read:balances read:reports write:reports read:booktransfers write:booktransfers read:subledgers write:subledgers read:verify-accounts write:verify-accounts read:webhook-configurations write:webhook-configurations read:webhook-secret write:webhook-secret invoke:webhook"
+                },
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://api-sandbox.orum.io/oauth/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "2747564f-ca55-45b9-8fc2-1362a384513e",
+              "name": "204 response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "webhooks",
+                    "configurations",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Orum-Version",
+                    "value": "<string>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "1c9d9003-e82a-470b-a371-3f8651e25065",
+              "name": "unauthorized request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "webhooks",
+                    "configurations",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Orum-Version",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error_code\": \"string\",\n  \"message\": \"string\",\n  \"details\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api-sandbox.orum.io",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "0df357ee-56c4-4dcc-828a-fe384aa9b740",
+    "name": "Orum Authentication Configure webhooks API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Orum API.",
+      "type": "text/plain"
+    }
+  }
+}

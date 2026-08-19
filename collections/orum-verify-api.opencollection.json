@@ -1,0 +1,242 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Orum Authentication Verify API",
+    "version": "v2022-09-21"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Verify",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get all verify accounts",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api-sandbox.orum.io/verify/accounts",
+            "headers": [
+              {
+                "name": "Orum-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "index",
+                "value": "",
+                "type": "query",
+                "description": "Index for paginated results"
+              },
+              {
+                "name": "size",
+                "value": "",
+                "type": "query",
+                "description": "Max number of results to return"
+              },
+              {
+                "name": "id",
+                "value": "",
+                "type": "query",
+                "description": "Filter results by the account id"
+              },
+              {
+                "name": "start_time",
+                "value": "",
+                "type": "query",
+                "description": "Filter results created at or after this time"
+              },
+              {
+                "name": "end_time",
+                "value": "",
+                "type": "query",
+                "description": "Filter results created before this time"
+              },
+              {
+                "name": "account_number",
+                "value": "",
+                "type": "query",
+                "description": "Filter results by account number"
+              },
+              {
+                "name": "verification_status",
+                "value": "",
+                "type": "query",
+                "description": "Filter results by account status"
+              },
+              {
+                "name": "ownership_status",
+                "value": "",
+                "type": "query",
+                "description": "Filter results by account ownership status"
+              },
+              {
+                "name": "control_status",
+                "value": "",
+                "type": "query",
+                "description": "Filter results by account control status"
+              },
+              {
+                "name": "debit_status",
+                "value": "",
+                "type": "query",
+                "description": "Filter results by account debit status"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api-sandbox.orum.io/oauth/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Get all verify accounts, sorted by most recently created."
+        },
+        {
+          "info": {
+            "name": "Post verify accounts",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api-sandbox.orum.io/verify/accounts",
+            "headers": [
+              {
+                "name": "Orum-Version",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api-sandbox.orum.io/oauth/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Request account verification."
+        },
+        {
+          "info": {
+            "name": "Get a verify account",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api-sandbox.orum.io/verify/accounts/:id",
+            "headers": [
+              {
+                "name": "Orum-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Orum generated unique id for the account you are fetching."
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api-sandbox.orum.io/oauth/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Get a single verify account."
+        },
+        {
+          "info": {
+            "name": "Verify account control",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api-sandbox.orum.io/verify/accounts/:id/control",
+            "headers": [
+              {
+                "name": "Orum-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Orum generated unique id for the account you are verifying."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api-sandbox.orum.io/oauth/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Verify control for a single verify account."
+        },
+        {
+          "info": {
+            "name": "Verify account debit status",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api-sandbox.orum.io/verify/accounts/:id/debits",
+            "headers": [
+              {
+                "name": "Orum-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Orum generated unique id for the account you are verifying."
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api-sandbox.orum.io/oauth/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Verify debit status for a single verify account."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

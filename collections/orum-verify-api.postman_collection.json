@@ -1,0 +1,1891 @@
+{
+  "item": [
+    {
+      "id": "5cf06214-ec4e-48bf-8349-655be7cbff92",
+      "name": "Verify",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "a8600ac2-bd12-4b27-8b99-9d296e25d43f",
+          "name": "Post verify accounts",
+          "request": {
+            "name": "Post verify accounts",
+            "description": {
+              "content": "Request account verification.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "verify",
+                "accounts"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "Orum-Version",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "read:persons write:persons read:businesses write:businesses read:external-accounts write:external-accounts read:cards write:cards read:transfers write:transfers read:transfer-groups write:transfer-groups read:schedules write:schedules read:routing-number-eligibility read:balances read:reports write:reports read:booktransfers write:booktransfers read:subledgers write:subledgers read:verify-accounts write:verify-accounts read:webhook-configurations write:webhook-configurations read:webhook-secret write:webhook-secret invoke:webhook"
+                },
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://api-sandbox.orum.io/oauth/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"account_number\": \"<string>\",\n  \"routing_number\": \"<string>\",\n  \"account_holder_name\": \"<string>\",\n  \"type\": \"<string>\",\n  \"email\": \"<email>\",\n  \"person\": {\n    \"first_name\": \"<string>\",\n    \"last_name\": \"<string>\",\n    \"phone_number\": \"<string>\",\n    \"ssn\": \"<string>\"\n  },\n  \"business\": {\n    \"business_name\": \"<string>\",\n    \"tax_id\": \"<string>\",\n    \"phone_number\": \"<string>\"\n  },\n  \"sender_name\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "f427f422-6289-459a-b978-5ed4dcfef937",
+              "name": "200 response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "verify",
+                    "accounts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Orum-Version",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"account_number\": \"<string>\",\n  \"routing_number\": \"021000021\",\n  \"account_holder_name\": \"John Doe\",\n  \"type\": \"<string>\",\n  \"email\": \"<email>\",\n  \"person\": {\n    \"first_name\": \"John\",\n    \"last_name\": \"Doe\",\n    \"ssn\": \"123121234\",\n    \"phone_number\": \"+11234567890\"\n  },\n  \"business\": {\n    \"business_name\": \"Acme\",\n    \"tax_id\": \"123456789\",\n    \"phone_number\": \"+11234567890\"\n  },\n  \"sender_name\": \"Acme\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"account\": {\n    \"id\": \"98365763-e0e5-dfbc-0e1b-d9b40ea93535\",\n    \"created_at\": \"1982-12-06T06:45:50.829Z\",\n    \"updated_at\": \"1958-01-27T00:07:01.239Z\",\n    \"account_number\": \"<string>\",\n    \"routing_number\": \"<string>\",\n    \"account_holder_name\": \"<string>\",\n    \"verification_status\": \"valid\",\n    \"email\": \"<email>\",\n    \"status_reason\": \"regulatory_error\",\n    \"ownership_status\": \"pending\",\n    \"person\": {\n      \"first_name\": \"string\",\n      \"last_name\": \"string\",\n      \"phone_number\": \"string\",\n      \"first_name_match\": \"not_found\",\n      \"last_name_match\": \"not_found\",\n      \"phone_number_match\": \"not_a_match\",\n      \"ssn_match\": \"not_found\"\n    },\n    \"business\": {\n      \"business_name\": \"string\",\n      \"phone_number\": \"string\",\n      \"business_name_match\": \"not_found\",\n      \"phone_number_match\": \"not_found\",\n      \"tax_id_match\": \"match\"\n    },\n    \"control_status\": \"pending\",\n    \"debit_status\": \"failed\",\n    \"debit_status_reason\": \"unexpected_error\",\n    \"estimated_verification_date\": \"2023-07-13T00:00:00.000Z\",\n    \"sender_name\": \"<string>\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "43454698-4c11-4b45-b9d1-08e192cfcbaf",
+              "name": "invalid request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "verify",
+                    "accounts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Orum-Version",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"account_number\": \"<string>\",\n  \"routing_number\": \"021000021\",\n  \"account_holder_name\": \"John Doe\",\n  \"type\": \"<string>\",\n  \"email\": \"<email>\",\n  \"person\": {\n    \"first_name\": \"John\",\n    \"last_name\": \"Doe\",\n    \"ssn\": \"123121234\",\n    \"phone_number\": \"+11234567890\"\n  },\n  \"business\": {\n    \"business_name\": \"Acme\",\n    \"tax_id\": \"123456789\",\n    \"phone_number\": \"+11234567890\"\n  },\n  \"sender_name\": \"Acme\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error_code\": \"string\",\n  \"message\": \"string\",\n  \"details\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2ab9c577-72bb-4ed6-840d-885bea3f3057",
+              "name": "forbidden.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "verify",
+                    "accounts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Orum-Version",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"account_number\": \"<string>\",\n  \"routing_number\": \"021000021\",\n  \"account_holder_name\": \"John Doe\",\n  \"type\": \"<string>\",\n  \"email\": \"<email>\",\n  \"person\": {\n    \"first_name\": \"John\",\n    \"last_name\": \"Doe\",\n    \"ssn\": \"123121234\",\n    \"phone_number\": \"+11234567890\"\n  },\n  \"business\": {\n    \"business_name\": \"Acme\",\n    \"tax_id\": \"123456789\",\n    \"phone_number\": \"+11234567890\"\n  },\n  \"sender_name\": \"Acme\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error_code\": \"string\",\n  \"message\": \"string\",\n  \"details\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "bf62d38a-41ba-4cee-ac1f-aa55730dd477",
+              "name": "unexpected error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "verify",
+                    "accounts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Orum-Version",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"account_number\": \"<string>\",\n  \"routing_number\": \"021000021\",\n  \"account_holder_name\": \"John Doe\",\n  \"type\": \"<string>\",\n  \"email\": \"<email>\",\n  \"person\": {\n    \"first_name\": \"John\",\n    \"last_name\": \"Doe\",\n    \"ssn\": \"123121234\",\n    \"phone_number\": \"+11234567890\"\n  },\n  \"business\": {\n    \"business_name\": \"Acme\",\n    \"tax_id\": \"123456789\",\n    \"phone_number\": \"+11234567890\"\n  },\n  \"sender_name\": \"Acme\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error_code\": \"string\",\n  \"message\": \"string\",\n  \"details\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "74eee209-cac8-4deb-9ef5-49fbe7dc8c25",
+          "name": "Get all verify accounts",
+          "request": {
+            "name": "Get all verify accounts",
+            "description": {
+              "content": "Get all verify accounts, sorted by most recently created.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "verify",
+                "accounts"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "index",
+                  "value": "0",
+                  "description": "Index for paginated results"
+                },
+                {
+                  "disabled": false,
+                  "key": "size",
+                  "value": "100",
+                  "description": "Max number of results to return"
+                },
+                {
+                  "disabled": false,
+                  "key": "id",
+                  "value": "<uuid>",
+                  "description": "Filter results by the account id"
+                },
+                {
+                  "disabled": false,
+                  "key": "start_time",
+                  "value": "<dateTime>",
+                  "description": "Filter results created at or after this time"
+                },
+                {
+                  "disabled": false,
+                  "key": "end_time",
+                  "value": "<dateTime>",
+                  "description": "Filter results created before this time"
+                },
+                {
+                  "disabled": false,
+                  "key": "account_number",
+                  "value": "<string>",
+                  "description": "Filter results by account number"
+                },
+                {
+                  "disabled": false,
+                  "key": "verification_status",
+                  "value": "<string>",
+                  "description": "Filter results by account status"
+                },
+                {
+                  "disabled": false,
+                  "key": "verification_status",
+                  "value": "<string>",
+                  "description": "Filter results by account status"
+                },
+                {
+                  "disabled": false,
+                  "key": "ownership_status",
+                  "value": "<string>",
+                  "description": "Filter results by account ownership status"
+                },
+                {
+                  "disabled": false,
+                  "key": "ownership_status",
+                  "value": "<string>",
+                  "description": "Filter results by account ownership status"
+                },
+                {
+                  "disabled": false,
+                  "key": "control_status",
+                  "value": "<string>",
+                  "description": "Filter results by account control status"
+                },
+                {
+                  "disabled": false,
+                  "key": "control_status",
+                  "value": "<string>",
+                  "description": "Filter results by account control status"
+                },
+                {
+                  "disabled": false,
+                  "key": "debit_status",
+                  "value": "<string>",
+                  "description": "Filter results by account debit status"
+                },
+                {
+                  "disabled": false,
+                  "key": "debit_status",
+                  "value": "<string>",
+                  "description": "Filter results by account debit status"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "Orum-Version",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "read:persons write:persons read:businesses write:businesses read:external-accounts write:external-accounts read:cards write:cards read:transfers write:transfers read:transfer-groups write:transfer-groups read:schedules write:schedules read:routing-number-eligibility read:balances read:reports write:reports read:booktransfers write:booktransfers read:subledgers write:subledgers read:verify-accounts write:verify-accounts read:webhook-configurations write:webhook-configurations read:webhook-secret write:webhook-secret invoke:webhook"
+                },
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://api-sandbox.orum.io/oauth/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "798eda76-4b22-4450-a7a0-8176ca7e0395",
+              "name": "200 response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "verify",
+                    "accounts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "index",
+                      "value": "0"
+                    },
+                    {
+                      "key": "size",
+                      "value": "100"
+                    },
+                    {
+                      "key": "id",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "key": "start_time",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "end_time",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "account_number",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "verification_status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "verification_status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "ownership_status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "ownership_status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "control_status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "control_status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "debit_status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "debit_status",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Orum-Version",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"accounts\": [\n    {\n      \"id\": \"996df14a-4a4b-2a9c-3b17-33c6e7bff8ba\",\n      \"created_at\": \"2017-12-13T16:58:36.273Z\",\n      \"updated_at\": \"1980-10-06T11:08:06.717Z\",\n      \"account_number\": \"<string>\",\n      \"routing_number\": \"<string>\",\n      \"account_holder_name\": \"<string>\",\n      \"verification_status\": \"<string>\",\n      \"email\": \"<email>\",\n      \"status_reason\": \"closed_account\",\n      \"ownership_status\": \"<string>\",\n      \"person\": {\n        \"first_name\": \"string\",\n        \"last_name\": \"string\",\n        \"phone_number\": \"string\",\n        \"first_name_match\": \"not_found\",\n        \"last_name_match\": \"not_found\",\n        \"phone_number_match\": \"not_found\",\n        \"ssn_match\": \"not_a_match\"\n      },\n      \"business\": {\n        \"business_name\": \"string\",\n        \"phone_number\": \"string\",\n        \"business_name_match\": \"not_found\",\n        \"phone_number_match\": \"not_a_match\",\n        \"tax_id_match\": \"match\"\n      },\n      \"control_status\": \"<string>\",\n      \"debit_status\": \"<string>\",\n      \"debit_status_reason\": \"invalid_routing\",\n      \"estimated_verification_date\": \"2023-07-13T00:00:00.000Z\",\n      \"sender_name\": \"<string>\"\n    },\n    {\n      \"id\": \"12e09d62-9617-0421-18b3-103fd13b34e3\",\n      \"created_at\": \"1961-05-05T11:35:10.747Z\",\n      \"updated_at\": \"2018-05-16T10:16:27.436Z\",\n      \"account_number\": \"<string>\",\n      \"routing_number\": \"<string>\",\n      \"account_holder_name\": \"<string>\",\n      \"verification_status\": \"<string>\",\n      \"email\": \"<email>\",\n      \"status_reason\": \"invalid_routing\",\n      \"ownership_status\": \"<string>\",\n      \"person\": {\n        \"first_name\": \"string\",\n        \"last_name\": \"string\",\n        \"phone_number\": \"string\",\n        \"first_name_match\": \"match\",\n        \"last_name_match\": \"not_a_match\",\n        \"phone_number_match\": \"not_found\",\n        \"ssn_match\": \"match\"\n      },\n      \"business\": {\n        \"business_name\": \"string\",\n        \"phone_number\": \"string\",\n        \"business_name_match\": \"not_found\",\n        \"phone_number_match\": \"match\",\n        \"tax_id_match\": \"not_a_match\"\n      },\n      \"control_status\": \"<string>\",\n      \"debit_status\": \"<string>\",\n      \"debit_status_reason\": \"invalid_routing\",\n      \"estimated_verification_date\": \"2023-07-13T00:00:00.000Z\",\n      \"sender_name\": \"<string>\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "161f1b02-5735-4939-b759-26acf2d06330",
+              "name": "invalid request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "verify",
+                    "accounts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "index",
+                      "value": "0"
+                    },
+                    {
+                      "key": "size",
+                      "value": "100"
+                    },
+                    {
+                      "key": "id",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "key": "start_time",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "end_time",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "account_number",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "verification_status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "verification_status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "ownership_status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "ownership_status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "control_status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "control_status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "debit_status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "debit_status",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Orum-Version",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error_code\": \"string\",\n  \"message\": \"string\",\n  \"details\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "03fa3728-4624-4dec-a4f5-5647487af926",
+              "name": "unexpected error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "verify",
+                    "accounts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "index",
+                      "value": "0"
+                    },
+                    {
+                      "key": "size",
+                      "value": "100"
+                    },
+                    {
+                      "key": "id",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "key": "start_time",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "end_time",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "account_number",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "verification_status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "verification_status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "ownership_status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "ownership_status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "control_status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "control_status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "debit_status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "debit_status",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Orum-Version",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error_code\": \"string\",\n  \"message\": \"string\",\n  \"details\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "99dc54b8-49e0-4191-9dec-a075b0cd12c3",
+          "name": "Get a verify account",
+          "request": {
+            "name": "Get a verify account",
+            "description": {
+              "content": "Get a single verify account.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "verify",
+                "accounts",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "id",
+                  "description": "(Required) Orum generated unique id for the account you are fetching."
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "Orum-Version",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "read:persons write:persons read:businesses write:businesses read:external-accounts write:external-accounts read:cards write:cards read:transfers write:transfers read:transfer-groups write:transfer-groups read:schedules write:schedules read:routing-number-eligibility read:balances read:reports write:reports read:booktransfers write:booktransfers read:subledgers write:subledgers read:verify-accounts write:verify-accounts read:webhook-configurations write:webhook-configurations read:webhook-secret write:webhook-secret invoke:webhook"
+                },
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://api-sandbox.orum.io/oauth/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "420bcdf8-8ef5-408e-a5c5-fbf3ee59b32b",
+              "name": "200 response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "verify",
+                    "accounts",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Orum generated unique id for the account you are fetching."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Orum-Version",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"account\": {\n    \"id\": \"<uuid>\",\n    \"created_at\": \"1959-01-18T22:19:55.194Z\",\n    \"updated_at\": \"1991-04-24T10:21:48.952Z\",\n    \"account_number\": \"<string>\",\n    \"routing_number\": \"<string>\",\n    \"account_holder_name\": \"<string>\",\n    \"verification_status\": \"<string>\",\n    \"email\": \"<email>\",\n    \"status_reason\": \"deceased_party\",\n    \"ownership_status\": \"<string>\",\n    \"person\": {\n      \"first_name\": \"string\",\n      \"last_name\": \"string\",\n      \"phone_number\": \"string\",\n      \"first_name_match\": \"match\",\n      \"last_name_match\": \"not_a_match\",\n      \"phone_number_match\": \"not_a_match\",\n      \"ssn_match\": \"not_found\"\n    },\n    \"business\": {\n      \"business_name\": \"string\",\n      \"phone_number\": \"string\",\n      \"business_name_match\": \"not_a_match\",\n      \"phone_number_match\": \"not_a_match\",\n      \"tax_id_match\": \"not_found\"\n    },\n    \"control_status\": \"<string>\",\n    \"debit_status\": \"<string>\",\n    \"debit_status_reason\": \"unauthorized_transfer\",\n    \"estimated_verification_date\": \"2023-07-13T00:00:00.000Z\",\n    \"sender_name\": \"<string>\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7533612c-2ecf-4178-b180-6fb1dd0c6abb",
+              "name": "invalid request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "verify",
+                    "accounts",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Orum generated unique id for the account you are fetching."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Orum-Version",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error_code\": \"string\",\n  \"message\": \"string\",\n  \"details\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f1569526-1a79-47da-a872-0607daa43450",
+              "name": "not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "verify",
+                    "accounts",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Orum generated unique id for the account you are fetching."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Orum-Version",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error_code\": \"string\",\n  \"message\": \"string\",\n  \"details\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c3cfea45-e6d5-48eb-88c9-c83357c17401",
+              "name": "unexpected error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "verify",
+                    "accounts",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Orum generated unique id for the account you are fetching."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Orum-Version",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error_code\": \"string\",\n  \"message\": \"string\",\n  \"details\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "be656464-ae9f-4e21-9861-c62fee044d62",
+          "name": "Verify account control",
+          "request": {
+            "name": "Verify account control",
+            "description": {
+              "content": "Verify control for a single verify account.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "verify",
+                "accounts",
+                ":id",
+                "control"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "id",
+                  "description": "(Required) Orum generated unique id for the account you are verifying."
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "Orum-Version",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "read:persons write:persons read:businesses write:businesses read:external-accounts write:external-accounts read:cards write:cards read:transfers write:transfers read:transfer-groups write:transfer-groups read:schedules write:schedules read:routing-number-eligibility read:balances read:reports write:reports read:booktransfers write:booktransfers read:subledgers write:subledgers read:verify-accounts write:verify-accounts read:webhook-configurations write:webhook-configurations read:webhook-secret write:webhook-secret invoke:webhook"
+                },
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://api-sandbox.orum.io/oauth/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"statement_code\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "07f1adfe-0f21-4333-99b3-0ebe181ca73e",
+              "name": "200 response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "verify",
+                    "accounts",
+                    ":id",
+                    "control"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Orum generated unique id for the account you are verifying."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Orum-Version",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"statement_code\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"account\": {\n    \"id\": \"<uuid>\",\n    \"created_at\": \"1959-01-18T22:19:55.194Z\",\n    \"updated_at\": \"1991-04-24T10:21:48.952Z\",\n    \"account_number\": \"<string>\",\n    \"routing_number\": \"<string>\",\n    \"account_holder_name\": \"<string>\",\n    \"verification_status\": \"<string>\",\n    \"email\": \"<email>\",\n    \"status_reason\": \"deceased_party\",\n    \"ownership_status\": \"<string>\",\n    \"person\": {\n      \"first_name\": \"string\",\n      \"last_name\": \"string\",\n      \"phone_number\": \"string\",\n      \"first_name_match\": \"match\",\n      \"last_name_match\": \"not_a_match\",\n      \"phone_number_match\": \"not_a_match\",\n      \"ssn_match\": \"not_found\"\n    },\n    \"business\": {\n      \"business_name\": \"string\",\n      \"phone_number\": \"string\",\n      \"business_name_match\": \"not_a_match\",\n      \"phone_number_match\": \"not_a_match\",\n      \"tax_id_match\": \"not_found\"\n    },\n    \"control_status\": \"<string>\",\n    \"debit_status\": \"<string>\",\n    \"debit_status_reason\": \"unauthorized_transfer\",\n    \"estimated_verification_date\": \"2023-07-13T00:00:00.000Z\",\n    \"sender_name\": \"<string>\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "45409909-9551-4fa0-87d4-fb8297246b74",
+              "name": "invalid request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "verify",
+                    "accounts",
+                    ":id",
+                    "control"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Orum generated unique id for the account you are verifying."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Orum-Version",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"statement_code\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error_code\": \"string\",\n  \"message\": \"string\",\n  \"attempts_remaining\": 9683\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fe3247e1-4bef-4af7-b58b-0ec0511e79ef",
+              "name": "not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "verify",
+                    "accounts",
+                    ":id",
+                    "control"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Orum generated unique id for the account you are verifying."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Orum-Version",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"statement_code\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error_code\": \"string\",\n  \"message\": \"string\",\n  \"details\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a3e091f4-3ad5-4e47-b8d4-5d4551a03aea",
+              "name": "too many requests.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "verify",
+                    "accounts",
+                    ":id",
+                    "control"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Orum generated unique id for the account you are verifying."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Orum-Version",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"statement_code\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error_code\": \"string\",\n  \"message\": \"string\",\n  \"details\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4afe4632-7116-4e68-a8ba-cccf5290698f",
+              "name": "unexpected error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "verify",
+                    "accounts",
+                    ":id",
+                    "control"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Orum generated unique id for the account you are verifying."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Orum-Version",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"statement_code\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error_code\": \"string\",\n  \"message\": \"string\",\n  \"details\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b5841c03-219c-4024-bef1-6385e45318f0",
+          "name": "Verify account debit status",
+          "request": {
+            "name": "Verify account debit status",
+            "description": {
+              "content": "Verify debit status for a single verify account.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "verify",
+                "accounts",
+                ":id",
+                "debits"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "id",
+                  "description": "(Required) Orum generated unique id for the account you are verifying."
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "Orum-Version",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "read:persons write:persons read:businesses write:businesses read:external-accounts write:external-accounts read:cards write:cards read:transfers write:transfers read:transfer-groups write:transfer-groups read:schedules write:schedules read:routing-number-eligibility read:balances read:reports write:reports read:booktransfers write:booktransfers read:subledgers write:subledgers read:verify-accounts write:verify-accounts read:webhook-configurations write:webhook-configurations read:webhook-secret write:webhook-secret invoke:webhook"
+                },
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://api-sandbox.orum.io/oauth/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "422c078b-c909-43ad-a8c1-57bd8ad09f81",
+              "name": "200 response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "verify",
+                    "accounts",
+                    ":id",
+                    "debits"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Orum generated unique id for the account you are verifying."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Orum-Version",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"account\": {\n    \"id\": \"<uuid>\",\n    \"created_at\": \"1959-01-18T22:19:55.194Z\",\n    \"updated_at\": \"1991-04-24T10:21:48.952Z\",\n    \"account_number\": \"<string>\",\n    \"routing_number\": \"<string>\",\n    \"account_holder_name\": \"<string>\",\n    \"verification_status\": \"<string>\",\n    \"email\": \"<email>\",\n    \"status_reason\": \"deceased_party\",\n    \"ownership_status\": \"<string>\",\n    \"person\": {\n      \"first_name\": \"string\",\n      \"last_name\": \"string\",\n      \"phone_number\": \"string\",\n      \"first_name_match\": \"match\",\n      \"last_name_match\": \"not_a_match\",\n      \"phone_number_match\": \"not_a_match\",\n      \"ssn_match\": \"not_found\"\n    },\n    \"business\": {\n      \"business_name\": \"string\",\n      \"phone_number\": \"string\",\n      \"business_name_match\": \"not_a_match\",\n      \"phone_number_match\": \"not_a_match\",\n      \"tax_id_match\": \"not_found\"\n    },\n    \"control_status\": \"<string>\",\n    \"debit_status\": \"<string>\",\n    \"debit_status_reason\": \"unauthorized_transfer\",\n    \"estimated_verification_date\": \"2023-07-13T00:00:00.000Z\",\n    \"sender_name\": \"<string>\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5a412dd0-3c7e-46db-8f4e-ff181b56acf0",
+              "name": "invalid request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "verify",
+                    "accounts",
+                    ":id",
+                    "debits"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Orum generated unique id for the account you are verifying."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Orum-Version",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error_code\": \"string\",\n  \"message\": \"string\",\n  \"details\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5a6cc0ce-447e-49f0-b851-e481f2798bb3",
+              "name": "not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "verify",
+                    "accounts",
+                    ":id",
+                    "debits"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Orum generated unique id for the account you are verifying."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Orum-Version",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error_code\": \"string\",\n  \"message\": \"string\",\n  \"details\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b745d386-af31-438f-9573-228d7cf01e9f",
+              "name": "too many requests.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "verify",
+                    "accounts",
+                    ":id",
+                    "debits"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Orum generated unique id for the account you are verifying."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Orum-Version",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error_code\": \"string\",\n  \"message\": \"string\",\n  \"details\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e2c496cc-fb13-4031-ba82-709c533bed01",
+              "name": "unexpected error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "verify",
+                    "accounts",
+                    ":id",
+                    "debits"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Orum generated unique id for the account you are verifying."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Orum-Version",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error_code\": \"string\",\n  \"message\": \"string\",\n  \"details\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api-sandbox.orum.io",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "8c819bd2-ce47-46fd-9cb2-420b7a8cbf16",
+    "name": "Orum Authentication Verify API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Orum API.",
+      "type": "text/plain"
+    }
+  }
+}

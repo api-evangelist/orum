@@ -1,0 +1,2804 @@
+{
+  "item": [
+    {
+      "id": "adf15101-d484-4eb3-8782-f9e9a566ba3b",
+      "name": "External Accounts",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "7d4ac342-a50e-437e-a4f7-9b3367212f44",
+          "name": "Create an external account",
+          "request": {
+            "name": "Create an external account",
+            "description": {
+              "content": "Create an external account object.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "deliver",
+                "external",
+                "accounts"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "Orum-Version",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "read:persons write:persons read:businesses write:businesses read:external-accounts write:external-accounts read:cards write:cards read:transfers write:transfers read:transfer-groups write:transfer-groups read:schedules write:schedules read:routing-number-eligibility read:balances read:reports write:reports read:booktransfers write:booktransfers read:subledgers write:subledgers read:verify-accounts write:verify-accounts read:webhook-configurations write:webhook-configurations read:webhook-secret write:webhook-secret invoke:webhook"
+                },
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://api-sandbox.orum.io/oauth/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"account_reference_id\": \"<string>\",\n  \"customer_reference_id\": \"<string>\",\n  \"customer_resource_type\": \"<string>\",\n  \"account_type\": \"<string>\",\n  \"account_number\": \"<string>\",\n  \"routing_number\": \"<string>\",\n  \"account_holder_name\": \"<string>\",\n  \"metadata\": \"<object>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "aecfd14f-c504-4e9c-983b-67bb001a76c1",
+              "name": "200 response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "deliver",
+                    "external",
+                    "accounts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Orum-Version",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"account_reference_id\": \"<string>\",\n  \"customer_reference_id\": \"<string>\",\n  \"customer_resource_type\": \"<string>\",\n  \"account_type\": \"<string>\",\n  \"account_number\": \"<string>\",\n  \"routing_number\": \"<string>\",\n  \"account_holder_name\": \"<string>\",\n  \"metadata\": \"<object>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"external_account\": {\n    \"id\": \"88920c7c-8f89-0ed5-2361-3decf428b149\",\n    \"account_reference_id\": \"<string>\",\n    \"customer_reference_id\": \"<string>\",\n    \"customer_resource_type\": \"<string>\",\n    \"account_type\": \"<string>\",\n    \"account_number\": \"<string>\",\n    \"routing_number\": \"<string>\",\n    \"account_holder_name\": \"string\",\n    \"status\": \"closed\",\n    \"created_at\": \"1997-03-16T18:56:40.902Z\",\n    \"updated_at\": \"1957-12-18T17:03:43.148Z\",\n    \"closed_at\": \"1948-07-21T00:34:52.377Z\",\n    \"metadata\": \"<object>\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "30ec0696-0fa3-4392-b239-c6d19b23f57c",
+              "name": "duplicate external account.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "deliver",
+                    "external",
+                    "accounts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Orum-Version",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"account_reference_id\": \"<string>\",\n  \"customer_reference_id\": \"<string>\",\n  \"customer_resource_type\": \"<string>\",\n  \"account_type\": \"<string>\",\n  \"account_number\": \"<string>\",\n  \"routing_number\": \"<string>\",\n  \"account_holder_name\": \"<string>\",\n  \"metadata\": \"<object>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error_code\": \"duplicate_account_details\",\n  \"message\": \"string\",\n  \"details\": {\n    \"customer_resource_type\": \"person\",\n    \"customer_reference_id\": \"string\",\n    \"customer_resource_id\": \"a2403dbd-0fc3-75ae-302a-3348fb313ba5\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2e7a0f55-5248-46dd-bd4c-636a5b69524c",
+              "name": "invalid or unexpected error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "deliver",
+                    "external",
+                    "accounts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Orum-Version",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"account_reference_id\": \"<string>\",\n  \"customer_reference_id\": \"<string>\",\n  \"customer_resource_type\": \"<string>\",\n  \"account_type\": \"<string>\",\n  \"account_number\": \"<string>\",\n  \"routing_number\": \"<string>\",\n  \"account_holder_name\": \"<string>\",\n  \"metadata\": \"<object>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error_code\": \"string\",\n  \"message\": \"string\",\n  \"details\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b37229d9-66ea-4309-b1ac-dc87d0142f25",
+          "name": "Get all external accounts",
+          "request": {
+            "name": "Get all external accounts",
+            "description": {
+              "content": "Get all external account objects.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "deliver",
+                "external",
+                "accounts"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "index",
+                  "value": "0",
+                  "description": "Index for paginated results"
+                },
+                {
+                  "disabled": false,
+                  "key": "size",
+                  "value": "100",
+                  "description": "Max number of results to return"
+                },
+                {
+                  "disabled": false,
+                  "key": "account_reference_id",
+                  "value": "<string>",
+                  "description": "Filter by account reference id"
+                },
+                {
+                  "disabled": false,
+                  "key": "customer_reference_id",
+                  "value": "<string>",
+                  "description": "Filter by customer reference id"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "Orum-Version",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "read:persons write:persons read:businesses write:businesses read:external-accounts write:external-accounts read:cards write:cards read:transfers write:transfers read:transfer-groups write:transfer-groups read:schedules write:schedules read:routing-number-eligibility read:balances read:reports write:reports read:booktransfers write:booktransfers read:subledgers write:subledgers read:verify-accounts write:verify-accounts read:webhook-configurations write:webhook-configurations read:webhook-secret write:webhook-secret invoke:webhook"
+                },
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://api-sandbox.orum.io/oauth/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "2a9b3e30-5157-4851-b94b-345756b7f5df",
+              "name": "200 response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "deliver",
+                    "external",
+                    "accounts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "index",
+                      "value": "0"
+                    },
+                    {
+                      "key": "size",
+                      "value": "100"
+                    },
+                    {
+                      "key": "account_reference_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "customer_reference_id",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Orum-Version",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"external_accounts\": [\n    {\n      \"id\": \"90acd95d-efa1-d4aa-12b1-96b7bdd04243\",\n      \"account_reference_id\": \"<string>\",\n      \"customer_reference_id\": \"<string>\",\n      \"customer_resource_type\": \"<string>\",\n      \"account_type\": \"<string>\",\n      \"account_number\": \"<string>\",\n      \"routing_number\": \"<string>\",\n      \"account_holder_name\": \"string\",\n      \"status\": \"closed\",\n      \"created_at\": \"1949-03-16T01:27:22.031Z\",\n      \"updated_at\": \"2005-06-23T20:55:47.057Z\",\n      \"closed_at\": \"1971-05-12T10:46:16.993Z\",\n      \"metadata\": \"<object>\"\n    },\n    {\n      \"id\": \"bf1fd386-9a59-da39-0d68-67d51991d639\",\n      \"account_reference_id\": \"<string>\",\n      \"customer_reference_id\": \"<string>\",\n      \"customer_resource_type\": \"<string>\",\n      \"account_type\": \"<string>\",\n      \"account_number\": \"<string>\",\n      \"routing_number\": \"<string>\",\n      \"account_holder_name\": \"string\",\n      \"status\": \"restricted\",\n      \"created_at\": \"1991-02-18T20:32:58.163Z\",\n      \"updated_at\": \"1989-02-05T20:00:50.802Z\",\n      \"closed_at\": \"1981-07-03T12:55:36.145Z\",\n      \"metadata\": \"<object>\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "48345e00-0e2c-4c61-9d7d-973ef9154079",
+              "name": "invalid request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "deliver",
+                    "external",
+                    "accounts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "index",
+                      "value": "0"
+                    },
+                    {
+                      "key": "size",
+                      "value": "100"
+                    },
+                    {
+                      "key": "account_reference_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "customer_reference_id",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Orum-Version",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error_code\": \"string\",\n  \"message\": \"string\",\n  \"details\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "63503e50-a3f6-4485-a766-4ef2c64cba96",
+              "name": "unexpected error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "deliver",
+                    "external",
+                    "accounts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "index",
+                      "value": "0"
+                    },
+                    {
+                      "key": "size",
+                      "value": "100"
+                    },
+                    {
+                      "key": "account_reference_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "customer_reference_id",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Orum-Version",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error_code\": \"string\",\n  \"message\": \"string\",\n  \"details\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "7b6ab8dc-dec4-492d-aff4-7d58845be1f5",
+          "name": "Update an external account by reference id",
+          "request": {
+            "name": "Update an external account by reference id",
+            "description": {
+              "content": "Update an external account object using its reference id.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "deliver",
+                "external",
+                "accounts"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "Orum-Version",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "read:persons write:persons read:businesses write:businesses read:external-accounts write:external-accounts read:cards write:cards read:transfers write:transfers read:transfer-groups write:transfer-groups read:schedules write:schedules read:routing-number-eligibility read:balances read:reports write:reports read:booktransfers write:booktransfers read:subledgers write:subledgers read:verify-accounts write:verify-accounts read:webhook-configurations write:webhook-configurations read:webhook-secret write:webhook-secret invoke:webhook"
+                },
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://api-sandbox.orum.io/oauth/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"account_reference_id\": \"<string>\",\n  \"customer_reference_id\": \"<string>\",\n  \"customer_resource_type\": \"<string>\",\n  \"account_type\": \"<string>\",\n  \"account_number\": \"<string>\",\n  \"routing_number\": \"<string>\",\n  \"account_holder_name\": \"<string>\",\n  \"metadata\": \"<object>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "95c3d3fb-d42b-4b55-b531-db1cf1d75e89",
+              "name": "200 response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "deliver",
+                    "external",
+                    "accounts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Orum-Version",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"account_reference_id\": \"<string>\",\n  \"customer_reference_id\": \"<string>\",\n  \"customer_resource_type\": \"<string>\",\n  \"account_type\": \"<string>\",\n  \"account_number\": \"<string>\",\n  \"routing_number\": \"<string>\",\n  \"account_holder_name\": \"<string>\",\n  \"metadata\": \"<object>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"external_account\": {\n    \"id\": \"88920c7c-8f89-0ed5-2361-3decf428b149\",\n    \"account_reference_id\": \"<string>\",\n    \"customer_reference_id\": \"<string>\",\n    \"customer_resource_type\": \"<string>\",\n    \"account_type\": \"<string>\",\n    \"account_number\": \"<string>\",\n    \"routing_number\": \"<string>\",\n    \"account_holder_name\": \"string\",\n    \"status\": \"closed\",\n    \"created_at\": \"1997-03-16T18:56:40.902Z\",\n    \"updated_at\": \"1957-12-18T17:03:43.148Z\",\n    \"closed_at\": \"1948-07-21T00:34:52.377Z\",\n    \"metadata\": \"<object>\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8b417e43-dfb2-4caa-9366-cfdc56438437",
+              "name": "invalid request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "deliver",
+                    "external",
+                    "accounts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Orum-Version",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"account_reference_id\": \"<string>\",\n  \"customer_reference_id\": \"<string>\",\n  \"customer_resource_type\": \"<string>\",\n  \"account_type\": \"<string>\",\n  \"account_number\": \"<string>\",\n  \"routing_number\": \"<string>\",\n  \"account_holder_name\": \"<string>\",\n  \"metadata\": \"<object>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error_code\": \"string\",\n  \"message\": \"string\",\n  \"details\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fb64faa2-279b-4cf7-a418-6184b3d23e64",
+              "name": "unexpected error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "deliver",
+                    "external",
+                    "accounts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Orum-Version",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"account_reference_id\": \"<string>\",\n  \"customer_reference_id\": \"<string>\",\n  \"customer_resource_type\": \"<string>\",\n  \"account_type\": \"<string>\",\n  \"account_number\": \"<string>\",\n  \"routing_number\": \"<string>\",\n  \"account_holder_name\": \"<string>\",\n  \"metadata\": \"<object>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error_code\": \"string\",\n  \"message\": \"string\",\n  \"details\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "da1ffcb2-f4b8-4e9d-9cf0-1af0d6a93fbc",
+          "name": "Get an external account by id",
+          "request": {
+            "name": "Get an external account by id",
+            "description": {
+              "content": "Get an external account object.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "deliver",
+                "external",
+                "accounts",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "id",
+                  "description": "(Required) Orum generated unique id for the resource for the external account you are fetching."
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "Orum-Version",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "read:persons write:persons read:businesses write:businesses read:external-accounts write:external-accounts read:cards write:cards read:transfers write:transfers read:transfer-groups write:transfer-groups read:schedules write:schedules read:routing-number-eligibility read:balances read:reports write:reports read:booktransfers write:booktransfers read:subledgers write:subledgers read:verify-accounts write:verify-accounts read:webhook-configurations write:webhook-configurations read:webhook-secret write:webhook-secret invoke:webhook"
+                },
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://api-sandbox.orum.io/oauth/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "4630be76-c05c-40d1-be8e-9497ff8e2b39",
+              "name": "200 response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "deliver",
+                    "external",
+                    "accounts",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Orum generated unique id for the resource for the external account you are fetching."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Orum-Version",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"external_account\": {\n    \"id\": \"<uuid>\",\n    \"account_reference_id\": \"<string>\",\n    \"customer_reference_id\": \"<string>\",\n    \"customer_resource_type\": \"<string>\",\n    \"account_type\": \"<string>\",\n    \"account_number\": \"<string>\",\n    \"routing_number\": \"<string>\",\n    \"account_holder_name\": \"string\",\n    \"status\": \"restricted\",\n    \"created_at\": \"1993-02-19T14:28:52.090Z\",\n    \"updated_at\": \"1957-03-26T07:26:59.423Z\",\n    \"closed_at\": \"1997-07-01T12:20:54.173Z\",\n    \"metadata\": \"<object>\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4473f8ba-00c0-4eff-9593-75c56084ebdc",
+              "name": "not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "deliver",
+                    "external",
+                    "accounts",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Orum generated unique id for the resource for the external account you are fetching."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Orum-Version",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error_code\": \"string\",\n  \"message\": \"string\",\n  \"details\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ffb61831-224b-4b19-891d-39c39ffbd871",
+              "name": "unexpected error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "deliver",
+                    "external",
+                    "accounts",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Orum generated unique id for the resource for the external account you are fetching."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Orum-Version",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error_code\": \"string\",\n  \"message\": \"string\",\n  \"details\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e09f96a0-e803-4aca-84dc-67573905e240",
+          "name": "Update an external account by id",
+          "request": {
+            "name": "Update an external account by id",
+            "description": {
+              "content": "Update an external account object.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "deliver",
+                "external",
+                "accounts",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "id",
+                  "description": "(Required) Orum generated unique id for the resource for the external account you are updating."
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "Orum-Version",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "read:persons write:persons read:businesses write:businesses read:external-accounts write:external-accounts read:cards write:cards read:transfers write:transfers read:transfer-groups write:transfer-groups read:schedules write:schedules read:routing-number-eligibility read:balances read:reports write:reports read:booktransfers write:booktransfers read:subledgers write:subledgers read:verify-accounts write:verify-accounts read:webhook-configurations write:webhook-configurations read:webhook-secret write:webhook-secret invoke:webhook"
+                },
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://api-sandbox.orum.io/oauth/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"account_reference_id\": \"<string>\",\n  \"customer_reference_id\": \"<string>\",\n  \"customer_resource_type\": \"<string>\",\n  \"account_type\": \"<string>\",\n  \"account_number\": \"<string>\",\n  \"routing_number\": \"<string>\",\n  \"account_holder_name\": \"<string>\",\n  \"metadata\": \"<object>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "9ea36761-7329-4143-a69d-a26658eaf3e2",
+              "name": "200 response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "deliver",
+                    "external",
+                    "accounts",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Orum generated unique id for the resource for the external account you are updating."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Orum-Version",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"account_reference_id\": \"<string>\",\n  \"customer_reference_id\": \"<string>\",\n  \"customer_resource_type\": \"<string>\",\n  \"account_type\": \"<string>\",\n  \"account_number\": \"<string>\",\n  \"routing_number\": \"<string>\",\n  \"account_holder_name\": \"<string>\",\n  \"metadata\": \"<object>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"external_account\": {\n    \"id\": \"<uuid>\",\n    \"account_reference_id\": \"<string>\",\n    \"customer_reference_id\": \"<string>\",\n    \"customer_resource_type\": \"<string>\",\n    \"account_type\": \"<string>\",\n    \"account_number\": \"<string>\",\n    \"routing_number\": \"<string>\",\n    \"account_holder_name\": \"string\",\n    \"status\": \"restricted\",\n    \"created_at\": \"1993-02-19T14:28:52.090Z\",\n    \"updated_at\": \"1957-03-26T07:26:59.423Z\",\n    \"closed_at\": \"1997-07-01T12:20:54.173Z\",\n    \"metadata\": \"<object>\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a6f08cf9-586e-4c68-ac66-2b7b5786d8c0",
+              "name": "invalid request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "deliver",
+                    "external",
+                    "accounts",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Orum generated unique id for the resource for the external account you are updating."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Orum-Version",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"account_reference_id\": \"<string>\",\n  \"customer_reference_id\": \"<string>\",\n  \"customer_resource_type\": \"<string>\",\n  \"account_type\": \"<string>\",\n  \"account_number\": \"<string>\",\n  \"routing_number\": \"<string>\",\n  \"account_holder_name\": \"<string>\",\n  \"metadata\": \"<object>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error_code\": \"string\",\n  \"message\": \"string\",\n  \"details\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4c6dee48-f9dd-49e3-bfd6-b3234b8525e8",
+              "name": "not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "deliver",
+                    "external",
+                    "accounts",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Orum generated unique id for the resource for the external account you are updating."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Orum-Version",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"account_reference_id\": \"<string>\",\n  \"customer_reference_id\": \"<string>\",\n  \"customer_resource_type\": \"<string>\",\n  \"account_type\": \"<string>\",\n  \"account_number\": \"<string>\",\n  \"routing_number\": \"<string>\",\n  \"account_holder_name\": \"<string>\",\n  \"metadata\": \"<object>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error_code\": \"string\",\n  \"message\": \"string\",\n  \"details\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2ca93160-c620-46cc-80a8-e4babd73cc45",
+              "name": "unexpected error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "deliver",
+                    "external",
+                    "accounts",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Orum generated unique id for the resource for the external account you are updating."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Orum-Version",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"account_reference_id\": \"<string>\",\n  \"customer_reference_id\": \"<string>\",\n  \"customer_resource_type\": \"<string>\",\n  \"account_type\": \"<string>\",\n  \"account_number\": \"<string>\",\n  \"routing_number\": \"<string>\",\n  \"account_holder_name\": \"<string>\",\n  \"metadata\": \"<object>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error_code\": \"string\",\n  \"message\": \"string\",\n  \"details\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c826cc5e-8361-45b9-9abb-cb5e500d6082",
+          "name": "Partial update an external account by id",
+          "request": {
+            "name": "Partial update an external account by id",
+            "description": {
+              "content": "Update individual fields on an external account object.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "deliver",
+                "external",
+                "accounts",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "id",
+                  "description": "(Required) Orum generated unique id for the resource for the external account you are updating."
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "Orum-Version",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "read:persons write:persons read:businesses write:businesses read:external-accounts write:external-accounts read:cards write:cards read:transfers write:transfers read:transfer-groups write:transfer-groups read:schedules write:schedules read:routing-number-eligibility read:balances read:reports write:reports read:booktransfers write:booktransfers read:subledgers write:subledgers read:verify-accounts write:verify-accounts read:webhook-configurations write:webhook-configurations read:webhook-secret write:webhook-secret invoke:webhook"
+                },
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://api-sandbox.orum.io/oauth/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"account_type\": \"<string>\",\n  \"account_number\": \"<string>\",\n  \"routing_number\": \"<string>\",\n  \"account_holder_name\": \"<string>\",\n  \"metadata\": \"<object>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "39a49173-f513-43c5-a82b-230c8f5a4ae8",
+              "name": "200 response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "deliver",
+                    "external",
+                    "accounts",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Orum generated unique id for the resource for the external account you are updating."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Orum-Version",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"account_type\": \"<string>\",\n  \"account_number\": \"<string>\",\n  \"routing_number\": \"<string>\",\n  \"account_holder_name\": \"<string>\",\n  \"metadata\": \"<object>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"external_account\": {\n    \"id\": \"<uuid>\",\n    \"account_reference_id\": \"<string>\",\n    \"customer_reference_id\": \"<string>\",\n    \"customer_resource_type\": \"<string>\",\n    \"account_type\": \"<string>\",\n    \"account_number\": \"<string>\",\n    \"routing_number\": \"<string>\",\n    \"account_holder_name\": \"string\",\n    \"status\": \"restricted\",\n    \"created_at\": \"1993-02-19T14:28:52.090Z\",\n    \"updated_at\": \"1957-03-26T07:26:59.423Z\",\n    \"closed_at\": \"1997-07-01T12:20:54.173Z\",\n    \"metadata\": \"<object>\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e6748fe6-3f02-4503-aea5-028b7ff2b9c1",
+              "name": "invalid request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "deliver",
+                    "external",
+                    "accounts",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Orum generated unique id for the resource for the external account you are updating."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Orum-Version",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"account_type\": \"<string>\",\n  \"account_number\": \"<string>\",\n  \"routing_number\": \"<string>\",\n  \"account_holder_name\": \"<string>\",\n  \"metadata\": \"<object>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error_code\": \"string\",\n  \"message\": \"string\",\n  \"details\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1e4bb83d-ea06-4db3-a24b-ee73f80b5873",
+              "name": "not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "deliver",
+                    "external",
+                    "accounts",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Orum generated unique id for the resource for the external account you are updating."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Orum-Version",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"account_type\": \"<string>\",\n  \"account_number\": \"<string>\",\n  \"routing_number\": \"<string>\",\n  \"account_holder_name\": \"<string>\",\n  \"metadata\": \"<object>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error_code\": \"string\",\n  \"message\": \"string\",\n  \"details\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9773782f-1009-4b9d-bd56-fa32da9daa40",
+              "name": "unexpected error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "deliver",
+                    "external",
+                    "accounts",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Orum generated unique id for the resource for the external account you are updating."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Orum-Version",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"account_type\": \"<string>\",\n  \"account_number\": \"<string>\",\n  \"routing_number\": \"<string>\",\n  \"account_holder_name\": \"<string>\",\n  \"metadata\": \"<object>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error_code\": \"string\",\n  \"message\": \"string\",\n  \"details\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "da6b28bc-c88f-4587-82c0-7f4a214fa7dd",
+          "name": "Closes an external account by id",
+          "request": {
+            "name": "Closes an external account by id",
+            "description": {
+              "content": "Close an external account object so they are unable to transact.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "deliver",
+                "external",
+                "accounts",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "id",
+                  "description": "(Required) Orum generated unique id for the resource for the external account you are updating."
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "Orum-Version",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "read:persons write:persons read:businesses write:businesses read:external-accounts write:external-accounts read:cards write:cards read:transfers write:transfers read:transfer-groups write:transfer-groups read:schedules write:schedules read:routing-number-eligibility read:balances read:reports write:reports read:booktransfers write:booktransfers read:subledgers write:subledgers read:verify-accounts write:verify-accounts read:webhook-configurations write:webhook-configurations read:webhook-secret write:webhook-secret invoke:webhook"
+                },
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://api-sandbox.orum.io/oauth/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "70231c30-0db5-49c9-b829-3957c3a33ba3",
+              "name": "200 response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "deliver",
+                    "external",
+                    "accounts",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Orum generated unique id for the resource for the external account you are updating."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Orum-Version",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"external_account\": {\n    \"id\": \"<uuid>\",\n    \"account_reference_id\": \"<string>\",\n    \"customer_reference_id\": \"<string>\",\n    \"customer_resource_type\": \"<string>\",\n    \"account_type\": \"<string>\",\n    \"account_number\": \"<string>\",\n    \"routing_number\": \"<string>\",\n    \"account_holder_name\": \"string\",\n    \"status\": \"restricted\",\n    \"created_at\": \"1993-02-19T14:28:52.090Z\",\n    \"updated_at\": \"1957-03-26T07:26:59.423Z\",\n    \"closed_at\": \"1997-07-01T12:20:54.173Z\",\n    \"metadata\": \"<object>\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "77e914e7-2ae8-4371-af7b-a7a7a43bdc04",
+              "name": "invalid request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "deliver",
+                    "external",
+                    "accounts",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Orum generated unique id for the resource for the external account you are updating."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Orum-Version",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error_code\": \"string\",\n  \"message\": \"string\",\n  \"details\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "556d4c56-b645-47b5-a478-0d8e8c9d7949",
+              "name": "not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "deliver",
+                    "external",
+                    "accounts",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Orum generated unique id for the resource for the external account you are updating."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Orum-Version",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error_code\": \"string\",\n  \"message\": \"string\",\n  \"details\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b917f5a7-1774-46ab-9844-48932a302080",
+              "name": "unexpected error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "deliver",
+                    "external",
+                    "accounts",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Orum generated unique id for the resource for the external account you are updating."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Orum-Version",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error_code\": \"string\",\n  \"message\": \"string\",\n  \"details\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "09ad86ba-61e4-44fb-ba12-17aee3edcc8c",
+          "name": "Get all external accounts for a specific person",
+          "request": {
+            "name": "Get all external accounts for a specific person",
+            "description": {
+              "content": "Get all external account objects, associated with a specific person",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "deliver",
+                "persons",
+                ":id",
+                "external",
+                "accounts"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "index",
+                  "value": "0",
+                  "description": "Index for paginated results"
+                },
+                {
+                  "disabled": false,
+                  "key": "size",
+                  "value": "100",
+                  "description": "Max number of results to return"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "id",
+                  "description": "(Required) Orum generated unique id for the person you are requesting accounts for"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "Orum-Version",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "read:persons write:persons read:businesses write:businesses read:external-accounts write:external-accounts read:cards write:cards read:transfers write:transfers read:transfer-groups write:transfer-groups read:schedules write:schedules read:routing-number-eligibility read:balances read:reports write:reports read:booktransfers write:booktransfers read:subledgers write:subledgers read:verify-accounts write:verify-accounts read:webhook-configurations write:webhook-configurations read:webhook-secret write:webhook-secret invoke:webhook"
+                },
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://api-sandbox.orum.io/oauth/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "8d73902c-705f-45d1-a986-1e4744402942",
+              "name": "200 response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "deliver",
+                    "persons",
+                    ":id",
+                    "external",
+                    "accounts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "index",
+                      "value": "0"
+                    },
+                    {
+                      "key": "size",
+                      "value": "100"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Orum generated unique id for the person you are requesting accounts for"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Orum-Version",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"external_accounts\": [\n    {\n      \"id\": \"<uuid>\",\n      \"account_reference_id\": \"<string>\",\n      \"customer_reference_id\": \"<string>\",\n      \"customer_resource_type\": \"<string>\",\n      \"account_type\": \"<string>\",\n      \"account_number\": \"<string>\",\n      \"routing_number\": \"<string>\",\n      \"account_holder_name\": \"string\",\n      \"status\": \"rejected\",\n      \"created_at\": \"1991-02-22T03:42:45.223Z\",\n      \"updated_at\": \"2001-04-15T16:31:30.554Z\",\n      \"closed_at\": \"1976-07-21T20:34:45.650Z\",\n      \"metadata\": \"<object>\"\n    },\n    {\n      \"id\": \"<uuid>\",\n      \"account_reference_id\": \"<string>\",\n      \"customer_reference_id\": \"<string>\",\n      \"customer_resource_type\": \"<string>\",\n      \"account_type\": \"<string>\",\n      \"account_number\": \"<string>\",\n      \"routing_number\": \"<string>\",\n      \"account_holder_name\": \"string\",\n      \"status\": \"verified\",\n      \"created_at\": \"1952-05-20T00:10:21.202Z\",\n      \"updated_at\": \"1991-06-29T04:17:18.377Z\",\n      \"closed_at\": \"1970-03-08T04:55:50.234Z\",\n      \"metadata\": \"<object>\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ad04e15c-8f82-4a9d-af2b-7f75d7d702f0",
+              "name": "invalid request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "deliver",
+                    "persons",
+                    ":id",
+                    "external",
+                    "accounts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "index",
+                      "value": "0"
+                    },
+                    {
+                      "key": "size",
+                      "value": "100"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Orum generated unique id for the person you are requesting accounts for"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Orum-Version",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error_code\": \"string\",\n  \"message\": \"string\",\n  \"details\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f01b4ca7-ac97-420a-a6ae-369e56d960ed",
+              "name": "not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "deliver",
+                    "persons",
+                    ":id",
+                    "external",
+                    "accounts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "index",
+                      "value": "0"
+                    },
+                    {
+                      "key": "size",
+                      "value": "100"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Orum generated unique id for the person you are requesting accounts for"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Orum-Version",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error_code\": \"string\",\n  \"message\": \"string\",\n  \"details\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "01147c4f-3ee7-46ce-ad9b-c9346f3b24e1",
+              "name": "unexpected error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "deliver",
+                    "persons",
+                    ":id",
+                    "external",
+                    "accounts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "index",
+                      "value": "0"
+                    },
+                    {
+                      "key": "size",
+                      "value": "100"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Orum generated unique id for the person you are requesting accounts for"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Orum-Version",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error_code\": \"string\",\n  \"message\": \"string\",\n  \"details\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "1b7dcc99-4b75-40a6-9a4d-c2e646ee95ac",
+          "name": "Get all external accounts for a specific business",
+          "request": {
+            "name": "Get all external accounts for a specific business",
+            "description": {
+              "content": "Get all external account objects, associated with a specific business",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "deliver",
+                "businesses",
+                ":id",
+                "external",
+                "accounts"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "index",
+                  "value": "0",
+                  "description": "Index for paginated results"
+                },
+                {
+                  "disabled": false,
+                  "key": "size",
+                  "value": "100",
+                  "description": "Max number of results to return"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "id",
+                  "description": "(Required) Orum generated unique id for the business you are requesting accounts for"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "Orum-Version",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "read:persons write:persons read:businesses write:businesses read:external-accounts write:external-accounts read:cards write:cards read:transfers write:transfers read:transfer-groups write:transfer-groups read:schedules write:schedules read:routing-number-eligibility read:balances read:reports write:reports read:booktransfers write:booktransfers read:subledgers write:subledgers read:verify-accounts write:verify-accounts read:webhook-configurations write:webhook-configurations read:webhook-secret write:webhook-secret invoke:webhook"
+                },
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://api-sandbox.orum.io/oauth/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "eb066679-78cd-4b8f-9d4a-985c9522d7aa",
+              "name": "200 response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "deliver",
+                    "businesses",
+                    ":id",
+                    "external",
+                    "accounts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "index",
+                      "value": "0"
+                    },
+                    {
+                      "key": "size",
+                      "value": "100"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Orum generated unique id for the business you are requesting accounts for"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Orum-Version",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"external_accounts\": [\n    {\n      \"id\": \"<uuid>\",\n      \"account_reference_id\": \"<string>\",\n      \"customer_reference_id\": \"<string>\",\n      \"customer_resource_type\": \"<string>\",\n      \"account_type\": \"<string>\",\n      \"account_number\": \"<string>\",\n      \"routing_number\": \"<string>\",\n      \"account_holder_name\": \"string\",\n      \"status\": \"rejected\",\n      \"created_at\": \"1991-02-22T03:42:45.223Z\",\n      \"updated_at\": \"2001-04-15T16:31:30.554Z\",\n      \"closed_at\": \"1976-07-21T20:34:45.650Z\",\n      \"metadata\": \"<object>\"\n    },\n    {\n      \"id\": \"<uuid>\",\n      \"account_reference_id\": \"<string>\",\n      \"customer_reference_id\": \"<string>\",\n      \"customer_resource_type\": \"<string>\",\n      \"account_type\": \"<string>\",\n      \"account_number\": \"<string>\",\n      \"routing_number\": \"<string>\",\n      \"account_holder_name\": \"string\",\n      \"status\": \"verified\",\n      \"created_at\": \"1952-05-20T00:10:21.202Z\",\n      \"updated_at\": \"1991-06-29T04:17:18.377Z\",\n      \"closed_at\": \"1970-03-08T04:55:50.234Z\",\n      \"metadata\": \"<object>\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2fcb54bb-0e0e-489b-940a-9510aa981004",
+              "name": "invalid request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "deliver",
+                    "businesses",
+                    ":id",
+                    "external",
+                    "accounts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "index",
+                      "value": "0"
+                    },
+                    {
+                      "key": "size",
+                      "value": "100"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Orum generated unique id for the business you are requesting accounts for"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Orum-Version",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error_code\": \"string\",\n  \"message\": \"string\",\n  \"details\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c45e86dd-2174-4f0b-ad8e-e04a42b4bb90",
+              "name": "not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "deliver",
+                    "businesses",
+                    ":id",
+                    "external",
+                    "accounts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "index",
+                      "value": "0"
+                    },
+                    {
+                      "key": "size",
+                      "value": "100"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Orum generated unique id for the business you are requesting accounts for"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Orum-Version",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error_code\": \"string\",\n  \"message\": \"string\",\n  \"details\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e5087ed7-c262-4ce3-9c28-8ea1f41274d6",
+              "name": "unexpected error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "deliver",
+                    "businesses",
+                    ":id",
+                    "external",
+                    "accounts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "index",
+                      "value": "0"
+                    },
+                    {
+                      "key": "size",
+                      "value": "100"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Orum generated unique id for the business you are requesting accounts for"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Orum-Version",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error_code\": \"string\",\n  \"message\": \"string\",\n  \"details\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api-sandbox.orum.io",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "c3008e7a-a657-4c71-b1fe-3792dcd7d4f1",
+    "name": "Orum Authentication External Accounts API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Orum API.",
+      "type": "text/plain"
+    }
+  }
+}

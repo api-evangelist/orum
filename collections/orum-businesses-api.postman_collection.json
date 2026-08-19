@@ -1,0 +1,2157 @@
+{
+  "item": [
+    {
+      "id": "bb43de84-13e5-4f9b-b0b0-9c4afbfad3f9",
+      "name": "Businesses",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "3e023b70-4ad9-4b8c-b7d2-d0e33d06d5e0",
+          "name": "Create a business",
+          "request": {
+            "name": "Create a business",
+            "description": {
+              "content": "Create a business object to represent a business customer.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "deliver",
+                "businesses"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "Orum-Version",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "read:persons write:persons read:businesses write:businesses read:external-accounts write:external-accounts read:cards write:cards read:transfers write:transfers read:transfer-groups write:transfer-groups read:schedules write:schedules read:routing-number-eligibility read:balances read:reports write:reports read:booktransfers write:booktransfers read:subledgers write:subledgers read:verify-accounts write:verify-accounts read:webhook-configurations write:webhook-configurations read:webhook-secret write:webhook-secret invoke:webhook"
+                },
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://api-sandbox.orum.io/oauth/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"customer_reference_id\": \"<string>\",\n  \"legal_name\": \"<string>\",\n  \"business_name\": \"<string>\",\n  \"entity_type\": \"<string>\",\n  \"tax_id\": \"<string>\",\n  \"tax_id_type\": \"<string>\",\n  \"account_holder_name\": \"<string>\",\n  \"incorporation_date\": \"<string>\",\n  \"addresses\": [\n    {\n      \"type\": \"<string>\",\n      \"address1\": \"<string>\",\n      \"city\": \"<string>\",\n      \"state\": \"<string>\",\n      \"country\": \"<string>\",\n      \"zip5\": \"<string>\",\n      \"address2\": \"<string>\"\n    }\n  ],\n  \"contacts\": [\n    {\n      \"type\": \"<string>\",\n      \"value\": \"<string>\"\n    }\n  ],\n  \"metadata\": \"<object>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "a9ea0c30-439d-44bb-b828-b8215d2c5cc1",
+              "name": "200 response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "deliver",
+                    "businesses"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Orum-Version",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"customer_reference_id\": \"<string>\",\n  \"legal_name\": \"<string>\",\n  \"business_name\": \"<string>\",\n  \"entity_type\": \"<string>\",\n  \"tax_id\": \"<string>\",\n  \"tax_id_type\": \"<string>\",\n  \"account_holder_name\": \"<string>\",\n  \"incorporation_date\": \"<string>\",\n  \"addresses\": [\n    {\n      \"type\": \"<string>\",\n      \"address1\": \"<string>\",\n      \"city\": \"<string>\",\n      \"state\": \"<string>\",\n      \"country\": \"<string>\",\n      \"zip5\": \"<string>\",\n      \"address2\": \"<string>\"\n    }\n  ],\n  \"contacts\": [\n    {\n      \"type\": \"<string>\",\n      \"value\": \"<string>\"\n    }\n  ],\n  \"metadata\": \"<object>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"business\": {\n    \"id\": \"2b745ae6-7abf-8abe-f78d-66ad85116b3f\",\n    \"customer_reference_id\": \"<string>\",\n    \"legal_name\": \"string\",\n    \"status\": \"rejected\",\n    \"created_at\": \"2025-10-18T06:56:06.235Z\",\n    \"updated_at\": \"1963-01-28T06:26:47.390Z\",\n    \"business_name\": \"string\",\n    \"entity_type\": \"string\",\n    \"tax_id_type\": \"string\",\n    \"account_holder_name\": \"string\",\n    \"incorporation_date\": \"string\",\n    \"addresses\": [\n      {\n        \"id\": \"b7c5aee5-17dc-dbbf-8f44-05a4604d76d4\",\n        \"type\": \"home\",\n        \"address1\": \"<string>\",\n        \"city\": \"<string>\",\n        \"state\": \"<string>\",\n        \"country\": \"<string>\",\n        \"zip5\": \"<string>\",\n        \"created_at\": \"1981-06-05T17:17:05.239Z\",\n        \"updated_at\": \"1972-03-26T21:49:26.244Z\",\n        \"address2\": \"<string>\"\n      }\n    ],\n    \"contacts\": [\n      {\n        \"id\": \"9c2e04c5-dc93-c9f1-e21a-303365d90d41\",\n        \"type\": \"<string>\",\n        \"value\": \"string\",\n        \"created_at\": \"2012-08-25T19:37:22.951Z\",\n        \"updated_at\": \"1975-01-16T17:30:33.302Z\"\n      }\n    ],\n    \"closed_at\": \"1979-05-24T16:11:42.901Z\",\n    \"metadata\": {}\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c985ff1b-b879-4eb1-b8c1-328af6b2b7f0",
+              "name": "invalid request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "deliver",
+                    "businesses"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Orum-Version",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"customer_reference_id\": \"<string>\",\n  \"legal_name\": \"<string>\",\n  \"business_name\": \"<string>\",\n  \"entity_type\": \"<string>\",\n  \"tax_id\": \"<string>\",\n  \"tax_id_type\": \"<string>\",\n  \"account_holder_name\": \"<string>\",\n  \"incorporation_date\": \"<string>\",\n  \"addresses\": [\n    {\n      \"type\": \"<string>\",\n      \"address1\": \"<string>\",\n      \"city\": \"<string>\",\n      \"state\": \"<string>\",\n      \"country\": \"<string>\",\n      \"zip5\": \"<string>\",\n      \"address2\": \"<string>\"\n    }\n  ],\n  \"contacts\": [\n    {\n      \"type\": \"<string>\",\n      \"value\": \"<string>\"\n    }\n  ],\n  \"metadata\": \"<object>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error_code\": \"string\",\n  \"message\": \"string\",\n  \"details\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5c225a7c-e2d6-4347-8220-195112350b42",
+              "name": "unexpected error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "deliver",
+                    "businesses"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Orum-Version",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"customer_reference_id\": \"<string>\",\n  \"legal_name\": \"<string>\",\n  \"business_name\": \"<string>\",\n  \"entity_type\": \"<string>\",\n  \"tax_id\": \"<string>\",\n  \"tax_id_type\": \"<string>\",\n  \"account_holder_name\": \"<string>\",\n  \"incorporation_date\": \"<string>\",\n  \"addresses\": [\n    {\n      \"type\": \"<string>\",\n      \"address1\": \"<string>\",\n      \"city\": \"<string>\",\n      \"state\": \"<string>\",\n      \"country\": \"<string>\",\n      \"zip5\": \"<string>\",\n      \"address2\": \"<string>\"\n    }\n  ],\n  \"contacts\": [\n    {\n      \"type\": \"<string>\",\n      \"value\": \"<string>\"\n    }\n  ],\n  \"metadata\": \"<object>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error_code\": \"string\",\n  \"message\": \"string\",\n  \"details\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "bfa1dce9-a153-496a-ab65-475ae5940325",
+          "name": "Get all businesses",
+          "request": {
+            "name": "Get all businesses",
+            "description": {
+              "content": "Get all business objects.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "deliver",
+                "businesses"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "index",
+                  "value": "0",
+                  "description": "Index for paginated results"
+                },
+                {
+                  "disabled": false,
+                  "key": "size",
+                  "value": "100",
+                  "description": "Max number of results to return"
+                },
+                {
+                  "disabled": false,
+                  "key": "customer_reference_id",
+                  "value": "<string>",
+                  "description": "Filter by customer reference id"
+                },
+                {
+                  "disabled": false,
+                  "key": "status",
+                  "value": "<string>",
+                  "description": "Filter by customer statuses (multiple allowed)"
+                },
+                {
+                  "disabled": false,
+                  "key": "status",
+                  "value": "<string>",
+                  "description": "Filter by customer statuses (multiple allowed)"
+                },
+                {
+                  "disabled": false,
+                  "key": "start_time",
+                  "value": "<dateTime>",
+                  "description": "Filter results created at or after this time"
+                },
+                {
+                  "disabled": false,
+                  "key": "end_time",
+                  "value": "<dateTime>",
+                  "description": "Filter results created before this time"
+                },
+                {
+                  "disabled": false,
+                  "key": "legal_name",
+                  "value": "<string>",
+                  "description": "Filter by legal name"
+                },
+                {
+                  "disabled": false,
+                  "key": "account_number",
+                  "value": "<string>",
+                  "description": "Filter by account number"
+                },
+                {
+                  "disabled": false,
+                  "key": "id",
+                  "value": "<uuid>",
+                  "description": "Filter results by the business id"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "Orum-Version",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "read:persons write:persons read:businesses write:businesses read:external-accounts write:external-accounts read:cards write:cards read:transfers write:transfers read:transfer-groups write:transfer-groups read:schedules write:schedules read:routing-number-eligibility read:balances read:reports write:reports read:booktransfers write:booktransfers read:subledgers write:subledgers read:verify-accounts write:verify-accounts read:webhook-configurations write:webhook-configurations read:webhook-secret write:webhook-secret invoke:webhook"
+                },
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://api-sandbox.orum.io/oauth/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "158a1166-a080-448a-b082-2551bf99df33",
+              "name": "200 response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "deliver",
+                    "businesses"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "index",
+                      "value": "0"
+                    },
+                    {
+                      "key": "size",
+                      "value": "100"
+                    },
+                    {
+                      "key": "customer_reference_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "start_time",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "end_time",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "legal_name",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "account_number",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "id",
+                      "value": "<uuid>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Orum-Version",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"businesses\": [\n    {\n      \"id\": \"ee6c13bd-7e39-77c5-d5db-417a34d7a7bc\",\n      \"customer_reference_id\": \"<string>\",\n      \"legal_name\": \"string\",\n      \"status\": \"<string>\",\n      \"created_at\": \"1952-04-17T03:37:54.934Z\",\n      \"updated_at\": \"1997-03-01T13:38:07.166Z\",\n      \"business_name\": \"string\",\n      \"entity_type\": \"string\",\n      \"tax_id_type\": \"string\",\n      \"account_holder_name\": \"string\",\n      \"incorporation_date\": \"string\",\n      \"addresses\": [\n        {\n          \"id\": \"238f039f-70f2-d3b2-300e-6bac5ffca83e\",\n          \"type\": \"legal\",\n          \"address1\": \"<string>\",\n          \"city\": \"<string>\",\n          \"state\": \"<string>\",\n          \"country\": \"<string>\",\n          \"zip5\": \"<string>\",\n          \"created_at\": \"1991-05-26T07:49:02.303Z\",\n          \"updated_at\": \"1972-05-29T02:32:04.425Z\",\n          \"address2\": \"<string>\"\n        }\n      ],\n      \"contacts\": [\n        {\n          \"id\": \"a111a777-7517-120e-5381-2829bcf3e7b6\",\n          \"type\": \"<string>\",\n          \"value\": \"string\",\n          \"created_at\": \"1956-04-25T01:36:10.312Z\",\n          \"updated_at\": \"1990-01-31T13:19:09.565Z\"\n        }\n      ],\n      \"closed_at\": \"2021-09-27T12:25:50.069Z\",\n      \"metadata\": {}\n    },\n    {\n      \"id\": \"af2b9a14-da8c-f20d-78c3-9f42ba98a7a8\",\n      \"customer_reference_id\": \"<string>\",\n      \"legal_name\": \"string\",\n      \"status\": \"<string>\",\n      \"created_at\": \"1952-02-18T02:30:02.855Z\",\n      \"updated_at\": \"1990-07-16T03:02:15.527Z\",\n      \"business_name\": \"string\",\n      \"entity_type\": \"string\",\n      \"tax_id_type\": \"string\",\n      \"account_holder_name\": \"string\",\n      \"incorporation_date\": \"string\",\n      \"addresses\": [\n        {\n          \"id\": \"8b57e594-3d5c-d03e-b995-5cea00e31732\",\n          \"type\": \"legal\",\n          \"address1\": \"<string>\",\n          \"city\": \"<string>\",\n          \"state\": \"<string>\",\n          \"country\": \"<string>\",\n          \"zip5\": \"<string>\",\n          \"created_at\": \"1992-08-25T23:20:21.467Z\",\n          \"updated_at\": \"2009-04-21T16:46:30.365Z\",\n          \"address2\": \"<string>\"\n        }\n      ],\n      \"contacts\": [\n        {\n          \"id\": \"eae75e70-3d50-1952-81c9-26703111d310\",\n          \"type\": \"<string>\",\n          \"value\": \"string\",\n          \"created_at\": \"1953-09-21T13:03:58.801Z\",\n          \"updated_at\": \"1957-06-20T04:49:41.267Z\"\n        }\n      ],\n      \"closed_at\": \"2015-11-22T05:43:17.089Z\",\n      \"metadata\": {}\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "30bac0cc-7451-411d-8580-9324a262f65b",
+              "name": "invalid request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "deliver",
+                    "businesses"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "index",
+                      "value": "0"
+                    },
+                    {
+                      "key": "size",
+                      "value": "100"
+                    },
+                    {
+                      "key": "customer_reference_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "start_time",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "end_time",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "legal_name",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "account_number",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "id",
+                      "value": "<uuid>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Orum-Version",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error_code\": \"string\",\n  \"message\": \"string\",\n  \"details\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "35db81e6-7090-4950-9773-bb59fde7d23d",
+              "name": "unexpected error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "deliver",
+                    "businesses"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "index",
+                      "value": "0"
+                    },
+                    {
+                      "key": "size",
+                      "value": "100"
+                    },
+                    {
+                      "key": "customer_reference_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "start_time",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "end_time",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "legal_name",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "account_number",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "id",
+                      "value": "<uuid>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Orum-Version",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error_code\": \"string\",\n  \"message\": \"string\",\n  \"details\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "90e07ef3-76db-4d7c-b735-57c4e45d3c83",
+          "name": "Update a business by reference id",
+          "request": {
+            "name": "Update a business by reference id",
+            "description": {
+              "content": "Update a business object using reference id.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "deliver",
+                "businesses"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "Orum-Version",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "read:persons write:persons read:businesses write:businesses read:external-accounts write:external-accounts read:cards write:cards read:transfers write:transfers read:transfer-groups write:transfer-groups read:schedules write:schedules read:routing-number-eligibility read:balances read:reports write:reports read:booktransfers write:booktransfers read:subledgers write:subledgers read:verify-accounts write:verify-accounts read:webhook-configurations write:webhook-configurations read:webhook-secret write:webhook-secret invoke:webhook"
+                },
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://api-sandbox.orum.io/oauth/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"customer_reference_id\": \"<string>\",\n  \"legal_name\": \"<string>\",\n  \"business_name\": \"<string>\",\n  \"entity_type\": \"<string>\",\n  \"tax_id\": \"<string>\",\n  \"tax_id_type\": \"<string>\",\n  \"account_holder_name\": \"<string>\",\n  \"incorporation_date\": \"<string>\",\n  \"addresses\": [\n    {\n      \"type\": \"<string>\",\n      \"address1\": \"<string>\",\n      \"city\": \"<string>\",\n      \"state\": \"<string>\",\n      \"country\": \"<string>\",\n      \"zip5\": \"<string>\",\n      \"address2\": \"<string>\"\n    }\n  ],\n  \"contacts\": [\n    {\n      \"type\": \"<string>\",\n      \"value\": \"<string>\"\n    }\n  ],\n  \"metadata\": \"<object>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "af056687-a43b-4cbf-b91a-819fd7811b1a",
+              "name": "200 response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "deliver",
+                    "businesses"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Orum-Version",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"customer_reference_id\": \"<string>\",\n  \"legal_name\": \"<string>\",\n  \"business_name\": \"<string>\",\n  \"entity_type\": \"<string>\",\n  \"tax_id\": \"<string>\",\n  \"tax_id_type\": \"<string>\",\n  \"account_holder_name\": \"<string>\",\n  \"incorporation_date\": \"<string>\",\n  \"addresses\": [\n    {\n      \"type\": \"<string>\",\n      \"address1\": \"<string>\",\n      \"city\": \"<string>\",\n      \"state\": \"<string>\",\n      \"country\": \"<string>\",\n      \"zip5\": \"<string>\",\n      \"address2\": \"<string>\"\n    }\n  ],\n  \"contacts\": [\n    {\n      \"type\": \"<string>\",\n      \"value\": \"<string>\"\n    }\n  ],\n  \"metadata\": \"<object>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"business\": {\n    \"id\": \"cbfb2ca5-bbd6-73ea-7d02-08dbf7470ec2\",\n    \"customer_reference_id\": \"<string>\",\n    \"legal_name\": \"string\",\n    \"status\": \"<string>\",\n    \"created_at\": \"1963-05-15T08:31:38.363Z\",\n    \"updated_at\": \"2015-07-13T08:02:04.269Z\",\n    \"business_name\": \"string\",\n    \"entity_type\": \"string\",\n    \"tax_id_type\": \"string\",\n    \"account_holder_name\": \"string\",\n    \"incorporation_date\": \"string\",\n    \"addresses\": [\n      {\n        \"id\": \"ae717409-020f-bec1-0f58-ea8785abfa91\",\n        \"type\": \"home\",\n        \"address1\": \"<string>\",\n        \"city\": \"<string>\",\n        \"state\": \"<string>\",\n        \"country\": \"<string>\",\n        \"zip5\": \"<string>\",\n        \"created_at\": \"2020-09-28T14:28:47.552Z\",\n        \"updated_at\": \"1973-10-10T02:43:11.468Z\",\n        \"address2\": \"<string>\"\n      }\n    ],\n    \"contacts\": [\n      {\n        \"id\": \"2fbd3aec-57eb-84ab-cd84-8fe9c8f792c7\",\n        \"type\": \"<string>\",\n        \"value\": \"string\",\n        \"created_at\": \"2020-11-02T02:21:35.956Z\",\n        \"updated_at\": \"1947-07-15T05:55:02.578Z\"\n      }\n    ],\n    \"closed_at\": \"2020-01-19T13:03:27.702Z\",\n    \"metadata\": \"<object>\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c7da5211-9a3b-454a-af2d-2702fb1cc5f4",
+              "name": "invalid request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "deliver",
+                    "businesses"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Orum-Version",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"customer_reference_id\": \"<string>\",\n  \"legal_name\": \"<string>\",\n  \"business_name\": \"<string>\",\n  \"entity_type\": \"<string>\",\n  \"tax_id\": \"<string>\",\n  \"tax_id_type\": \"<string>\",\n  \"account_holder_name\": \"<string>\",\n  \"incorporation_date\": \"<string>\",\n  \"addresses\": [\n    {\n      \"type\": \"<string>\",\n      \"address1\": \"<string>\",\n      \"city\": \"<string>\",\n      \"state\": \"<string>\",\n      \"country\": \"<string>\",\n      \"zip5\": \"<string>\",\n      \"address2\": \"<string>\"\n    }\n  ],\n  \"contacts\": [\n    {\n      \"type\": \"<string>\",\n      \"value\": \"<string>\"\n    }\n  ],\n  \"metadata\": \"<object>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error_code\": \"string\",\n  \"message\": \"string\",\n  \"details\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "221fbc07-bdc6-4c20-a14c-46bab2a5b41d",
+              "name": "unexpected error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "deliver",
+                    "businesses"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Orum-Version",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"customer_reference_id\": \"<string>\",\n  \"legal_name\": \"<string>\",\n  \"business_name\": \"<string>\",\n  \"entity_type\": \"<string>\",\n  \"tax_id\": \"<string>\",\n  \"tax_id_type\": \"<string>\",\n  \"account_holder_name\": \"<string>\",\n  \"incorporation_date\": \"<string>\",\n  \"addresses\": [\n    {\n      \"type\": \"<string>\",\n      \"address1\": \"<string>\",\n      \"city\": \"<string>\",\n      \"state\": \"<string>\",\n      \"country\": \"<string>\",\n      \"zip5\": \"<string>\",\n      \"address2\": \"<string>\"\n    }\n  ],\n  \"contacts\": [\n    {\n      \"type\": \"<string>\",\n      \"value\": \"<string>\"\n    }\n  ],\n  \"metadata\": \"<object>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error_code\": \"string\",\n  \"message\": \"string\",\n  \"details\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "31174b82-b9f8-4ab9-bb47-c3dcf51a93ec",
+          "name": "Get a business by id",
+          "request": {
+            "name": "Get a business by id",
+            "description": {
+              "content": "Get a business object.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "deliver",
+                "businesses",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "id",
+                  "description": "(Required) Orum generated unique id for the business you are fetching."
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "Orum-Version",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "read:persons write:persons read:businesses write:businesses read:external-accounts write:external-accounts read:cards write:cards read:transfers write:transfers read:transfer-groups write:transfer-groups read:schedules write:schedules read:routing-number-eligibility read:balances read:reports write:reports read:booktransfers write:booktransfers read:subledgers write:subledgers read:verify-accounts write:verify-accounts read:webhook-configurations write:webhook-configurations read:webhook-secret write:webhook-secret invoke:webhook"
+                },
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://api-sandbox.orum.io/oauth/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "e6216180-7678-4f65-a9be-66c402a431a1",
+              "name": "200 response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "deliver",
+                    "businesses",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Orum generated unique id for the business you are fetching."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Orum-Version",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"business\": {\n    \"id\": \"<uuid>\",\n    \"customer_reference_id\": \"<string>\",\n    \"legal_name\": \"string\",\n    \"status\": \"<string>\",\n    \"created_at\": \"2016-12-21T07:02:47.587Z\",\n    \"updated_at\": \"2000-12-07T10:15:18.389Z\",\n    \"business_name\": \"string\",\n    \"entity_type\": \"string\",\n    \"tax_id_type\": \"string\",\n    \"account_holder_name\": \"string\",\n    \"incorporation_date\": \"string\",\n    \"addresses\": [\n      {\n        \"id\": \"<uuid>\",\n        \"type\": \"legal\",\n        \"address1\": \"<string>\",\n        \"city\": \"<string>\",\n        \"state\": \"<string>\",\n        \"country\": \"<string>\",\n        \"zip5\": \"<string>\",\n        \"created_at\": \"2020-05-12T07:48:31.859Z\",\n        \"updated_at\": \"1990-12-12T09:14:33.248Z\",\n        \"address2\": \"<string>\"\n      }\n    ],\n    \"contacts\": [\n      {\n        \"id\": \"<uuid>\",\n        \"type\": \"<string>\",\n        \"value\": \"string\",\n        \"created_at\": \"1957-09-18T09:39:20.455Z\",\n        \"updated_at\": \"1959-01-31T06:10:37.223Z\"\n      }\n    ],\n    \"closed_at\": \"2013-10-03T07:02:46.859Z\",\n    \"metadata\": {}\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "91ce9bbc-b7d8-4b29-8a28-0c371aad0544",
+              "name": "not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "deliver",
+                    "businesses",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Orum generated unique id for the business you are fetching."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Orum-Version",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error_code\": \"string\",\n  \"message\": \"string\",\n  \"details\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2be78169-2de1-4992-9529-fdba90546831",
+              "name": "unexpected error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "deliver",
+                    "businesses",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Orum generated unique id for the business you are fetching."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Orum-Version",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error_code\": \"string\",\n  \"message\": \"string\",\n  \"details\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "96ff5557-9d5d-4b2a-872d-e048ba19afe1",
+          "name": "Update a business by id",
+          "request": {
+            "name": "Update a business by id",
+            "description": {
+              "content": "Update a business object by id.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "deliver",
+                "businesses",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "id",
+                  "description": "(Required) Orum generated unique id for the business you are updating."
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "Orum-Version",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "read:persons write:persons read:businesses write:businesses read:external-accounts write:external-accounts read:cards write:cards read:transfers write:transfers read:transfer-groups write:transfer-groups read:schedules write:schedules read:routing-number-eligibility read:balances read:reports write:reports read:booktransfers write:booktransfers read:subledgers write:subledgers read:verify-accounts write:verify-accounts read:webhook-configurations write:webhook-configurations read:webhook-secret write:webhook-secret invoke:webhook"
+                },
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://api-sandbox.orum.io/oauth/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"customer_reference_id\": \"<string>\",\n  \"legal_name\": \"<string>\",\n  \"business_name\": \"<string>\",\n  \"entity_type\": \"<string>\",\n  \"tax_id\": \"<string>\",\n  \"tax_id_type\": \"<string>\",\n  \"account_holder_name\": \"<string>\",\n  \"incorporation_date\": \"<string>\",\n  \"addresses\": [\n    {\n      \"type\": \"<string>\",\n      \"address1\": \"<string>\",\n      \"city\": \"<string>\",\n      \"state\": \"<string>\",\n      \"country\": \"<string>\",\n      \"zip5\": \"<string>\",\n      \"address2\": \"<string>\"\n    }\n  ],\n  \"contacts\": [\n    {\n      \"type\": \"<string>\",\n      \"value\": \"<string>\"\n    }\n  ],\n  \"metadata\": \"<object>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "2f6b126b-98b0-4d21-b2d7-16e6541efd80",
+              "name": "200 response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "deliver",
+                    "businesses",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Orum generated unique id for the business you are updating."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Orum-Version",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"customer_reference_id\": \"<string>\",\n  \"legal_name\": \"<string>\",\n  \"business_name\": \"<string>\",\n  \"entity_type\": \"<string>\",\n  \"tax_id\": \"<string>\",\n  \"tax_id_type\": \"<string>\",\n  \"account_holder_name\": \"<string>\",\n  \"incorporation_date\": \"<string>\",\n  \"addresses\": [\n    {\n      \"type\": \"<string>\",\n      \"address1\": \"<string>\",\n      \"city\": \"<string>\",\n      \"state\": \"<string>\",\n      \"country\": \"<string>\",\n      \"zip5\": \"<string>\",\n      \"address2\": \"<string>\"\n    }\n  ],\n  \"contacts\": [\n    {\n      \"type\": \"<string>\",\n      \"value\": \"<string>\"\n    }\n  ],\n  \"metadata\": \"<object>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"business\": {\n    \"id\": \"<uuid>\",\n    \"customer_reference_id\": \"<string>\",\n    \"legal_name\": \"string\",\n    \"status\": \"<string>\",\n    \"created_at\": \"2000-08-28T05:46:33.733Z\",\n    \"updated_at\": \"1963-06-28T23:24:26.779Z\",\n    \"business_name\": \"string\",\n    \"entity_type\": \"string\",\n    \"tax_id_type\": \"string\",\n    \"account_holder_name\": \"string\",\n    \"incorporation_date\": \"string\",\n    \"addresses\": [\n      {\n        \"id\": \"<uuid>\",\n        \"type\": \"home\",\n        \"address1\": \"<string>\",\n        \"city\": \"<string>\",\n        \"state\": \"<string>\",\n        \"country\": \"<string>\",\n        \"zip5\": \"<string>\",\n        \"created_at\": \"1977-04-29T02:42:09.648Z\",\n        \"updated_at\": \"2016-12-05T06:20:54.558Z\",\n        \"address2\": \"<string>\"\n      }\n    ],\n    \"contacts\": [\n      {\n        \"id\": \"<uuid>\",\n        \"type\": \"<string>\",\n        \"value\": \"string\",\n        \"created_at\": \"1991-02-01T14:15:57.534Z\",\n        \"updated_at\": \"2013-04-02T04:28:15.656Z\"\n      }\n    ],\n    \"closed_at\": \"2003-01-12T08:37:07.784Z\",\n    \"metadata\": \"<object>\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "dc6ea558-5243-4df4-ab2d-48e142748593",
+              "name": "invalid request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "deliver",
+                    "businesses",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Orum generated unique id for the business you are updating."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Orum-Version",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"customer_reference_id\": \"<string>\",\n  \"legal_name\": \"<string>\",\n  \"business_name\": \"<string>\",\n  \"entity_type\": \"<string>\",\n  \"tax_id\": \"<string>\",\n  \"tax_id_type\": \"<string>\",\n  \"account_holder_name\": \"<string>\",\n  \"incorporation_date\": \"<string>\",\n  \"addresses\": [\n    {\n      \"type\": \"<string>\",\n      \"address1\": \"<string>\",\n      \"city\": \"<string>\",\n      \"state\": \"<string>\",\n      \"country\": \"<string>\",\n      \"zip5\": \"<string>\",\n      \"address2\": \"<string>\"\n    }\n  ],\n  \"contacts\": [\n    {\n      \"type\": \"<string>\",\n      \"value\": \"<string>\"\n    }\n  ],\n  \"metadata\": \"<object>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error_code\": \"string\",\n  \"message\": \"string\",\n  \"details\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "406039ee-47f5-4f38-b42f-c6c8dc43032c",
+              "name": "not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "deliver",
+                    "businesses",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Orum generated unique id for the business you are updating."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Orum-Version",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"customer_reference_id\": \"<string>\",\n  \"legal_name\": \"<string>\",\n  \"business_name\": \"<string>\",\n  \"entity_type\": \"<string>\",\n  \"tax_id\": \"<string>\",\n  \"tax_id_type\": \"<string>\",\n  \"account_holder_name\": \"<string>\",\n  \"incorporation_date\": \"<string>\",\n  \"addresses\": [\n    {\n      \"type\": \"<string>\",\n      \"address1\": \"<string>\",\n      \"city\": \"<string>\",\n      \"state\": \"<string>\",\n      \"country\": \"<string>\",\n      \"zip5\": \"<string>\",\n      \"address2\": \"<string>\"\n    }\n  ],\n  \"contacts\": [\n    {\n      \"type\": \"<string>\",\n      \"value\": \"<string>\"\n    }\n  ],\n  \"metadata\": \"<object>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error_code\": \"string\",\n  \"message\": \"string\",\n  \"details\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "65dfaafb-a20d-4ad9-9815-252e6206483b",
+              "name": "unexpected error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "deliver",
+                    "businesses",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Orum generated unique id for the business you are updating."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Orum-Version",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"customer_reference_id\": \"<string>\",\n  \"legal_name\": \"<string>\",\n  \"business_name\": \"<string>\",\n  \"entity_type\": \"<string>\",\n  \"tax_id\": \"<string>\",\n  \"tax_id_type\": \"<string>\",\n  \"account_holder_name\": \"<string>\",\n  \"incorporation_date\": \"<string>\",\n  \"addresses\": [\n    {\n      \"type\": \"<string>\",\n      \"address1\": \"<string>\",\n      \"city\": \"<string>\",\n      \"state\": \"<string>\",\n      \"country\": \"<string>\",\n      \"zip5\": \"<string>\",\n      \"address2\": \"<string>\"\n    }\n  ],\n  \"contacts\": [\n    {\n      \"type\": \"<string>\",\n      \"value\": \"<string>\"\n    }\n  ],\n  \"metadata\": \"<object>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error_code\": \"string\",\n  \"message\": \"string\",\n  \"details\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "f0359777-fae1-457a-8706-df7abcfd72e1",
+          "name": "Partial update a business by id",
+          "request": {
+            "name": "Partial update a business by id",
+            "description": {
+              "content": "Update individual fields on a business object.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "deliver",
+                "businesses",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "id",
+                  "description": "(Required) Orum generated unique id for the business you are updating."
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "Orum-Version",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "read:persons write:persons read:businesses write:businesses read:external-accounts write:external-accounts read:cards write:cards read:transfers write:transfers read:transfer-groups write:transfer-groups read:schedules write:schedules read:routing-number-eligibility read:balances read:reports write:reports read:booktransfers write:booktransfers read:subledgers write:subledgers read:verify-accounts write:verify-accounts read:webhook-configurations write:webhook-configurations read:webhook-secret write:webhook-secret invoke:webhook"
+                },
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://api-sandbox.orum.io/oauth/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"legal_name\": \"<string>\",\n  \"business_name\": \"<string>\",\n  \"entity_type\": \"<string>\",\n  \"tax_id\": \"<string>\",\n  \"tax_id_type\": \"<string>\",\n  \"account_holder_name\": \"<string>\",\n  \"incorporation_date\": \"<string>\",\n  \"addresses\": [\n    {\n      \"type\": \"<string>\",\n      \"address1\": \"<string>\",\n      \"address2\": \"<string>\",\n      \"city\": \"<string>\",\n      \"state\": \"<string>\",\n      \"country\": \"<string>\",\n      \"zip5\": \"<string>\"\n    }\n  ],\n  \"contacts\": [\n    {\n      \"type\": \"<string>\",\n      \"value\": \"<string>\"\n    },\n    {\n      \"type\": \"<string>\",\n      \"value\": \"<string>\"\n    },\n    {\n      \"type\": \"<string>\",\n      \"value\": \"<string>\"\n    }\n  ],\n  \"metadata\": \"<object>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "864a90cf-b5f0-4ac2-95a5-ccc02943de63",
+              "name": "200 response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "deliver",
+                    "businesses",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Orum generated unique id for the business you are updating."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Orum-Version",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"legal_name\": \"<string>\",\n  \"business_name\": \"<string>\",\n  \"entity_type\": \"<string>\",\n  \"tax_id\": \"<string>\",\n  \"tax_id_type\": \"<string>\",\n  \"account_holder_name\": \"<string>\",\n  \"incorporation_date\": \"<string>\",\n  \"addresses\": [\n    {\n      \"type\": \"<string>\",\n      \"address1\": \"<string>\",\n      \"address2\": \"<string>\",\n      \"city\": \"<string>\",\n      \"state\": \"<string>\",\n      \"country\": \"<string>\",\n      \"zip5\": \"<string>\"\n    }\n  ],\n  \"contacts\": [\n    {\n      \"type\": \"<string>\",\n      \"value\": \"<string>\"\n    },\n    {\n      \"type\": \"<string>\",\n      \"value\": \"<string>\"\n    },\n    {\n      \"type\": \"<string>\",\n      \"value\": \"<string>\"\n    }\n  ],\n  \"metadata\": \"<object>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"business\": {\n    \"id\": \"<uuid>\",\n    \"customer_reference_id\": \"<string>\",\n    \"legal_name\": \"string\",\n    \"status\": \"<string>\",\n    \"created_at\": \"2016-12-21T07:02:47.587Z\",\n    \"updated_at\": \"2000-12-07T10:15:18.389Z\",\n    \"business_name\": \"string\",\n    \"entity_type\": \"string\",\n    \"tax_id_type\": \"string\",\n    \"account_holder_name\": \"string\",\n    \"incorporation_date\": \"string\",\n    \"addresses\": [\n      {\n        \"id\": \"<uuid>\",\n        \"type\": \"legal\",\n        \"address1\": \"<string>\",\n        \"city\": \"<string>\",\n        \"state\": \"<string>\",\n        \"country\": \"<string>\",\n        \"zip5\": \"<string>\",\n        \"created_at\": \"2020-05-12T07:48:31.859Z\",\n        \"updated_at\": \"1990-12-12T09:14:33.248Z\",\n        \"address2\": \"<string>\"\n      }\n    ],\n    \"contacts\": [\n      {\n        \"id\": \"<uuid>\",\n        \"type\": \"<string>\",\n        \"value\": \"string\",\n        \"created_at\": \"1957-09-18T09:39:20.455Z\",\n        \"updated_at\": \"1959-01-31T06:10:37.223Z\"\n      }\n    ],\n    \"closed_at\": \"2013-10-03T07:02:46.859Z\",\n    \"metadata\": {}\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ce2dae1d-080c-4699-adb6-842664965232",
+              "name": "invalid request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "deliver",
+                    "businesses",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Orum generated unique id for the business you are updating."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Orum-Version",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"legal_name\": \"<string>\",\n  \"business_name\": \"<string>\",\n  \"entity_type\": \"<string>\",\n  \"tax_id\": \"<string>\",\n  \"tax_id_type\": \"<string>\",\n  \"account_holder_name\": \"<string>\",\n  \"incorporation_date\": \"<string>\",\n  \"addresses\": [\n    {\n      \"type\": \"<string>\",\n      \"address1\": \"<string>\",\n      \"address2\": \"<string>\",\n      \"city\": \"<string>\",\n      \"state\": \"<string>\",\n      \"country\": \"<string>\",\n      \"zip5\": \"<string>\"\n    }\n  ],\n  \"contacts\": [\n    {\n      \"type\": \"<string>\",\n      \"value\": \"<string>\"\n    },\n    {\n      \"type\": \"<string>\",\n      \"value\": \"<string>\"\n    },\n    {\n      \"type\": \"<string>\",\n      \"value\": \"<string>\"\n    }\n  ],\n  \"metadata\": \"<object>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error_code\": \"string\",\n  \"message\": \"string\",\n  \"details\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "eb73a349-dbd1-40b0-8928-8d0fecc8e093",
+              "name": "not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "deliver",
+                    "businesses",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Orum generated unique id for the business you are updating."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Orum-Version",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"legal_name\": \"<string>\",\n  \"business_name\": \"<string>\",\n  \"entity_type\": \"<string>\",\n  \"tax_id\": \"<string>\",\n  \"tax_id_type\": \"<string>\",\n  \"account_holder_name\": \"<string>\",\n  \"incorporation_date\": \"<string>\",\n  \"addresses\": [\n    {\n      \"type\": \"<string>\",\n      \"address1\": \"<string>\",\n      \"address2\": \"<string>\",\n      \"city\": \"<string>\",\n      \"state\": \"<string>\",\n      \"country\": \"<string>\",\n      \"zip5\": \"<string>\"\n    }\n  ],\n  \"contacts\": [\n    {\n      \"type\": \"<string>\",\n      \"value\": \"<string>\"\n    },\n    {\n      \"type\": \"<string>\",\n      \"value\": \"<string>\"\n    },\n    {\n      \"type\": \"<string>\",\n      \"value\": \"<string>\"\n    }\n  ],\n  \"metadata\": \"<object>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error_code\": \"string\",\n  \"message\": \"string\",\n  \"details\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8455fa60-dcd6-4512-a2d8-c0ddd54a125c",
+              "name": "unexpected error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "deliver",
+                    "businesses",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Orum generated unique id for the business you are updating."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Orum-Version",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"legal_name\": \"<string>\",\n  \"business_name\": \"<string>\",\n  \"entity_type\": \"<string>\",\n  \"tax_id\": \"<string>\",\n  \"tax_id_type\": \"<string>\",\n  \"account_holder_name\": \"<string>\",\n  \"incorporation_date\": \"<string>\",\n  \"addresses\": [\n    {\n      \"type\": \"<string>\",\n      \"address1\": \"<string>\",\n      \"address2\": \"<string>\",\n      \"city\": \"<string>\",\n      \"state\": \"<string>\",\n      \"country\": \"<string>\",\n      \"zip5\": \"<string>\"\n    }\n  ],\n  \"contacts\": [\n    {\n      \"type\": \"<string>\",\n      \"value\": \"<string>\"\n    },\n    {\n      \"type\": \"<string>\",\n      \"value\": \"<string>\"\n    },\n    {\n      \"type\": \"<string>\",\n      \"value\": \"<string>\"\n    }\n  ],\n  \"metadata\": \"<object>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error_code\": \"string\",\n  \"message\": \"string\",\n  \"details\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a3251493-59f6-4997-a0d1-6f98a7baa708",
+          "name": "Closes a business by id",
+          "request": {
+            "name": "Closes a business by id",
+            "description": {
+              "content": "Close a business object so they are unable to transact.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "deliver",
+                "businesses",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "id",
+                  "description": "(Required) Orum generated unique id for the business you are updating."
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "Orum-Version",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "read:persons write:persons read:businesses write:businesses read:external-accounts write:external-accounts read:cards write:cards read:transfers write:transfers read:transfer-groups write:transfer-groups read:schedules write:schedules read:routing-number-eligibility read:balances read:reports write:reports read:booktransfers write:booktransfers read:subledgers write:subledgers read:verify-accounts write:verify-accounts read:webhook-configurations write:webhook-configurations read:webhook-secret write:webhook-secret invoke:webhook"
+                },
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://api-sandbox.orum.io/oauth/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "6adb16ec-6183-47ce-a3a6-be6638230233",
+              "name": "200 response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "deliver",
+                    "businesses",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Orum generated unique id for the business you are updating."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Orum-Version",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"business\": {\n    \"id\": \"<uuid>\",\n    \"customer_reference_id\": \"<string>\",\n    \"legal_name\": \"string\",\n    \"status\": \"<string>\",\n    \"created_at\": \"2016-12-21T07:02:47.587Z\",\n    \"updated_at\": \"2000-12-07T10:15:18.389Z\",\n    \"business_name\": \"string\",\n    \"entity_type\": \"string\",\n    \"tax_id_type\": \"string\",\n    \"account_holder_name\": \"string\",\n    \"incorporation_date\": \"string\",\n    \"addresses\": [\n      {\n        \"id\": \"<uuid>\",\n        \"type\": \"legal\",\n        \"address1\": \"<string>\",\n        \"city\": \"<string>\",\n        \"state\": \"<string>\",\n        \"country\": \"<string>\",\n        \"zip5\": \"<string>\",\n        \"created_at\": \"2020-05-12T07:48:31.859Z\",\n        \"updated_at\": \"1990-12-12T09:14:33.248Z\",\n        \"address2\": \"<string>\"\n      }\n    ],\n    \"contacts\": [\n      {\n        \"id\": \"<uuid>\",\n        \"type\": \"<string>\",\n        \"value\": \"string\",\n        \"created_at\": \"1957-09-18T09:39:20.455Z\",\n        \"updated_at\": \"1959-01-31T06:10:37.223Z\"\n      }\n    ],\n    \"closed_at\": \"2013-10-03T07:02:46.859Z\",\n    \"metadata\": {}\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "adb74829-3aa7-4812-adce-7a31d5102076",
+              "name": "invalid request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "deliver",
+                    "businesses",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Orum generated unique id for the business you are updating."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Orum-Version",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error_code\": \"string\",\n  \"message\": \"string\",\n  \"details\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "af0a35a5-298d-4c90-ac62-3a2ee59899a7",
+              "name": "not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "deliver",
+                    "businesses",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Orum generated unique id for the business you are updating."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Orum-Version",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error_code\": \"string\",\n  \"message\": \"string\",\n  \"details\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9a6c78f1-e44e-4ffd-b300-7eef19762de2",
+              "name": "unexpected error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "deliver",
+                    "businesses",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Orum generated unique id for the business you are updating."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Orum-Version",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error_code\": \"string\",\n  \"message\": \"string\",\n  \"details\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api-sandbox.orum.io",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "947c4c16-4322-440e-8b4d-579174c42fb2",
+    "name": "Orum Authentication Businesses API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Orum API.",
+      "type": "text/plain"
+    }
+  }
+}

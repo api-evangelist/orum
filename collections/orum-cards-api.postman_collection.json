@@ -1,0 +1,1011 @@
+{
+  "item": [
+    {
+      "id": "15468fdc-e89f-4f39-ada7-178fd3c136fc",
+      "name": "Cards",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "0da01153-9c48-45bb-83c5-8072ce0767f7",
+          "name": "Create a card",
+          "request": {
+            "name": "Create a card",
+            "description": {
+              "content": "Create a card object.",
+              "type": "text/plain"
+            },
+            "url": {
+              "protocol": "https",
+              "path": [
+                "deliver",
+                "cards"
+              ],
+              "host": [
+                "vault",
+                "api-sandbox",
+                "orum",
+                "io"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "read:persons write:persons read:businesses write:businesses read:external-accounts write:external-accounts read:cards write:cards read:transfers write:transfers read:transfer-groups write:transfer-groups read:schedules write:schedules read:routing-number-eligibility read:balances read:reports write:reports read:booktransfers write:booktransfers read:subledgers write:subledgers read:verify-accounts write:verify-accounts read:webhook-configurations write:webhook-configurations read:webhook-secret write:webhook-secret invoke:webhook"
+                },
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://api-sandbox.orum.io/oauth/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"account_reference_id\": \"<string>\",\n  \"customer_reference_id\": \"<string>\",\n  \"customer_resource_type\": \"<string>\",\n  \"account_holder_name\": {\n    \"first_name\": \"<string>\",\n    \"last_name\": \"<string>\",\n    \"middle_name\": \"<string>\",\n    \"suffix\": \"<string>\"\n  },\n  \"address\": {\n    \"zip5\": \"<string>\"\n  },\n  \"number\": \"<string>\",\n  \"expiration_month\": \"<integer>\",\n  \"expiration_year\": \"<integer>\",\n  \"metadata\": \"<object>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "e35664e4-63da-4f05-a535-27616acbff34",
+              "name": "200 response.",
+              "originalRequest": {
+                "url": {
+                  "protocol": "https",
+                  "path": [
+                    "deliver",
+                    "cards"
+                  ],
+                  "host": [
+                    "vault",
+                    "api-sandbox",
+                    "orum",
+                    "io"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"account_reference_id\": \"<string>\",\n  \"customer_reference_id\": \"<string>\",\n  \"customer_resource_type\": \"<string>\",\n  \"account_holder_name\": {\n    \"first_name\": \"<string>\",\n    \"last_name\": \"<string>\",\n    \"middle_name\": \"<string>\",\n    \"suffix\": \"<string>\"\n  },\n  \"address\": {\n    \"zip5\": \"<string>\"\n  },\n  \"number\": \"<string>\",\n  \"expiration_month\": \"<integer>\",\n  \"expiration_year\": \"<integer>\",\n  \"metadata\": \"<object>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"card\": {\n    \"id\": \"80028dd1-b958-7630-6cc6-0a9b31a73aa6\",\n    \"account_reference_id\": \"<string>\",\n    \"customer_reference_id\": \"string\",\n    \"customer_resource_type\": \"<string>\",\n    \"account_holder_name\": {\n      \"first_name\": \"<string>\",\n      \"last_name\": \"<string>\",\n      \"middle_name\": \"<string>\",\n      \"suffix\": \"<string>\"\n    },\n    \"status\": \"rejected\",\n    \"address\": {\n      \"id\": \"1c535336-788c-cb04-aef1-c1703bd37635\",\n      \"type\": \"billing\",\n      \"zip5\": \"<string>\",\n      \"created_at\": \"1951-05-30T05:27:19.128Z\",\n      \"updated_at\": \"1981-02-02T21:15:13.966Z\",\n      \"address1\": \"string\",\n      \"address2\": \"string\",\n      \"city\": \"string\",\n      \"state\": \"TV\",\n      \"country\": \"US\"\n    },\n    \"last4\": \"XXxxXxxXxxX3070\",\n    \"expiration_month\": \"<integer>\",\n    \"expiration_year\": \"<integer>\",\n    \"created_at\": \"1960-07-16T06:34:00.777Z\",\n    \"updated_at\": \"2002-08-19T15:13:06.117Z\",\n    \"pull_eligible\": true,\n    \"push_eligible\": true,\n    \"closed_at\": \"2008-12-13T11:05:44.981Z\",\n    \"metadata\": {},\n    \"status_reasons\": [\n      {\n        \"reason_code\": \"invalid_address\",\n        \"reason_code_message\": \"Address submitted is a non-supported address type\"\n      },\n      {\n        \"reason_code\": \"invalid_address\",\n        \"reason_code_message\": \"Address submitted is a non-supported address type\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d788922d-3614-4acb-999d-79cf9a1f0e43",
+              "name": "invalid request.",
+              "originalRequest": {
+                "url": {
+                  "protocol": "https",
+                  "path": [
+                    "deliver",
+                    "cards"
+                  ],
+                  "host": [
+                    "vault",
+                    "api-sandbox",
+                    "orum",
+                    "io"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"account_reference_id\": \"<string>\",\n  \"customer_reference_id\": \"<string>\",\n  \"customer_resource_type\": \"<string>\",\n  \"account_holder_name\": {\n    \"first_name\": \"<string>\",\n    \"last_name\": \"<string>\",\n    \"middle_name\": \"<string>\",\n    \"suffix\": \"<string>\"\n  },\n  \"address\": {\n    \"zip5\": \"<string>\"\n  },\n  \"number\": \"<string>\",\n  \"expiration_month\": \"<integer>\",\n  \"expiration_year\": \"<integer>\",\n  \"metadata\": \"<object>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error_code\": \"string\",\n  \"message\": \"string\",\n  \"details\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2e0e7de1-4669-427f-b669-b8e43b048dd2",
+              "name": "unexpected error.",
+              "originalRequest": {
+                "url": {
+                  "protocol": "https",
+                  "path": [
+                    "deliver",
+                    "cards"
+                  ],
+                  "host": [
+                    "vault",
+                    "api-sandbox",
+                    "orum",
+                    "io"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"account_reference_id\": \"<string>\",\n  \"customer_reference_id\": \"<string>\",\n  \"customer_resource_type\": \"<string>\",\n  \"account_holder_name\": {\n    \"first_name\": \"<string>\",\n    \"last_name\": \"<string>\",\n    \"middle_name\": \"<string>\",\n    \"suffix\": \"<string>\"\n  },\n  \"address\": {\n    \"zip5\": \"<string>\"\n  },\n  \"number\": \"<string>\",\n  \"expiration_month\": \"<integer>\",\n  \"expiration_year\": \"<integer>\",\n  \"metadata\": \"<object>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error_code\": \"string\",\n  \"message\": \"string\",\n  \"details\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "2768465d-f4d2-4a4e-9dda-316ed8ae48eb",
+          "name": "Get all cards",
+          "request": {
+            "name": "Get all cards",
+            "description": {
+              "content": "Get all cards by filter.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "deliver",
+                "cards"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "index",
+                  "value": "0",
+                  "description": "Index for paginated results"
+                },
+                {
+                  "disabled": false,
+                  "key": "size",
+                  "value": "100",
+                  "description": "Max number of results to return"
+                },
+                {
+                  "disabled": false,
+                  "key": "customer_reference_id",
+                  "value": "<string>",
+                  "description": "Filter by customer reference id"
+                },
+                {
+                  "disabled": false,
+                  "key": "status",
+                  "value": "<string>",
+                  "description": "Filter by card statuses (multiple allowed)"
+                },
+                {
+                  "disabled": false,
+                  "key": "status",
+                  "value": "<string>",
+                  "description": "Filter by card statuses (multiple allowed)"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "Orum-Version",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "read:persons write:persons read:businesses write:businesses read:external-accounts write:external-accounts read:cards write:cards read:transfers write:transfers read:transfer-groups write:transfer-groups read:schedules write:schedules read:routing-number-eligibility read:balances read:reports write:reports read:booktransfers write:booktransfers read:subledgers write:subledgers read:verify-accounts write:verify-accounts read:webhook-configurations write:webhook-configurations read:webhook-secret write:webhook-secret invoke:webhook"
+                },
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://api-sandbox.orum.io/oauth/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "83ce4fcf-1981-4b3a-9ae0-7b3777f0b662",
+              "name": "200 response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "deliver",
+                    "cards"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "index",
+                      "value": "0"
+                    },
+                    {
+                      "key": "size",
+                      "value": "100"
+                    },
+                    {
+                      "key": "customer_reference_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Orum-Version",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"cards\": [\n    {\n      \"id\": \"3004fc89-8885-1cb2-6650-6a0b472f9b80\",\n      \"account_reference_id\": \"<string>\",\n      \"customer_reference_id\": \"<string>\",\n      \"customer_resource_type\": \"<string>\",\n      \"account_holder_name\": {\n        \"first_name\": {\n          \"x-orum-error-invalid\": {\n            \"known-error\": \"invalid_first_name\"\n          },\n          \"x-orum-error-missing\": {\n            \"known-error\": \"missing_first_name\"\n          },\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"last_name\": {\n          \"x-orum-error-invalid\": {\n            \"known-error\": \"invalid_last_name\"\n          },\n          \"x-orum-error-missing\": {\n            \"known-error\": \"missing_last_name\"\n          },\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"middle_name\": \"string\",\n        \"suffix\": \"<string>\"\n      },\n      \"status\": \"<string>\",\n      \"address\": {\n        \"id\": \"7ea19a3a-5bb4-4a70-a994-ca983ec2b4f8\",\n        \"type\": \"billing\",\n        \"zip5\": \"<string>\",\n        \"created_at\": \"1965-05-10T12:11:02.206Z\",\n        \"updated_at\": \"2025-07-27T05:01:26.988Z\",\n        \"address1\": \"string\",\n        \"address2\": \"string\",\n        \"city\": \"string\",\n        \"state\": \"UN\",\n        \"country\": \"US\"\n      },\n      \"last4\": \"XXXXXxXx2119\",\n      \"expiration_month\": \"<integer>\",\n      \"expiration_year\": \"<integer>\",\n      \"created_at\": \"2006-05-05T14:52:33.485Z\",\n      \"updated_at\": \"1958-02-28T03:26:39.203Z\",\n      \"pull_eligible\": true,\n      \"push_eligible\": true,\n      \"closed_at\": \"2025-10-03T17:15:25.357Z\",\n      \"metadata\": {},\n      \"status_reasons\": [\n        {\n          \"reason_code\": \"invalid_address\",\n          \"reason_code_message\": \"Address submitted is a non-supported address type\"\n        },\n        {\n          \"reason_code\": \"invalid_address\",\n          \"reason_code_message\": \"Address submitted is a non-supported address type\"\n        }\n      ]\n    },\n    {\n      \"id\": \"9d03d691-39cb-f9a0-a00b-b03577ba43b0\",\n      \"account_reference_id\": \"<string>\",\n      \"customer_reference_id\": \"<string>\",\n      \"customer_resource_type\": \"<string>\",\n      \"account_holder_name\": {\n        \"first_name\": {\n          \"x-orum-error-invalid\": {\n            \"known-error\": \"invalid_first_name\"\n          },\n          \"x-orum-error-missing\": {\n            \"known-error\": \"missing_first_name\"\n          },\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"last_name\": {\n          \"x-orum-error-invalid\": {\n            \"known-error\": \"invalid_last_name\"\n          },\n          \"x-orum-error-missing\": {\n            \"known-error\": \"missing_last_name\"\n          },\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"middle_name\": \"string\",\n        \"suffix\": \"<string>\"\n      },\n      \"status\": \"<string>\",\n      \"address\": {\n        \"id\": \"5ebfba98-69d1-efe2-e6c1-7c96fdfa652a\",\n        \"type\": \"billing\",\n        \"zip5\": \"<string>\",\n        \"created_at\": \"1999-09-17T00:58:45.670Z\",\n        \"updated_at\": \"1989-07-20T03:43:53.181Z\",\n        \"address1\": \"string\",\n        \"address2\": \"string\",\n        \"city\": \"string\",\n        \"state\": \"ML\",\n        \"country\": \"US\"\n      },\n      \"last4\": \"xXX3146\",\n      \"expiration_month\": \"<integer>\",\n      \"expiration_year\": \"<integer>\",\n      \"created_at\": \"2014-12-17T03:42:50.400Z\",\n      \"updated_at\": \"1968-11-21T01:32:56.884Z\",\n      \"pull_eligible\": true,\n      \"push_eligible\": false,\n      \"closed_at\": \"1950-05-25T20:32:43.625Z\",\n      \"metadata\": {},\n      \"status_reasons\": [\n        {\n          \"reason_code\": \"invalid_address\",\n          \"reason_code_message\": \"Address submitted is a non-supported address type\"\n        },\n        {\n          \"reason_code\": \"invalid_address\",\n          \"reason_code_message\": \"Address submitted is a non-supported address type\"\n        }\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2cf75529-b961-4ec3-a5be-a2151d37b7b5",
+              "name": "invalid request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "deliver",
+                    "cards"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "index",
+                      "value": "0"
+                    },
+                    {
+                      "key": "size",
+                      "value": "100"
+                    },
+                    {
+                      "key": "customer_reference_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Orum-Version",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error_code\": \"string\",\n  \"message\": \"string\",\n  \"details\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5549dfe3-5d47-4cc9-8835-22d9042d63f7",
+              "name": "unexpected error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "deliver",
+                    "cards"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "index",
+                      "value": "0"
+                    },
+                    {
+                      "key": "size",
+                      "value": "100"
+                    },
+                    {
+                      "key": "customer_reference_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Orum-Version",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error_code\": \"string\",\n  \"message\": \"string\",\n  \"details\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "16962eeb-f5dc-417a-b5a1-de5a085ad93e",
+          "name": "Get a card by id",
+          "request": {
+            "name": "Get a card by id",
+            "description": {
+              "content": "Get a card object by id.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "deliver",
+                "cards",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "id",
+                  "description": "(Required) Orum generated unique id for the resource for the card you are fetching."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "read:persons write:persons read:businesses write:businesses read:external-accounts write:external-accounts read:cards write:cards read:transfers write:transfers read:transfer-groups write:transfer-groups read:schedules write:schedules read:routing-number-eligibility read:balances read:reports write:reports read:booktransfers write:booktransfers read:subledgers write:subledgers read:verify-accounts write:verify-accounts read:webhook-configurations write:webhook-configurations read:webhook-secret write:webhook-secret invoke:webhook"
+                },
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://api-sandbox.orum.io/oauth/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "f081405c-74f0-426f-8b73-457b0b9eb2e9",
+              "name": "200 response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "deliver",
+                    "cards",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Orum generated unique id for the resource for the card you are fetching."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"card\": {\n    \"id\": \"<uuid>\",\n    \"account_reference_id\": \"<string>\",\n    \"customer_reference_id\": \"<string>\",\n    \"customer_resource_type\": \"<string>\",\n    \"account_holder_name\": {\n      \"first_name\": \"<string>\",\n      \"last_name\": \"<string>\",\n      \"middle_name\": \"<string>\",\n      \"suffix\": \"<string>\"\n    },\n    \"status\": \"<string>\",\n    \"address\": {\n      \"id\": \"<uuid>\",\n      \"type\": \"billing\",\n      \"zip5\": \"<string>\",\n      \"created_at\": \"1983-05-13T01:38:27.908Z\",\n      \"updated_at\": \"2007-04-06T04:34:45.931Z\",\n      \"address1\": \"string\",\n      \"address2\": \"string\",\n      \"city\": \"string\",\n      \"state\": \"NH\",\n      \"country\": \"US\"\n    },\n    \"last4\": \"X3351\",\n    \"expiration_month\": \"<integer>\",\n    \"expiration_year\": \"<integer>\",\n    \"created_at\": \"2012-02-26T22:41:55.667Z\",\n    \"updated_at\": \"1950-06-06T22:13:39.724Z\",\n    \"pull_eligible\": true,\n    \"push_eligible\": true,\n    \"closed_at\": \"1992-12-28T06:50:22.168Z\",\n    \"metadata\": {},\n    \"status_reasons\": [\n      {\n        \"reason_code\": \"invalid_address\",\n        \"reason_code_message\": \"Address submitted is a non-supported address type\"\n      },\n      {\n        \"reason_code\": \"invalid_address\",\n        \"reason_code_message\": \"Address submitted is a non-supported address type\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "48b56c76-0c5f-4c26-ae5c-178b4cd59567",
+              "name": "not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "deliver",
+                    "cards",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Orum generated unique id for the resource for the card you are fetching."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error_code\": \"string\",\n  \"message\": \"string\",\n  \"details\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "16949947-6000-42a2-b328-05c5d6a74e25",
+              "name": "unexpected error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "deliver",
+                    "cards",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Orum generated unique id for the resource for the card you are fetching."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error_code\": \"string\",\n  \"message\": \"string\",\n  \"details\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b2ba5d91-eb79-4389-b311-3b87e1a2efaa",
+          "name": "Closes a card by id",
+          "request": {
+            "name": "Closes a card by id",
+            "description": {
+              "content": "Close a card object so they are unable to transact.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "deliver",
+                "cards",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "id",
+                  "description": "(Required) Orum generated unique id for the resource for the card you are fetching."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "read:persons write:persons read:businesses write:businesses read:external-accounts write:external-accounts read:cards write:cards read:transfers write:transfers read:transfer-groups write:transfer-groups read:schedules write:schedules read:routing-number-eligibility read:balances read:reports write:reports read:booktransfers write:booktransfers read:subledgers write:subledgers read:verify-accounts write:verify-accounts read:webhook-configurations write:webhook-configurations read:webhook-secret write:webhook-secret invoke:webhook"
+                },
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://api-sandbox.orum.io/oauth/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "22d2e7b7-1b73-4be0-aad5-e82eecf106db",
+              "name": "200 response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "deliver",
+                    "cards",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Orum generated unique id for the resource for the card you are fetching."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"card\": {\n    \"id\": \"<uuid>\",\n    \"account_reference_id\": \"<string>\",\n    \"customer_reference_id\": \"<string>\",\n    \"customer_resource_type\": \"<string>\",\n    \"account_holder_name\": {\n      \"first_name\": \"<string>\",\n      \"last_name\": \"<string>\",\n      \"middle_name\": \"<string>\",\n      \"suffix\": \"<string>\"\n    },\n    \"status\": \"<string>\",\n    \"address\": {\n      \"id\": \"<uuid>\",\n      \"type\": \"billing\",\n      \"zip5\": \"<string>\",\n      \"created_at\": \"1983-05-13T01:38:27.908Z\",\n      \"updated_at\": \"2007-04-06T04:34:45.931Z\",\n      \"address1\": \"string\",\n      \"address2\": \"string\",\n      \"city\": \"string\",\n      \"state\": \"NH\",\n      \"country\": \"US\"\n    },\n    \"last4\": \"X3351\",\n    \"expiration_month\": \"<integer>\",\n    \"expiration_year\": \"<integer>\",\n    \"created_at\": \"2012-02-26T22:41:55.667Z\",\n    \"updated_at\": \"1950-06-06T22:13:39.724Z\",\n    \"pull_eligible\": true,\n    \"push_eligible\": true,\n    \"closed_at\": \"1992-12-28T06:50:22.168Z\",\n    \"metadata\": {},\n    \"status_reasons\": [\n      {\n        \"reason_code\": \"invalid_address\",\n        \"reason_code_message\": \"Address submitted is a non-supported address type\"\n      },\n      {\n        \"reason_code\": \"invalid_address\",\n        \"reason_code_message\": \"Address submitted is a non-supported address type\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9c5aef04-ed9b-4951-a903-2b0440339318",
+              "name": "not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "deliver",
+                    "cards",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Orum generated unique id for the resource for the card you are fetching."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error_code\": \"string\",\n  \"message\": \"string\",\n  \"details\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0a8aa121-08ad-42ab-9221-270d0e6dfd01",
+              "name": "unexpected error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "deliver",
+                    "cards",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Orum generated unique id for the resource for the card you are fetching."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error_code\": \"string\",\n  \"message\": \"string\",\n  \"details\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api-sandbox.orum.io",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "7a73c492-4add-42b1-adbd-529bd274fbdb",
+    "name": "Orum Authentication Cards API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Orum API.",
+      "type": "text/plain"
+    }
+  }
+}

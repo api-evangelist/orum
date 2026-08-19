@@ -1,0 +1,212 @@
+{
+  "item": [
+    {
+      "id": "903400d7-326a-4f5a-ac95-caba7f6dc953",
+      "name": "Trigger webhooks",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "c4fe2c25-b1ba-42c2-9ed7-8f3a6ef25c4b",
+          "name": "Invoke a test webhook event",
+          "request": {
+            "name": "Invoke a test webhook event",
+            "description": {},
+            "url": {
+              "path": [
+                "webhooks",
+                "invoke"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "Orum-Version",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "read:persons write:persons read:businesses write:businesses read:external-accounts write:external-accounts read:cards write:cards read:transfers write:transfers read:transfer-groups write:transfer-groups read:schedules write:schedules read:routing-number-eligibility read:balances read:reports write:reports read:booktransfers write:booktransfers read:subledgers write:subledgers read:verify-accounts write:verify-accounts read:webhook-configurations write:webhook-configurations read:webhook-secret write:webhook-secret invoke:webhook"
+                },
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://api-sandbox.orum.io/oauth/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"event_type\": \"<string>\",\n  \"data\": {\n    \"id\": \"<uuid>\",\n    \"customer_reference_id\": \"<string>\",\n    \"first_name\": \"<string>\",\n    \"last_name\": \"<string>\",\n    \"status\": \"<string>\",\n    \"created_at\": \"<dateTime>\",\n    \"updated_at\": \"<dateTime>\",\n    \"middle_name\": \"<string>\",\n    \"date_of_birth\": \"<string>\",\n    \"addresses\": [\n      {\n        \"id\": \"<uuid>\",\n        \"type\": \"<string>\",\n        \"address1\": \"<string>\",\n        \"city\": \"<string>\",\n        \"state\": \"<string>\",\n        \"country\": \"<string>\",\n        \"zip5\": \"<string>\",\n        \"created_at\": \"<dateTime>\",\n        \"updated_at\": \"<dateTime>\",\n        \"address2\": \"<string>\"\n      }\n    ],\n    \"contacts\": [\n      {\n        \"id\": \"<uuid>\",\n        \"type\": \"<string>\",\n        \"value\": \"<string>\",\n        \"created_at\": \"<dateTime>\",\n        \"updated_at\": \"<dateTime>\"\n      }\n    ],\n    \"status_reasons\": [\n      {\n        \"reason_code\": \"<string>\",\n        \"reason_code_message\": \"<string>\"\n      },\n      {\n        \"reason_code\": \"<string>\",\n        \"reason_code_message\": \"<string>\"\n      }\n    ],\n    \"closed_at\": \"<dateTime>\",\n    \"metadata\": \"<object>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "1bc1b11c-a5f6-48f8-aa50-faea2c547e08",
+              "name": "201 response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "webhooks",
+                    "invoke"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Orum-Version",
+                    "value": "<string>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"event_type\": \"<string>\",\n  \"data\": {\n    \"id\": \"<uuid>\",\n    \"customer_reference_id\": \"<string>\",\n    \"first_name\": \"<string>\",\n    \"last_name\": \"<string>\",\n    \"status\": \"<string>\",\n    \"created_at\": \"<dateTime>\",\n    \"updated_at\": \"<dateTime>\",\n    \"middle_name\": \"<string>\",\n    \"date_of_birth\": \"<string>\",\n    \"addresses\": [\n      {\n        \"id\": \"<uuid>\",\n        \"type\": \"<string>\",\n        \"address1\": \"<string>\",\n        \"city\": \"<string>\",\n        \"state\": \"<string>\",\n        \"country\": \"<string>\",\n        \"zip5\": \"<string>\",\n        \"created_at\": \"<dateTime>\",\n        \"updated_at\": \"<dateTime>\",\n        \"address2\": \"<string>\"\n      }\n    ],\n    \"contacts\": [\n      {\n        \"id\": \"<uuid>\",\n        \"type\": \"<string>\",\n        \"value\": \"<string>\",\n        \"created_at\": \"<dateTime>\",\n        \"updated_at\": \"<dateTime>\"\n      }\n    ],\n    \"status_reasons\": [\n      {\n        \"reason_code\": \"invalid_address\",\n        \"reason_code_message\": \"Address submitted is a non-supported address type\"\n      },\n      {\n        \"reason_code\": \"invalid_address\",\n        \"reason_code_message\": \"Address submitted is a non-supported address type\"\n      }\n    ],\n    \"closed_at\": \"<dateTime>\",\n    \"metadata\": \"<object>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "6ffe715a-c21c-456a-b222-c8de5746ebdb",
+              "name": "unauthorized request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "webhooks",
+                    "invoke"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Orum-Version",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"event_type\": \"<string>\",\n  \"data\": {\n    \"id\": \"<uuid>\",\n    \"customer_reference_id\": \"<string>\",\n    \"first_name\": \"<string>\",\n    \"last_name\": \"<string>\",\n    \"status\": \"<string>\",\n    \"created_at\": \"<dateTime>\",\n    \"updated_at\": \"<dateTime>\",\n    \"middle_name\": \"<string>\",\n    \"date_of_birth\": \"<string>\",\n    \"addresses\": [\n      {\n        \"id\": \"<uuid>\",\n        \"type\": \"<string>\",\n        \"address1\": \"<string>\",\n        \"city\": \"<string>\",\n        \"state\": \"<string>\",\n        \"country\": \"<string>\",\n        \"zip5\": \"<string>\",\n        \"created_at\": \"<dateTime>\",\n        \"updated_at\": \"<dateTime>\",\n        \"address2\": \"<string>\"\n      }\n    ],\n    \"contacts\": [\n      {\n        \"id\": \"<uuid>\",\n        \"type\": \"<string>\",\n        \"value\": \"<string>\",\n        \"created_at\": \"<dateTime>\",\n        \"updated_at\": \"<dateTime>\"\n      }\n    ],\n    \"status_reasons\": [\n      {\n        \"reason_code\": \"invalid_address\",\n        \"reason_code_message\": \"Address submitted is a non-supported address type\"\n      },\n      {\n        \"reason_code\": \"invalid_address\",\n        \"reason_code_message\": \"Address submitted is a non-supported address type\"\n      }\n    ],\n    \"closed_at\": \"<dateTime>\",\n    \"metadata\": \"<object>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error_code\": \"string\",\n  \"message\": \"string\",\n  \"details\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api-sandbox.orum.io",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "c61f6b17-b28b-48a6-98b6-a2a9a2eb92a4",
+    "name": "Orum Authentication Trigger webhooks API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Orum API.",
+      "type": "text/plain"
+    }
+  }
+}

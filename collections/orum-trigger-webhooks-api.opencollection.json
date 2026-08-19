@@ -1,0 +1,48 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Orum Authentication Trigger webhooks API",
+    "version": "v2022-09-21"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Trigger webhooks",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Invoke a test webhook event",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api-sandbox.orum.io/webhooks/invoke",
+            "headers": [
+              {
+                "name": "Orum-Version",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api-sandbox.orum.io/oauth/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Invoke a test webhook event"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

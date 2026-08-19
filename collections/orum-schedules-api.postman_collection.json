@@ -1,0 +1,1280 @@
+{
+  "item": [
+    {
+      "id": "aac195d7-40f5-4fc9-b2c1-9e4e1b12a2bb",
+      "name": "Schedules",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "b1d241de-de7c-4848-956c-32490dc61ff8",
+          "name": "Create a schedule",
+          "request": {
+            "name": "Create a schedule",
+            "description": {
+              "content": "Schedule recurring transfers.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "deliver",
+                "schedules"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "Orum-Version",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "read:persons write:persons read:businesses write:businesses read:external-accounts write:external-accounts read:cards write:cards read:transfers write:transfers read:transfer-groups write:transfer-groups read:schedules write:schedules read:routing-number-eligibility read:balances read:reports write:reports read:booktransfers write:booktransfers read:subledgers write:subledgers read:verify-accounts write:verify-accounts read:webhook-configurations write:webhook-configurations read:webhook-secret write:webhook-secret invoke:webhook"
+                },
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://api-sandbox.orum.io/oauth/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"schedule_reference_id\": \"<string>\",\n  \"amount\": \"<integer>\",\n  \"currency\": \"<string>\",\n  \"speed\": \"<string>\",\n  \"start_date\": \"<date>\",\n  \"recurrence\": \"<string>\",\n  \"source\": \"<object>\",\n  \"destination\": \"<object>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "9b8f79dc-f066-494f-b6fb-37819efad616",
+              "name": "200 response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "deliver",
+                    "schedules"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Orum-Version",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"schedule_reference_id\": \"<string>\",\n  \"amount\": \"<integer>\",\n  \"currency\": \"<string>\",\n  \"speed\": \"<string>\",\n  \"start_date\": \"2025-01-01\",\n  \"recurrence\": \"RRULE:FREQ=WEEKLY;INTERVAL=1;BYDAY=MO,WE,FR\",\n  \"source\": {\n    \"account_reference_id\": \"<string>\",\n    \"customer_reference_id\": \"<string>\",\n    \"statement_display_name\": \"<string>\"\n  },\n  \"destination\": {\n    \"account_reference_id\": \"<string>\",\n    \"customer_reference_id\": \"<string>\",\n    \"statement_display_name\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"schedule\": {\n    \"id\": \"6d86ddc1-4e1a-dd3d-b8e0-7d2765848de7\",\n    \"schedule_reference_id\": \"<string>\",\n    \"status\": \"inactive\",\n    \"amount\": \"<integer>\",\n    \"currency\": \"<string>\",\n    \"speed\": \"<string>\",\n    \"start_date\": \"2025-01-01\",\n    \"recurrence\": \"RRULE:FREQ=WEEKLY;INTERVAL=1;BYDAY=MO,WE,FR\",\n    \"next_payment_date\": \"2025-01-01\",\n    \"created_at\": \"1995-05-30T12:01:03.242Z\",\n    \"updated_at\": \"1962-07-12T17:30:21.820Z\",\n    \"rrule_readable\": \"Weekly on Monday, Wednesday, and Friday\",\n    \"source\": {\n      \"account_reference_id\": \"<string>\",\n      \"customer_reference_id\": \"<string>\",\n      \"statement_display_name\": \"<string>\"\n    },\n    \"destination\": {\n      \"account_reference_id\": \"<string>\",\n      \"customer_reference_id\": \"<string>\",\n      \"statement_display_name\": \"<string>\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "75411a61-ab09-463a-8d2b-32c19987a58a",
+              "name": "invalid request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "deliver",
+                    "schedules"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Orum-Version",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"schedule_reference_id\": \"<string>\",\n  \"amount\": \"<integer>\",\n  \"currency\": \"<string>\",\n  \"speed\": \"<string>\",\n  \"start_date\": \"2025-01-01\",\n  \"recurrence\": \"RRULE:FREQ=WEEKLY;INTERVAL=1;BYDAY=MO,WE,FR\",\n  \"source\": {\n    \"account_reference_id\": \"<string>\",\n    \"customer_reference_id\": \"<string>\",\n    \"statement_display_name\": \"<string>\"\n  },\n  \"destination\": {\n    \"account_reference_id\": \"<string>\",\n    \"customer_reference_id\": \"<string>\",\n    \"statement_display_name\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error_code\": \"string\",\n  \"message\": \"string\",\n  \"details\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "651c11df-a238-4000-9aff-5ad2519f9a24",
+              "name": "unexpected error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "deliver",
+                    "schedules"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Orum-Version",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"schedule_reference_id\": \"<string>\",\n  \"amount\": \"<integer>\",\n  \"currency\": \"<string>\",\n  \"speed\": \"<string>\",\n  \"start_date\": \"2025-01-01\",\n  \"recurrence\": \"RRULE:FREQ=WEEKLY;INTERVAL=1;BYDAY=MO,WE,FR\",\n  \"source\": {\n    \"account_reference_id\": \"<string>\",\n    \"customer_reference_id\": \"<string>\",\n    \"statement_display_name\": \"<string>\"\n  },\n  \"destination\": {\n    \"account_reference_id\": \"<string>\",\n    \"customer_reference_id\": \"<string>\",\n    \"statement_display_name\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error_code\": \"string\",\n  \"message\": \"string\",\n  \"details\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "f65ddc54-59b2-4e79-8e23-73b29776e286",
+          "name": "Get all schedules",
+          "request": {
+            "name": "Get all schedules",
+            "description": {
+              "content": "Get all schedule objects.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "deliver",
+                "schedules"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "index",
+                  "value": "0",
+                  "description": "Index for paginated results"
+                },
+                {
+                  "disabled": false,
+                  "key": "size",
+                  "value": "100",
+                  "description": "Max number of results to return"
+                },
+                {
+                  "disabled": false,
+                  "key": "status",
+                  "value": "<string>",
+                  "description": "Filter results by schedule status"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "Orum-Version",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "read:persons write:persons read:businesses write:businesses read:external-accounts write:external-accounts read:cards write:cards read:transfers write:transfers read:transfer-groups write:transfer-groups read:schedules write:schedules read:routing-number-eligibility read:balances read:reports write:reports read:booktransfers write:booktransfers read:subledgers write:subledgers read:verify-accounts write:verify-accounts read:webhook-configurations write:webhook-configurations read:webhook-secret write:webhook-secret invoke:webhook"
+                },
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://api-sandbox.orum.io/oauth/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "b70eb44d-63ee-4939-ba13-f62af8b982ac",
+              "name": "200 response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "deliver",
+                    "schedules"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "index",
+                      "value": "0"
+                    },
+                    {
+                      "key": "size",
+                      "value": "100"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Orum-Version",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"schedules\": [\n    {\n      \"id\": \"ac9bb55c-efca-0615-6022-32c606d6bc5e\",\n      \"schedule_reference_id\": \"<string>\",\n      \"status\": \"<string>\",\n      \"amount\": \"<integer>\",\n      \"currency\": \"<string>\",\n      \"speed\": \"<string>\",\n      \"start_date\": \"2025-01-01\",\n      \"recurrence\": \"RRULE:FREQ=WEEKLY;INTERVAL=1;BYDAY=MO,WE,FR\",\n      \"next_payment_date\": \"2025-01-01\",\n      \"created_at\": \"1983-07-07T22:04:12.721Z\",\n      \"updated_at\": \"1951-08-01T22:24:57.540Z\",\n      \"rrule_readable\": \"Weekly on Monday, Wednesday, and Friday\",\n      \"source\": {\n        \"account_reference_id\": \"<string>\",\n        \"customer_reference_id\": \"<string>\",\n        \"statement_display_name\": \"<string>\"\n      },\n      \"destination\": {\n        \"account_reference_id\": \"<string>\",\n        \"customer_reference_id\": \"<string>\",\n        \"statement_display_name\": \"<string>\"\n      }\n    },\n    {\n      \"id\": \"800cad32-a2f0-a60e-7e3e-38917d570ec5\",\n      \"schedule_reference_id\": \"<string>\",\n      \"status\": \"<string>\",\n      \"amount\": \"<integer>\",\n      \"currency\": \"<string>\",\n      \"speed\": \"<string>\",\n      \"start_date\": \"2025-01-01\",\n      \"recurrence\": \"RRULE:FREQ=WEEKLY;INTERVAL=1;BYDAY=MO,WE,FR\",\n      \"next_payment_date\": \"2025-01-01\",\n      \"created_at\": \"1947-03-12T20:01:53.885Z\",\n      \"updated_at\": \"1962-06-27T18:04:13.193Z\",\n      \"rrule_readable\": \"Weekly on Monday, Wednesday, and Friday\",\n      \"source\": {\n        \"account_reference_id\": \"<string>\",\n        \"customer_reference_id\": \"<string>\",\n        \"statement_display_name\": \"<string>\"\n      },\n      \"destination\": {\n        \"account_reference_id\": \"<string>\",\n        \"customer_reference_id\": \"<string>\",\n        \"statement_display_name\": \"<string>\"\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a86cce07-7ad6-4517-a8a0-c4993c7e31de",
+              "name": "invalid request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "deliver",
+                    "schedules"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "index",
+                      "value": "0"
+                    },
+                    {
+                      "key": "size",
+                      "value": "100"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Orum-Version",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error_code\": \"string\",\n  \"message\": \"string\",\n  \"details\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b0962dad-82ed-4b9f-9204-f830e8fb34be",
+              "name": "unexpected error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "deliver",
+                    "schedules"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "index",
+                      "value": "0"
+                    },
+                    {
+                      "key": "size",
+                      "value": "100"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Orum-Version",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error_code\": \"string\",\n  \"message\": \"string\",\n  \"details\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a0dc07be-8481-484c-abe7-d30ec0048821",
+          "name": "Validate and parse RRULE string",
+          "request": {
+            "name": "Validate and parse RRULE string",
+            "description": {
+              "content": "Validates an RRULE string and returns its human readable form along with next occurrence dates.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "deliver",
+                "schedules",
+                "rrule"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "Orum-Version",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "read:persons write:persons read:businesses write:businesses read:external-accounts write:external-accounts read:cards write:cards read:transfers write:transfers read:transfer-groups write:transfer-groups read:schedules write:schedules read:routing-number-eligibility read:balances read:reports write:reports read:booktransfers write:booktransfers read:subledgers write:subledgers read:verify-accounts write:verify-accounts read:webhook-configurations write:webhook-configurations read:webhook-secret write:webhook-secret invoke:webhook"
+                },
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://api-sandbox.orum.io/oauth/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"start_date\": \"<date>\",\n  \"recurrence\": \"<string>\",\n  \"occurrence_count\": \"<integer>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "162739b1-c06a-4812-b33e-f71454085e9e",
+              "name": "200 response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "deliver",
+                    "schedules",
+                    "rrule"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Orum-Version",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"start_date\": \"2025-01-01\",\n  \"recurrence\": \"RRULE:FREQ=WEEKLY;INTERVAL=1;BYDAY=MO,WE,FR\",\n  \"occurrence_count\": \"<integer>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"start_date\": \"2025-01-01\",\n  \"occurrences\": [\n    \"1996-12-22\",\n    \"1965-07-09\"\n  ],\n  \"rrule_string\": \"string\",\n  \"rrule_readable\": \"string\",\n  \"recurrence\": false\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "53b07932-72ad-4fe8-b46f-191634442ded",
+              "name": "invalid request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "deliver",
+                    "schedules",
+                    "rrule"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Orum-Version",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"start_date\": \"2025-01-01\",\n  \"recurrence\": \"RRULE:FREQ=WEEKLY;INTERVAL=1;BYDAY=MO,WE,FR\",\n  \"occurrence_count\": \"<integer>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error_code\": \"string\",\n  \"message\": \"string\",\n  \"details\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "cc0ef12f-a1a7-4396-b3cd-fc9879f4211c",
+              "name": "unexpected error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "deliver",
+                    "schedules",
+                    "rrule"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Orum-Version",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"start_date\": \"2025-01-01\",\n  \"recurrence\": \"RRULE:FREQ=WEEKLY;INTERVAL=1;BYDAY=MO,WE,FR\",\n  \"occurrence_count\": \"<integer>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error_code\": \"string\",\n  \"message\": \"string\",\n  \"details\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c4400eb3-3bc1-4f60-861d-a897fb98410f",
+          "name": "Get schedule by id",
+          "request": {
+            "name": "Get schedule by id",
+            "description": {
+              "content": "Retrieve a single schedule",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "deliver",
+                "schedules",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "id",
+                  "description": "(Required) Orum generated unique id for the schedule you are fetching."
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "Orum-Version",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "read:persons write:persons read:businesses write:businesses read:external-accounts write:external-accounts read:cards write:cards read:transfers write:transfers read:transfer-groups write:transfer-groups read:schedules write:schedules read:routing-number-eligibility read:balances read:reports write:reports read:booktransfers write:booktransfers read:subledgers write:subledgers read:verify-accounts write:verify-accounts read:webhook-configurations write:webhook-configurations read:webhook-secret write:webhook-secret invoke:webhook"
+                },
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://api-sandbox.orum.io/oauth/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "ab9a2a3c-5459-47e4-9d54-a91cff82908e",
+              "name": "200 response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "deliver",
+                    "schedules",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Orum generated unique id for the schedule you are fetching."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Orum-Version",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"schedule\": {\n    \"id\": \"<uuid>\",\n    \"schedule_reference_id\": \"<string>\",\n    \"status\": \"<string>\",\n    \"amount\": \"<integer>\",\n    \"currency\": \"<string>\",\n    \"speed\": \"<string>\",\n    \"start_date\": \"2025-01-01\",\n    \"recurrence\": \"RRULE:FREQ=WEEKLY;INTERVAL=1;BYDAY=MO,WE,FR\",\n    \"next_payment_date\": \"2025-01-01\",\n    \"created_at\": \"1995-08-29T15:57:10.338Z\",\n    \"updated_at\": \"1995-10-07T06:54:01.329Z\",\n    \"rrule_readable\": \"Weekly on Monday, Wednesday, and Friday\",\n    \"source\": {\n      \"account_reference_id\": \"<string>\",\n      \"customer_reference_id\": \"<string>\",\n      \"statement_display_name\": \"<string>\"\n    },\n    \"destination\": {\n      \"account_reference_id\": \"<string>\",\n      \"customer_reference_id\": \"<string>\",\n      \"statement_display_name\": \"<string>\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e9c823d3-e46f-4882-9036-2c7ff660ae48",
+              "name": "not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "deliver",
+                    "schedules",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Orum generated unique id for the schedule you are fetching."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Orum-Version",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error_code\": \"string\",\n  \"message\": \"string\",\n  \"details\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "09c1cd02-5448-4bc7-8e62-7ade8ed093ab",
+              "name": "unexpected error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "deliver",
+                    "schedules",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Orum generated unique id for the schedule you are fetching."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Orum-Version",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error_code\": \"string\",\n  \"message\": \"string\",\n  \"details\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "5a6c4e3a-f734-4780-9b08-88e9a044a55d",
+          "name": "delete a schedule that matches the id",
+          "request": {
+            "name": "delete a schedule that matches the id",
+            "description": {
+              "content": "Delete a single schedule",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "deliver",
+                "schedules",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "id",
+                  "description": "(Required) Orum generated unique id for the schedule you are deleting."
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "Orum-Version",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "read:persons write:persons read:businesses write:businesses read:external-accounts write:external-accounts read:cards write:cards read:transfers write:transfers read:transfer-groups write:transfer-groups read:schedules write:schedules read:routing-number-eligibility read:balances read:reports write:reports read:booktransfers write:booktransfers read:subledgers write:subledgers read:verify-accounts write:verify-accounts read:webhook-configurations write:webhook-configurations read:webhook-secret write:webhook-secret invoke:webhook"
+                },
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://api-sandbox.orum.io/oauth/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "884e6cf7-034c-42e2-b2cc-32a35bd55455",
+              "name": "200 response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "deliver",
+                    "schedules",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Orum generated unique id for the schedule you are deleting."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Orum-Version",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"schedule\": {\n    \"id\": \"<uuid>\",\n    \"schedule_reference_id\": \"<string>\",\n    \"status\": \"<string>\",\n    \"amount\": \"<integer>\",\n    \"currency\": \"<string>\",\n    \"speed\": \"<string>\",\n    \"start_date\": \"2025-01-01\",\n    \"recurrence\": \"RRULE:FREQ=WEEKLY;INTERVAL=1;BYDAY=MO,WE,FR\",\n    \"next_payment_date\": \"2025-01-01\",\n    \"created_at\": \"1995-08-29T15:57:10.338Z\",\n    \"updated_at\": \"1995-10-07T06:54:01.329Z\",\n    \"rrule_readable\": \"Weekly on Monday, Wednesday, and Friday\",\n    \"source\": {\n      \"account_reference_id\": \"<string>\",\n      \"customer_reference_id\": \"<string>\",\n      \"statement_display_name\": \"<string>\"\n    },\n    \"destination\": {\n      \"account_reference_id\": \"<string>\",\n      \"customer_reference_id\": \"<string>\",\n      \"statement_display_name\": \"<string>\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "471f9d54-336d-4e78-99e1-1b86549810e9",
+              "name": "not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "deliver",
+                    "schedules",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Orum generated unique id for the schedule you are deleting."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Orum-Version",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error_code\": \"string\",\n  \"message\": \"string\",\n  \"details\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2bc7f2b1-4919-4840-ace5-4eedbbd2eaeb",
+              "name": "unexpected error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "deliver",
+                    "schedules",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Orum generated unique id for the schedule you are deleting."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Orum-Version",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error_code\": \"string\",\n  \"message\": \"string\",\n  \"details\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api-sandbox.orum.io",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "d227e25a-a4d3-46c2-b5f0-21fc6dceb17c",
+    "name": "Orum Authentication Schedules API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Orum API.",
+      "type": "text/plain"
+    }
+  }
+}

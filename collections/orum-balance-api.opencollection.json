@@ -1,0 +1,117 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Orum Authentication Balance API",
+    "version": "v2022-09-21"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Balance",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get balance",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api-sandbox.orum.io/deliver/balance",
+            "headers": [
+              {
+                "name": "Orum-Version",
+                "value": ""
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api-sandbox.orum.io/oauth/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Get balance object."
+        },
+        {
+          "info": {
+            "name": "Get subledger account balance",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api-sandbox.orum.io/deliver/balance/subledgers/:id",
+            "headers": [
+              {
+                "name": "Orum-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api-sandbox.orum.io/oauth/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Get subledger account balance object."
+        },
+        {
+          "info": {
+            "name": "Gets all subledger account balances",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api-sandbox.orum.io/deliver/balance/subledgers",
+            "headers": [
+              {
+                "name": "Orum-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "index",
+                "value": "",
+                "type": "query",
+                "description": "Index for paginated results"
+              },
+              {
+                "name": "size",
+                "value": "",
+                "type": "query",
+                "description": "Max number of results to return"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api-sandbox.orum.io/oauth/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Gets all subledger account balance object."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

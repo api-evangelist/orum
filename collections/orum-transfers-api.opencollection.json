@@ -1,0 +1,258 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Orum Authentication Transfers API",
+    "version": "v2022-09-21"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Transfers",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get all transfers",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api-sandbox.orum.io/deliver/transfers",
+            "headers": [
+              {
+                "name": "Orum-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "index",
+                "value": "",
+                "type": "query",
+                "description": "Index for paginated results"
+              },
+              {
+                "name": "size",
+                "value": "",
+                "type": "query",
+                "description": "Max number of results to return"
+              },
+              {
+                "name": "transfer_reference_id",
+                "value": "",
+                "type": "query",
+                "description": "Filter results by transfer reference id"
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "Filter results by transfer status"
+              },
+              {
+                "name": "transfer_group_id",
+                "value": "",
+                "type": "query",
+                "description": "Filter results by transfer group id"
+              },
+              {
+                "name": "schedule_id",
+                "value": "",
+                "type": "query",
+                "description": "Filter results by schedule id"
+              },
+              {
+                "name": "subledger_reference_id",
+                "value": "",
+                "type": "query",
+                "description": "Filter results by subledger reference id"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api-sandbox.orum.io/oauth/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Get all transfer objects."
+        },
+        {
+          "info": {
+            "name": "Create a transfer",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api-sandbox.orum.io/deliver/transfers",
+            "headers": [
+              {
+                "name": "Orum-Version",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api-sandbox.orum.io/oauth/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Initiate a transfer between a source party and destination party."
+        },
+        {
+          "info": {
+            "name": "Get a transfer by id",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api-sandbox.orum.io/deliver/transfers/:id",
+            "headers": [
+              {
+                "name": "Orum-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Orum generated unique id for the transfer you are fetching."
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api-sandbox.orum.io/oauth/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Get a transfer object."
+        },
+        {
+          "info": {
+            "name": "Update transfer metadata by id",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api-sandbox.orum.io/deliver/transfers/:id",
+            "headers": [
+              {
+                "name": "Orum-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Orum generated unique id for the transfer you are fetching."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api-sandbox.orum.io/oauth/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Update the metadata on a transfer."
+        },
+        {
+          "info": {
+            "name": "Cancel a transfer by id",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api-sandbox.orum.io/deliver/transfers/:id/cancel",
+            "headers": [
+              {
+                "name": "Orum-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Orum generated unique id for the transfer you are canceling."
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api-sandbox.orum.io/oauth/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Initiates a transfer cancellation request if the transfer is eligible."
+        },
+        {
+          "info": {
+            "name": "Get transfer history by id",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api-sandbox.orum.io/deliver/transfers/:id/history",
+            "headers": [
+              {
+                "name": "Orum-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Orum generated unique id for the transfer."
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api-sandbox.orum.io/oauth/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Get the history of status changes for a transfer."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
