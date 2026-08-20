@@ -80,6 +80,8 @@ apis:
   humanURL: https://docs.orum.io
   baseURL: https://api.orum.io
   tags:
+  - Balances
+  tags_raw:
   - Balance
   properties:
   - type: OpenAPI
