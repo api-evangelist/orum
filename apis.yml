@@ -242,6 +242,9 @@ maintainers:
 - FN: APIs.json
   email: info@apis.io
 common:
+- type: CapabilityMap
+  url: capabilities/orum-capability-edges.yml
+  name: Orum Business Capability Map
 - type: Website
   url: https://orum.io/
 - type: DeveloperPortal

@@ -1,0 +1,56 @@
+slug: orum
+provider: Orum
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Banking & Capital Markets
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 4
+edges:
+- tag: Transfers
+  spec_file: orum-transfers-api-openapi.yml
+  capability_id: BC-1340.10
+  capability_id_l1: BC-1340
+  capability_name: Payment Initiation Management
+  confidence: 0.85
+  evidence: POST /deliver/transfers  Create a transfer; POST /deliver/transfers/{id}/cancel  Cancel a
+    transfer by id; schemas TransferSpeed, TraceNumber, TransferStatus
+  reason: 'Core money-movement API: creating, cancelling and tracking transfers across ACH/wire/RTP rails
+    — payment instruction capture, authorisation and lifecycle.'
+- tag: Schedules
+  spec_file: orum-schedules-api-openapi.yml
+  capability_id: BC-1340.10
+  capability_id_l1: BC-1340
+  capability_name: Payment Initiation Management
+  confidence: 0.75
+  evidence: POST /deliver/schedules  Create a schedule; schemas TransferAmount, TransferSpeed, SourceTransferParty,
+    ScheduleNextPaymentDate, ScheduleRecurrence
+  reason: Schedules define recurring payment instructions (amount, speed, source/destination parties,
+    next payment date), i.e. capture and set-up of payment instructions ahead of execution.
+- tag: Book Transfers
+  spec_file: orum-book-transfers-api-openapi.yml
+  capability_id: BC-1340.10
+  capability_id_l1: BC-1340
+  capability_name: Payment Initiation Management
+  confidence: 0.7
+  evidence: POST /deliver/booktransfers — "Create a book transfer"; schemas BookTransferSourceObject,
+    BookTransferDestinationObject, TransferAmount, BookTransferStatus
+  reason: Creation and tracking of on-ledger fund transfers between source and destination accounts is
+    payment instruction capture and processing; initiation is the closest sub-capability though processing
+    could also apply.
+- tag: Eligibility
+  spec_file: orum-eligibility-api-openapi.yml
+  capability_id: BC-1340.50
+  capability_id_l1: BC-1340
+  capability_name: Real-Time Payment Management
+  confidence: 0.7
+  evidence: POST /deliver/eligibility — "Check if a routing number is eligible for RTP or FedNow"; schemas
+    RTPEligible, FednowEligible
+  reason: Determining whether a receiving institution can be reached on RTP/FedNow instant rails is real-time
+    payment rail management; could alternatively be read as payment routing, hence 0.7.
