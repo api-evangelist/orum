@@ -1,6 +1,6 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: Orum Authentication Configure webhooks API
+  title: Orum Configure webhooks API
   description: Orum API.
   version: v2022-09-21
   license:
@@ -162,27 +162,44 @@ paths:
         - write:webhook-configurations
 components:
   schemas:
-    ConfigurationRequest:
-      title: ConfigurationRequest
-      type: object
-      required:
-      - event_types
-      - url
-      - enabled
-      properties:
-        event_types:
-          $ref: '#/components/schemas/EventTypes'
-        url:
-          type: string
-          description: The URL where you would like the webhook to be sent.
-        enabled:
-          type: boolean
-          description: A boolean to determine whether the configuration is enabled. Acts as an on/off switch for that particular webhook.
     OrumVersion:
       type: string
       description: Version of Deliver and Verify APIs. Use v2022-09-21.
       enum:
       - v2022-09-21
+    EventType:
+      type: string
+      description: The type of event you want to invoke a webhook for.
+      enum:
+      - subscribe_all
+      - person_created
+      - person_verified
+      - person_rejected
+      - person_restricted
+      - person_unverified
+      - person_closed
+      - person_all
+      - business_created
+      - business_verified
+      - business_rejected
+      - business_restricted
+      - business_unverified
+      - business_closed
+      - business_all
+      - external_account_created
+      - external_account_verified
+      - external_account_rejected
+      - external_account_restricted
+      - external_account_unverified
+      - external_account_closed
+      - external_account_all
+      - transfer_updated
+      - transfer_all
+      - verify_account_updated
+      - subledger_all
+      - subledger_created
+      - book_transfer_all
+      - book_transfer_updated
     WebhookConfiguration:
       title: WebhookConfiguration
       type: object
@@ -218,6 +235,28 @@ components:
           type: string
         updated_by:
           type: string
+    DataVersion:
+      type: string
+      description: data_version is set by the Orum-Version used to create or update the webhook configuration. A webhook configuration with data_version v2022-09-21 will match the v2022-09-21 schema for the given event type.
+      enum:
+      - v2022-09-21
+      - v2021-10-01
+    ConfigurationRequest:
+      title: ConfigurationRequest
+      type: object
+      required:
+      - event_types
+      - url
+      - enabled
+      properties:
+        event_types:
+          $ref: '#/components/schemas/EventTypes'
+        url:
+          type: string
+          description: The URL where you would like the webhook to be sent.
+        enabled:
+          type: boolean
+          description: A boolean to determine whether the configuration is enabled. Acts as an on/off switch for that particular webhook.
     ConfigurationResponse:
       title: ConfigurationResponse
       type: object
@@ -242,39 +281,6 @@ components:
       description: The types of events for which you would like to receive a webhook e.g. transfer_created. Use subscribe_all to receive webhooks for all events.
       items:
         $ref: '#/components/schemas/EventType'
-    EventType:
-      type: string
-      description: The type of event you want to invoke a webhook for.
-      enum:
-      - subscribe_all
-      - person_created
-      - person_verified
-      - person_rejected
-      - person_restricted
-      - person_unverified
-      - person_closed
-      - person_all
-      - business_created
-      - business_verified
-      - business_rejected
-      - business_restricted
-      - business_unverified
-      - business_closed
-      - business_all
-      - external_account_created
-      - external_account_verified
-      - external_account_rejected
-      - external_account_restricted
-      - external_account_unverified
-      - external_account_closed
-      - external_account_all
-      - transfer_updated
-      - transfer_all
-      - verify_account_updated
-      - subledger_all
-      - subledger_created
-      - book_transfer_all
-      - book_transfer_updated
     ErrorResponse:
       type: object
       properties:
@@ -283,18 +289,13 @@ components:
         message:
           type: string
         details:
-          type: object
+          type:
+          - object
+          - 'null'
           description: additional details about the error.
-          nullable: true
       required:
       - error_code
       - message
-    DataVersion:
-      type: string
-      description: data_version is set by the Orum-Version used to create or update the webhook configuration. A webhook configuration with data_version v2022-09-21 will match the v2022-09-21 schema for the given event type.
-      enum:
-      - v2022-09-21
-      - v2021-10-01
   securitySchemes:
     oauth2:
       type: oauth2

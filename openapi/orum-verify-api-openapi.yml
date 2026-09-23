@@ -1,6 +1,6 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: Orum Authentication Verify API
+  title: Orum Verify API
   description: Orum API.
   version: v2022-09-21
   license:
@@ -393,10 +393,23 @@ paths:
         - write:verify-accounts
 components:
   schemas:
-    Email:
+    ControlErrorResponse:
+      type: object
+      properties:
+        error_code:
+          type: string
+        message:
+          type: string
+        attempts_remaining:
+          type: integer
+    VerifyAccountType:
       type: string
-      format: email
-      description: Email address to notify once the statement code is sent to the account to verify account control.
+      description: The type of verify request to make. If not provided, we will default to "status".
+      enum:
+      - status
+      - control
+      - status_ownership
+      - control_ownership
     OwnershipPerson:
       description: Ownership details for a person
       type: object
@@ -418,6 +431,15 @@ components:
           $ref: '#/components/schemas/OwnershipResult'
         ssn_match:
           $ref: '#/components/schemas/OwnershipResult'
+    OwnershipStatus:
+      type: string
+      description: Status of account ownership.
+      enum:
+      - pending
+      - full
+      - partial
+      - not_a_match
+      - not_found
     VerifyAccountsResponse:
       title: VerifyAccountsResponse
       type: object
@@ -429,7 +451,47 @@ components:
           description: An array of verify accounts.
           items:
             $ref: '#/components/schemas/VerifyAccountResponseBase'
-    OwnershipBusiness:
+    UsBankAccountNumber:
+      title: UsBankAccountNumber
+      type: string
+      pattern: ^(?:\d-{0,1}){3,16}\d$
+      description: Account number for US bank account. 4 to 17 digits are acceptable.
+    ControlStatus:
+      type: string
+      description: Status of account control.
+      enum:
+      - pending
+      - valid
+      - canceled
+    SenderName:
+      type: string
+      description: Name of sender initiating the verification request. This name will appear on the statement and should be recognizable to the account holder. Accepts alphanumeric characters and hyphens, dashes, periods, apostrophes, spaces, and diacritics.
+      pattern: ^([ ’!"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~¡¢£¤¥¦§¨©ª«¬®¯°±²³´µ¶·¸¹º»¼½¾¿ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖ×ØÙÚÛÜÝÞßàáâãäåæçèéêëìíîïðñòóôõö÷øùúûüýþÿĀāĂăĄąĆćĈĉĊċČčĎďĐđĒēĔĕĖėĘęĚěĜĝĞğĠġĢģĤĥĦħĨĩĪīĬĭĮįİıĲĳĴĵĶķĸĹĺĻļĽľĿŀŁłŃńŅņŇňŉŊŋŌōŎŏŐőŒœŔŕŖŗŘřŚśŜŝŞşŠšŢţŤťŦŧŨũŪūŬŭŮůŰűŲųŴŵŶŷŸŹźŻżŽžſ]*|)$
+      maxLength: 255
+      minLength: 1
+    VerifyAccountResponse:
+      title: VerifyAccountResponse
+      type: object
+      required:
+      - account
+      properties:
+        account:
+          $ref: '#/components/schemas/VerifyAccountResponseBase'
+    OrumVersion:
+      type: string
+      description: Version of Deliver and Verify APIs. Use v2022-09-21.
+      enum:
+      - v2022-09-21
+    CreatedAt:
+      type: string
+      description: Timestamp when the resource was created.
+      format: date-time
+    StatementCode:
+      title: StatementCode
+      type: string
+      pattern: ^[a-zA-Z0-9]{4}$
+      description: Text from the account statement descriptor to verify account control.
+    OwnershipBusinessRequest:
       description: Ownership details for a business
       type: object
       required:
@@ -437,64 +499,81 @@ components:
       properties:
         business_name:
           type: string
+          maxLength: 512
+          minLength: 1
+          x-orum-error-missing:
+            message: Business name is required.
+            code: missing_business_name
+          x-orum-error-invalid:
+            message: Business name is invalid.
+            code: invalid_business_name
+        tax_id:
+          type: string
+          maxLength: 9
+          minLength: 4
+          pattern: ^\d+$
+          x-orum-error-invalid:
+            message: Tax ID is invalid.
+            code: invalid_tax_id
         phone_number:
           type: string
-        business_name_match:
-          $ref: '#/components/schemas/OwnershipResult'
-        phone_number_match:
-          $ref: '#/components/schemas/OwnershipResult'
-        tax_id_match:
-          $ref: '#/components/schemas/OwnershipResult'
-    ErrorResponse:
+          maxLength: 12
+          minLength: 1
+          pattern: ^\+1[0-9]{10}$
+          x-orum-error-invalid:
+            message: Phone number is invalid.
+            code: invalid_phone_number
+    OwnershipPersonRequest:
+      description: Ownership details for a person
       type: object
-      properties:
-        error_code:
-          type: string
-        message:
-          type: string
-        details:
-          type: object
-          description: additional details about the error.
-          nullable: true
       required:
-      - error_code
-      - message
-    OwnershipResult:
-      type: string
-      description: Result of Ownership match
-      enum:
-      - match
-      - not_a_match
-      - not_found
-    AbaRoutingNumber:
-      title: AbaRoutingNumber
-      type: string
-      pattern: ^\d{9}$
-      description: 9-digit American Bankers Association (ABA) routing number.
-    ControlErrorResponse:
-      type: object
+      - first_name
+      - last_name
       properties:
-        error_code:
+        first_name:
           type: string
-        message:
+          maxLength: 255
+          minLength: 1
+          x-orum-error-missing:
+            message: First name is required.
+            code: missing_first_name
+          x-orum-error-invalid:
+            message: First name is invalid.
+            code: invalid_first_name
+          example: John
+        last_name:
           type: string
-        attempts_remaining:
-          type: integer
-    VerificationStatusReason:
+          maxLength: 255
+          minLength: 1
+          x-orum-error-missing:
+            message: Last name is required.
+            code: missing_last_name
+          x-orum-error-invalid:
+            message: Last name is invalid.
+            code: invalid_last_name
+          example: Doe
+        phone_number:
+          type: string
+          maxLength: 12
+          minLength: 1
+          pattern: ^\+1[0-9]{10}$
+          x-orum-error-invalid:
+            message: Phone number is invalid.
+            code: invalid_phone_number
+          example: '+12125551212'
+        ssn:
+          type: string
+          maxLength: 9
+          minLength: 4
+          pattern: ^\d+$
+          x-orum-error-invalid:
+            message: SSN is invalid
+            code: invalid_ssn
+          example: '123121234'
+    UpdatedAt:
       type: string
-      description: Status reason for failed, invalid, and closed accounts.
-      enum:
-      - blocked_account
-      - closed_account
-      - deceased_party
-      - duplicated_transfer
-      - invalid_account
-      - invalid_field
-      - invalid_routing
-      - regulatory_error
-      - unavailable_financial_institution
-      - unexpected_error
-      - unsupported_transfer
+      description: Timestamp when the resource was last updated.
+      format: date-time
     VerifyAccountResponseBase:
       title: VerifyAccountResponseBase
       type: object
@@ -541,6 +620,103 @@ components:
           $ref: '#/components/schemas/EstimatedVerificationDate'
         sender_name:
           $ref: '#/components/schemas/SenderName'
+    AccountHolderName:
+      type: string
+      description: Name of account holder. Accepts alphanumeric characters and hyphens, dashes, periods, apostrophes, spaces, and diacritics.
+      pattern: ^([ ’!"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~¡¢£¤¥¦§¨©ª«¬®¯°±²³´µ¶·¸¹º»¼½¾¿ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖ×ØÙÚÛÜÝÞßàáâãäåæçèéêëìíîïðñòóôõö÷øùúûüýþÿĀāĂăĄąĆćĈĉĊċČčĎďĐđĒēĔĕĖėĘęĚěĜĝĞğĠġĢģĤĥĦħĨĩĪīĬĭĮįİıĲĳĴĵĶķĸĹĺĻļĽľĿŀŁłŃńŅņŇňŉŊŋŌōŎŏŐőŒœŔŕŖŗŘřŚśŜŝŞşŠšŢţŤťŦŧŨũŪūŬŭŮůŰűŲųŴŵŶŷŸŹźŻżŽžſ]*|)$
+      maxLength: 255
+      minLength: 1
+    DebitStatusReason:
+      type: string
+      description: Status reason for failed and blocked accounts.
+      enum:
+      - blocked_account
+      - closed_account
+      - deceased_party
+      - duplicated_transfer
+      - invalid_account
+      - invalid_field
+      - invalid_routing
+      - regulatory_error
+      - unavailable_financial_institution
+      - unexpected_error
+      - unsupported_transfer
+      - debit_blocked
+      - unauthorized_transfer
+    EstimatedVerificationDate:
+      type: string
+      description: Estimated date that the account verification will be complete. Time will always be midnight and should be ignored.
+      format: date-time
+      example: '2023-07-13T00:00:00.000Z'
+    OrumId:
+      type: string
+      description: Orum generated unique id for the resource.
+      format: uuid
+    VerifyAccountControlRequest:
+      title: VerifyAccountControlRequest
+      type: object
+      required:
+      - statement_code
+      properties:
+        statement_code:
+          allOf:
+          - $ref: '#/components/schemas/StatementCode'
+          x-orum-error-missing:
+            message: Statement code is required. Pass the statement code from the account statement descriptor.
+            code: missing_statement_code
+          x-orum-error-invalid:
+            message: Statement code is invalid. Pass the statement code from the account statement descriptor.
+            code: invalid_statement_code
+    VerificationStatusReason:
+      type: string
+      description: Status reason for failed, invalid, and closed accounts.
+      enum:
+      - blocked_account
+      - closed_account
+      - deceased_party
+      - duplicated_transfer
+      - invalid_account
+      - invalid_field
+      - invalid_routing
+      - regulatory_error
+      - unavailable_financial_institution
+      - unexpected_error
+      - unsupported_transfer
+    ErrorResponse:
+      type: object
+      properties:
+        error_code:
+          type: string
+        message:
+          type: string
+        details:
+          type:
+          - object
+          - 'null'
+          description: additional details about the error.
+      required:
+      - error_code
+      - message
+    OwnershipResult:
+      type: string
+      description: Result of Ownership match
+      enum:
+      - match
+      - not_a_match
+      - not_found
+    Email:
+      type: string
+      format: email
+      description: Email address to notify once the statement code is sent to the account to verify account control.
+    VerificationStatus:
+      type: string
+      description: Status of account verification.
+      enum:
+      - pending
+      - valid
+      - closed
+      - invalid
+      - failed
     VerifyAccountRequest:
       title: VerifyAccountRequest
       type: object
@@ -632,6 +808,27 @@ components:
             message: Sender name is invalid.
             code: invalid_sender_name
           example: Acme
+    AbaRoutingNumber:
+      title: AbaRoutingNumber
+      type: string
+      pattern: ^\d{9}$
+      description: 9-digit American Bankers Association (ABA) routing number.
+    OwnershipBusiness:
+      description: Ownership details for a business
+      type: object
+      required:
+      - business_name
+      properties:
+        business_name:
+          type: string
+        phone_number:
+          type: string
+        business_name_match:
+          $ref: '#/components/schemas/OwnershipResult'
+        phone_number_match:
+          $ref: '#/components/schemas/OwnershipResult'
+        tax_id_match:
+          $ref: '#/components/schemas/OwnershipResult'
     DebitStatus:
       type: string
       description: Status of account debit.
@@ -640,202 +837,6 @@ components:
       - valid
       - blocked
       - failed
-    VerificationStatus:
-      type: string
-      description: Status of account verification.
-      enum:
-      - pending
-      - valid
-      - closed
-      - invalid
-      - failed
-    DebitStatusReason:
-      type: string
-      description: Status reason for failed and blocked accounts.
-      enum:
-      - blocked_account
-      - closed_account
-      - deceased_party
-      - duplicated_transfer
-      - invalid_account
-      - invalid_field
-      - invalid_routing
-      - regulatory_error
-      - unavailable_financial_institution
-      - unexpected_error
-      - unsupported_transfer
-      - debit_blocked
-      - unauthorized_transfer
-    OrumVersion:
-      type: string
-      description: Version of Deliver and Verify APIs. Use v2022-09-21.
-      enum:
-      - v2022-09-21
-    OwnershipPersonRequest:
-      description: Ownership details for a person
-      type: object
-      required:
-      - first_name
-      - last_name
-      properties:
-        first_name:
-          type: string
-          maxLength: 255
-          minLength: 1
-          x-orum-error-missing:
-            message: First name is required.
-            code: missing_first_name
-          x-orum-error-invalid:
-            message: First name is invalid.
-            code: invalid_first_name
-          example: John
-        last_name:
-          type: string
-          maxLength: 255
-          minLength: 1
-          x-orum-error-missing:
-            message: Last name is required.
-            code: missing_last_name
-          x-orum-error-invalid:
-            message: Last name is invalid.
-            code: invalid_last_name
-          example: Doe
-        phone_number:
-          type: string
-          maxLength: 12
-          minLength: 1
-          pattern: ^\+1[0-9]{10}$
-          x-orum-error-invalid:
-            message: Phone number is invalid.
-            code: invalid_phone_number
-          example: '+12125551212'
-        ssn:
-          type: string
-          maxLength: 9
-          minLength: 4
-          pattern: ^\d+$
-          x-orum-error-invalid:
-            message: SSN is invalid
-            code: invalid_ssn
-          example: '123121234'
-    EstimatedVerificationDate:
-      type: string
-      description: Estimated date that the account verification will be complete. Time will always be midnight and should be ignored.
-      format: date-time
-      example: '2023-07-13T00:00:00.000Z'
-    VerifyAccountControlRequest:
-      title: VerifyAccountControlRequest
-      type: object
-      required:
-      - statement_code
-      properties:
-        statement_code:
-          allOf:
-          - $ref: '#/components/schemas/StatementCode'
-          x-orum-error-missing:
-            message: Statement code is required. Pass the statement code from the account statement descriptor.
-            code: missing_statement_code
-          x-orum-error-invalid:
-            message: Statement code is invalid. Pass the statement code from the account statement descriptor.
-            code: invalid_statement_code
-    SenderName:
-      type: string
-      description: Name of sender initiating the verification request. This name will appear on the statement and should be recognizable to the account holder. Accepts alphanumeric characters and hyphens, dashes, periods, apostrophes, spaces, and diacritics.
-      pattern: ^([ ’!"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~¡¢£¤¥¦§¨©ª«¬®¯°±²³´µ¶·¸¹º»¼½¾¿ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖ×ØÙÚÛÜÝÞßàáâãäåæçèéêëìíîïðñòóôõö÷øùúûüýþÿĀāĂăĄąĆćĈĉĊċČčĎďĐđĒēĔĕĖėĘęĚěĜĝĞğĠġĢģĤĥĦħĨĩĪīĬĭĮįİıĲĳĴĵĶķĸĹĺĻļĽľĿŀŁłŃńŅņŇňŉŊŋŌōŎŏŐőŒœŔŕŖŗŘřŚśŜŝŞşŠšŢţŤťŦŧŨũŪūŬŭŮůŰűŲųŴŵŶŷŸŹźŻżŽžſ]*|)$
-      maxLength: 255
-      minLength: 1
-    ControlStatus:
-      type: string
-      description: Status of account control.
-      enum:
-      - pending
-      - valid
-      - canceled
-    UsBankAccountNumber:
-      title: UsBankAccountNumber
-      type: string
-      pattern: ^(?:\d-{0,1}){3,16}\d$
-      description: Account number for US bank account. 4 to 17 digits are acceptable.
-    CreatedAt:
-      type: string
-      description: Timestamp when the resource was created.
-      format: date-time
-    UpdatedAt:
-      type: string
-      description: Timestamp when the resource was last updated.
-      format: date-time
-    StatementCode:
-      title: StatementCode
-      type: string
-      pattern: ^[a-zA-Z0-9]{4}$
-      description: Text from the account statement descriptor to verify account control.
-    OrumId:
-      type: string
-      description: Orum generated unique id for the resource.
-      format: uuid
-    OwnershipStatus:
-      type: string
-      description: Status of account ownership.
-      enum:
-      - pending
-      - full
-      - partial
-      - not_a_match
-      - not_found
-    AccountHolderName:
-      type: string
-      description: Name of account holder. Accepts alphanumeric characters and hyphens, dashes, periods, apostrophes, spaces, and diacritics.
-      pattern: ^([ ’!"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~¡¢£¤¥¦§¨©ª«¬®¯°±²³´µ¶·¸¹º»¼½¾¿ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖ×ØÙÚÛÜÝÞßàáâãäåæçèéêëìíîïðñòóôõö÷øùúûüýþÿĀāĂăĄąĆćĈĉĊċČčĎďĐđĒēĔĕĖėĘęĚěĜĝĞğĠġĢģĤĥĦħĨĩĪīĬĭĮįİıĲĳĴĵĶķĸĹĺĻļĽľĿŀŁłŃńŅņŇňŉŊŋŌōŎŏŐőŒœŔŕŖŗŘřŚśŜŝŞşŠšŢţŤťŦŧŨũŪūŬŭŮůŰűŲųŴŵŶŷŸŹźŻżŽžſ]*|)$
-      maxLength: 255
-      minLength: 1
-    OwnershipBusinessRequest:
-      description: Ownership details for a business
-      type: object
-      required:
-      - business_name
-      properties:
-        business_name:
-          type: string
-          maxLength: 512
-          minLength: 1
-          x-orum-error-missing:
-            message: Business name is required.
-            code: missing_business_name
-          x-orum-error-invalid:
-            message: Business name is invalid.
-            code: invalid_business_name
-        tax_id:
-          type: string
-          maxLength: 9
-          minLength: 4
-          pattern: ^\d+$
-          x-orum-error-invalid:
-            message: Tax ID is invalid.
-            code: invalid_tax_id
-        phone_number:
-          type: string
-          maxLength: 12
-          minLength: 1
-          pattern: ^\+1[0-9]{10}$
-          x-orum-error-invalid:
-            message: Phone number is invalid.
-            code: invalid_phone_number
-    VerifyAccountType:
-      type: string
-      description: The type of verify request to make. If not provided, we will default to "status".
-      enum:
-      - status
-      - control
-      - status_ownership
-      - control_ownership
-    VerifyAccountResponse:
-      title: VerifyAccountResponse
-      type: object
-      required:
-      - account
-      properties:
-        account:
-          $ref: '#/components/schemas/VerifyAccountResponseBase'
   securitySchemes:
     oauth2:
       type: oauth2

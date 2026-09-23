@@ -1,6 +1,6 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: Orum Authentication Balance API
+  title: Orum Balance API
   description: Orum API.
   version: v2022-09-21
   license:
@@ -160,29 +160,6 @@ paths:
         - read:balances
 components:
   schemas:
-    SubledgerBalanceResponse:
-      title: BalanceResponse
-      type: object
-      required:
-      - balance
-      properties:
-        balance:
-          $ref: '#/components/schemas/SubledgerBalance'
-    Currency:
-      title: Currency
-      type: string
-      description: Currency code in ISO 4217 format. Only USD is supported.
-      enum:
-      - USD
-    OrumVersion:
-      type: string
-      description: Version of Deliver and Verify APIs. Use v2022-09-21.
-      enum:
-      - v2022-09-21
-    UpdatedAt:
-      type: string
-      description: Timestamp when the resource was last updated.
-      format: date-time
     SubledgerBalancesResponse:
       title: BalancesResponse
       type: object
@@ -195,6 +172,17 @@ components:
           items:
             allOf:
             - $ref: '#/components/schemas/SubledgerBalance'
+    OrumVersion:
+      type: string
+      description: Version of Deliver and Verify APIs. Use v2022-09-21.
+      enum:
+      - v2022-09-21
+    Currency:
+      title: Currency
+      type: string
+      description: Currency code in ISO 4217 format. Only USD is supported.
+      enum:
+      - USD
     Balance:
       title: Balance
       type: object
@@ -216,20 +204,14 @@ components:
           $ref: '#/components/schemas/Currency'
         updated_at:
           $ref: '#/components/schemas/UpdatedAt'
-    ErrorResponse:
+    SubledgerBalanceResponse:
+      title: BalanceResponse
       type: object
-      properties:
-        error_code:
-          type: string
-        message:
-          type: string
-        details:
-          type: object
-          description: additional details about the error.
-          nullable: true
       required:
-      - error_code
-      - message
+      - balance
+      properties:
+        balance:
+          $ref: '#/components/schemas/SubledgerBalance'
     SubledgerBalance:
       title: SubledgerBalance
       type: object
@@ -260,6 +242,25 @@ components:
         subledger_reference_id:
           type: string
           description: The subledger reference id associated with the balance
+    ErrorResponse:
+      type: object
+      properties:
+        error_code:
+          type: string
+        message:
+          type: string
+        details:
+          type:
+          - object
+          - 'null'
+          description: additional details about the error.
+      required:
+      - error_code
+      - message
+    UpdatedAt:
+      type: string
+      description: Timestamp when the resource was last updated.
+      format: date-time
     BalanceResponse:
       title: BalanceResponse
       type: object

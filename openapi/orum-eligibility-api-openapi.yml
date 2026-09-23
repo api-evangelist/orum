@@ -1,6 +1,6 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: Orum Authentication Eligibility API
+  title: Orum Eligibility API
   description: Orum API.
   version: v2022-09-21
   license:
@@ -97,16 +97,6 @@ paths:
         - read:routing-number-eligibility
 components:
   schemas:
-    AbaRoutingNumber:
-      title: AbaRoutingNumber
-      type: string
-      pattern: ^\d{9}$
-      description: 9-digit American Bankers Association (ABA) routing number.
-    OrumVersion:
-      type: string
-      description: Version of Deliver and Verify APIs. Use v2022-09-21.
-      enum:
-      - v2022-09-21
     RtpAndFedNow:
       type: object
       required:
@@ -117,19 +107,6 @@ components:
           type: boolean
         fednow:
           type: boolean
-    EligibilityResponse:
-      title: EligibilityResponse
-      type: object
-      required:
-      - routing_numbers
-      properties:
-        routing_numbers:
-          type: array
-          items:
-            $ref: '#/components/schemas/EligibilityRoutingNumber'
-    Eligible:
-      type: boolean
-      description: Describes if the routing number is RTP or Fednow eligible or not
     EligibilityRoutingNumber:
       title: EligibilityRoutingNumber
       type: object
@@ -147,6 +124,29 @@ components:
           $ref: '#/components/schemas/RTPEligible'
         fednow:
           $ref: '#/components/schemas/FednowEligible'
+    OrumVersion:
+      type: string
+      description: Version of Deliver and Verify APIs. Use v2022-09-21.
+      enum:
+      - v2022-09-21
+    FednowEligible:
+      type: boolean
+      description: Describes if the routing number is Fednow eligible or not
+    PostEligibilityAbaRoutingNumber:
+      title: PostEligibilityAbaRoutingNumber
+      type: string
+      pattern: ^\d{9}$
+      description: 9-digit American Bankers Association (ABA) routing number.
+      x-orum-error-invalid:
+        known-error: invalid_routing_numbers
+    AbaRoutingNumber:
+      title: AbaRoutingNumber
+      type: string
+      pattern: ^\d{9}$
+      description: 9-digit American Bankers Association (ABA) routing number.
+    RTPEligible:
+      type: boolean
+      description: Describes if the routing number is RTP eligible or not
     EligibilityRequest:
       title: EligibilityRequest
       type: object
@@ -162,24 +162,9 @@ components:
             known-error: invalid_routing_numbers
           items:
             $ref: '#/components/schemas/PostEligibilityAbaRoutingNumber'
-    GetEligibilityResponse:
-      type: object
-      additionalProperties:
-        $ref: '#/components/schemas/RtpAndFedNow'
-      example:
-        011000138:
-          rtp: true
-          fednow: true
-    PostEligibilityAbaRoutingNumber:
-      title: PostEligibilityAbaRoutingNumber
-      type: string
-      pattern: ^\d{9}$
-      description: 9-digit American Bankers Association (ABA) routing number.
-      x-orum-error-invalid:
-        known-error: invalid_routing_numbers
-    FednowEligible:
+    Eligible:
       type: boolean
-      description: Describes if the routing number is Fednow eligible or not
+      description: Describes if the routing number is RTP or Fednow eligible or not
     ErrorResponse:
       type: object
       properties:
@@ -188,15 +173,31 @@ components:
         message:
           type: string
         details:
-          type: object
+          type:
+          - object
+          - 'null'
           description: additional details about the error.
-          nullable: true
       required:
       - error_code
       - message
-    RTPEligible:
-      type: boolean
-      description: Describes if the routing number is RTP eligible or not
+    GetEligibilityResponse:
+      type: object
+      additionalProperties:
+        $ref: '#/components/schemas/RtpAndFedNow'
+      example:
+        011000138:
+          rtp: true
+          fednow: true
+    EligibilityResponse:
+      title: EligibilityResponse
+      type: object
+      required:
+      - routing_numbers
+      properties:
+        routing_numbers:
+          type: array
+          items:
+            $ref: '#/components/schemas/EligibilityRoutingNumber'
   securitySchemes:
     oauth2:
       type: oauth2

@@ -1,23 +1,7 @@
 {
   "provider": "orum",
   "sources": [
-    "orum-authentication-api-openapi.yml",
-    "orum-balance-api-openapi.yml",
-    "orum-book-transfers-api-openapi.yml",
-    "orum-businesses-api-openapi.yml",
-    "orum-cards-api-openapi.yml",
-    "orum-configure-webhooks-api-openapi.yml",
-    "orum-eligibility-api-openapi.yml",
-    "orum-external-accounts-api-openapi.yml",
-    "orum-persons-api-openapi.yml",
-    "orum-reports-api-openapi.yml",
-    "orum-schedules-api-openapi.yml",
-    "orum-secure-webhooks-api-openapi.yml",
-    "orum-subledgers-api-openapi.yml",
-    "orum-transfer-groups-api-openapi.yml",
-    "orum-transfers-api-openapi.yml",
-    "orum-trigger-webhooks-api-openapi.yml",
-    "orum-verify-api-openapi.yml"
+    "_original/orum-openapi-original.yml"
   ],
   "outputs": [
     "orum-authentication-api-openapi.yml",
@@ -41,6 +25,45 @@
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
-  "skipped": []
+  "notes": [
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "orum-openapi-original.yml: upgraded openapi 3.0.1 -> OpenAPI 3.2.0",
+    "orum-openapi-original.yml: declared missing tag: Authentication",
+    "orum-openapi-original.yml: declared missing tag: Balance",
+    "orum-openapi-original.yml: declared missing tag: Book Transfers",
+    "orum-openapi-original.yml: declared missing tag: Businesses",
+    "orum-openapi-original.yml: declared missing tag: Cards",
+    "orum-openapi-original.yml: declared missing tag: Configure webhooks",
+    "orum-openapi-original.yml: declared missing tag: Eligibility",
+    "orum-openapi-original.yml: declared missing tag: External Accounts",
+    "orum-openapi-original.yml: declared missing tag: Persons",
+    "orum-openapi-original.yml: declared missing tag: Reports",
+    "orum-openapi-original.yml: declared missing tag: Schedules",
+    "orum-openapi-original.yml: declared missing tag: Secure webhooks",
+    "orum-openapi-original.yml: declared missing tag: Subledgers",
+    "orum-openapi-original.yml: declared missing tag: Transfer Groups",
+    "orum-openapi-original.yml: declared missing tag: Transfers",
+    "orum-openapi-original.yml: declared missing tag: Trigger webhooks",
+    "orum-openapi-original.yml: declared missing tag: Verify",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "orum-authentication-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "orum-balance-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "orum-book-transfers-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "orum-businesses-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "orum-cards-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "orum-configure-webhooks-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "orum-eligibility-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "orum-external-accounts-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "orum-persons-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "orum-reports-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "orum-schedules-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "orum-secure-webhooks-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "orum-subledgers-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "orum-transfer-groups-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "orum-transfers-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "orum-trigger-webhooks-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "orum-verify-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }
