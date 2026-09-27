@@ -97,16 +97,80 @@ paths:
         - read:routing-number-eligibility
 components:
   schemas:
-    RtpAndFedNow:
+    AbaRoutingNumber:
+      title: AbaRoutingNumber
+      type: string
+      pattern: ^\d{9}$
+      description: 9-digit American Bankers Association (ABA) routing number.
+    PostEligibilityAbaRoutingNumber:
+      title: PostEligibilityAbaRoutingNumber
+      type: string
+      pattern: ^\d{9}$
+      description: 9-digit American Bankers Association (ABA) routing number.
+      x-orum-error-invalid:
+        known-error: invalid_routing_numbers
+    EligibilityResponse:
+      title: EligibilityResponse
       type: object
       required:
-      - rtp
-      - fednow
+      - routing_numbers
       properties:
-        rtp:
-          type: boolean
-        fednow:
-          type: boolean
+        routing_numbers:
+          type: array
+          items:
+            $ref: '#/components/schemas/EligibilityRoutingNumber'
+    FednowEligible:
+      type: boolean
+      description: Describes if the routing number is Fednow eligible or not
+    GetEligibilityResponse:
+      type: object
+      additionalProperties:
+        $ref: '#/components/schemas/RtpAndFedNow'
+      example:
+        011000138:
+          rtp: true
+          fednow: true
+    Eligible:
+      type: boolean
+      description: Describes if the routing number is RTP or Fednow eligible or not
+    RTPEligible:
+      type: boolean
+      description: Describes if the routing number is RTP eligible or not
+    ErrorResponse:
+      type: object
+      properties:
+        error_code:
+          type: string
+        message:
+          type: string
+        details:
+          type:
+          - object
+          - 'null'
+          description: additional details about the error.
+      required:
+      - error_code
+      - message
+    OrumVersion:
+      type: string
+      description: Version of Deliver and Verify APIs. Use v2022-09-21.
+      enum:
+      - v2022-09-21
+    EligibilityRequest:
+      title: EligibilityRequest
+      type: object
+      required:
+      - routing_numbers
+      properties:
+        routing_numbers:
+          type: array
+          x-orum-error-missing:
+            message: Routing numbers is required
+            code: missing_routing_numbers
+          x-orum-error-invalid:
+            known-error: invalid_routing_numbers
+          items:
+            $ref: '#/components/schemas/PostEligibilityAbaRoutingNumber'
     EligibilityRoutingNumber:
       title: EligibilityRoutingNumber
       type: object
@@ -124,80 +188,16 @@ components:
           $ref: '#/components/schemas/RTPEligible'
         fednow:
           $ref: '#/components/schemas/FednowEligible'
-    OrumVersion:
-      type: string
-      description: Version of Deliver and Verify APIs. Use v2022-09-21.
-      enum:
-      - v2022-09-21
-    FednowEligible:
-      type: boolean
-      description: Describes if the routing number is Fednow eligible or not
-    PostEligibilityAbaRoutingNumber:
-      title: PostEligibilityAbaRoutingNumber
-      type: string
-      pattern: ^\d{9}$
-      description: 9-digit American Bankers Association (ABA) routing number.
-      x-orum-error-invalid:
-        known-error: invalid_routing_numbers
-    AbaRoutingNumber:
-      title: AbaRoutingNumber
-      type: string
-      pattern: ^\d{9}$
-      description: 9-digit American Bankers Association (ABA) routing number.
-    RTPEligible:
-      type: boolean
-      description: Describes if the routing number is RTP eligible or not
-    EligibilityRequest:
-      title: EligibilityRequest
+    RtpAndFedNow:
       type: object
       required:
-      - routing_numbers
+      - rtp
+      - fednow
       properties:
-        routing_numbers:
-          type: array
-          x-orum-error-missing:
-            message: Routing numbers is required
-            code: missing_routing_numbers
-          x-orum-error-invalid:
-            known-error: invalid_routing_numbers
-          items:
-            $ref: '#/components/schemas/PostEligibilityAbaRoutingNumber'
-    Eligible:
-      type: boolean
-      description: Describes if the routing number is RTP or Fednow eligible or not
-    ErrorResponse:
-      type: object
-      properties:
-        error_code:
-          type: string
-        message:
-          type: string
-        details:
-          type:
-          - object
-          - 'null'
-          description: additional details about the error.
-      required:
-      - error_code
-      - message
-    GetEligibilityResponse:
-      type: object
-      additionalProperties:
-        $ref: '#/components/schemas/RtpAndFedNow'
-      example:
-        011000138:
-          rtp: true
-          fednow: true
-    EligibilityResponse:
-      title: EligibilityResponse
-      type: object
-      required:
-      - routing_numbers
-      properties:
-        routing_numbers:
-          type: array
-          items:
-            $ref: '#/components/schemas/EligibilityRoutingNumber'
+        rtp:
+          type: boolean
+        fednow:
+          type: boolean
   securitySchemes:
     oauth2:
       type: oauth2

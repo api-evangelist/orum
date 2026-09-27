@@ -162,44 +162,58 @@ paths:
         - write:webhook-configurations
 components:
   schemas:
+    ConfigurationsResponse:
+      title: ConfigurationsResponse
+      type: object
+      required:
+      - webhook_configurations
+      properties:
+        webhook_configurations:
+          type: array
+          description: An array of webhook configurations.
+          items:
+            $ref: '#/components/schemas/WebhookConfiguration'
+    EventTypes:
+      type: array
+      description: The types of events for which you would like to receive a webhook e.g. transfer_created. Use subscribe_all to receive webhooks for all events.
+      items:
+        $ref: '#/components/schemas/EventType'
+    ConfigurationRequest:
+      title: ConfigurationRequest
+      type: object
+      required:
+      - event_types
+      - url
+      - enabled
+      properties:
+        event_types:
+          $ref: '#/components/schemas/EventTypes'
+        url:
+          type: string
+          description: The URL where you would like the webhook to be sent.
+        enabled:
+          type: boolean
+          description: A boolean to determine whether the configuration is enabled. Acts as an on/off switch for that particular webhook.
+    ErrorResponse:
+      type: object
+      properties:
+        error_code:
+          type: string
+        message:
+          type: string
+        details:
+          type:
+          - object
+          - 'null'
+          description: additional details about the error.
+      required:
+      - error_code
+      - message
     OrumVersion:
       type: string
       description: Version of Deliver and Verify APIs. Use v2022-09-21.
       enum:
       - v2022-09-21
-    EventType:
-      type: string
-      description: The type of event you want to invoke a webhook for.
-      enum:
-      - subscribe_all
-      - person_created
-      - person_verified
-      - person_rejected
-      - person_restricted
-      - person_unverified
-      - person_closed
-      - person_all
-      - business_created
-      - business_verified
-      - business_rejected
-      - business_restricted
-      - business_unverified
-      - business_closed
-      - business_all
-      - external_account_created
-      - external_account_verified
-      - external_account_rejected
-      - external_account_restricted
-      - external_account_unverified
-      - external_account_closed
-      - external_account_all
-      - transfer_updated
-      - transfer_all
-      - verify_account_updated
-      - subledger_all
-      - subledger_created
-      - book_transfer_all
-      - book_transfer_updated
     WebhookConfiguration:
       title: WebhookConfiguration
       type: object
@@ -241,22 +255,39 @@ components:
       enum:
       - v2022-09-21
       - v2021-10-01
-    ConfigurationRequest:
-      title: ConfigurationRequest
-      type: object
-      required:
-      - event_types
-      - url
-      - enabled
-      properties:
-        event_types:
-          $ref: '#/components/schemas/EventTypes'
-        url:
-          type: string
-          description: The URL where you would like the webhook to be sent.
-        enabled:
-          type: boolean
-          description: A boolean to determine whether the configuration is enabled. Acts as an on/off switch for that particular webhook.
+    EventType:
+      type: string
+      description: The type of event you want to invoke a webhook for.
+      enum:
+      - subscribe_all
+      - person_created
+      - person_verified
+      - person_rejected
+      - person_restricted
+      - person_unverified
+      - person_closed
+      - person_all
+      - business_created
+      - business_verified
+      - business_rejected
+      - business_restricted
+      - business_unverified
+      - business_closed
+      - business_all
+      - external_account_created
+      - external_account_verified
+      - external_account_rejected
+      - external_account_restricted
+      - external_account_unverified
+      - external_account_closed
+      - external_account_all
+      - transfer_updated
+      - transfer_all
+      - verify_account_updated
+      - subledger_all
+      - subledger_created
+      - book_transfer_all
+      - book_transfer_updated
     ConfigurationResponse:
       title: ConfigurationResponse
       type: object
@@ -265,37 +296,6 @@ components:
       properties:
         webhook_configuration:
           $ref: '#/components/schemas/WebhookConfiguration'
-    ConfigurationsResponse:
-      title: ConfigurationsResponse
-      type: object
-      required:
-      - webhook_configurations
-      properties:
-        webhook_configurations:
-          type: array
-          description: An array of webhook configurations.
-          items:
-            $ref: '#/components/schemas/WebhookConfiguration'
-    EventTypes:
-      type: array
-      description: The types of events for which you would like to receive a webhook e.g. transfer_created. Use subscribe_all to receive webhooks for all events.
-      items:
-        $ref: '#/components/schemas/EventType'
-    ErrorResponse:
-      type: object
-      properties:
-        error_code:
-          type: string
-        message:
-          type: string
-        details:
-          type:
-          - object
-          - 'null'
-          description: additional details about the error.
-      required:
-      - error_code
-      - message
   securitySchemes:
     oauth2:
       type: oauth2

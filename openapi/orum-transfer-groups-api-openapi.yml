@@ -181,15 +181,42 @@ paths:
         - read:transfer-groups
 components:
   schemas:
-    OrumVersion:
-      type: string
-      description: Version of Deliver and Verify APIs. Use v2022-09-21.
-      enum:
-      - v2022-09-21
+    TransferGroupResponse:
+      title: TransferGroupResponse
+      type: object
+      properties:
+        transfer_group:
+          $ref: '#/components/schemas/TransferGroup'
+      required:
+      - transfer_group
     CreatedAt:
       type: string
       description: Timestamp when the resource was created.
       format: date-time
+    TransferGroupDestinationObject:
+      title: Destination
+      type: object
+      description: Information about the ultimate destination of the transfer group.
+      properties:
+        account_reference_id:
+          type: string
+          minLength: 1
+          description: Unique id of the account on the Enterprise platform
+          x-orum-error-missing:
+            known-error: missing_transfer_group_destination_account_reference_id
+          x-orum-error-invalid:
+            known-error: invalid_transfer_group_destination_account_reference_id
+        customer_reference_id:
+          type: string
+          minLength: 1
+          description: Unique id of the customer on the Enterprise platform
+          x-orum-error-missing:
+            known-error: missing_transfer_group_destination_customer_reference_id
+          x-orum-error-invalid:
+            known-error: invalid_transfer_group_destination_customer_reference_id
+      required:
+      - account_reference_id
+      - customer_reference_id
     TransferGroupRequest:
       title: TransferGroupRequest
       type: object
@@ -215,22 +242,13 @@ components:
           - 'null'
       required:
       - transfer_group_reference_id
-    OrumId:
+    TransferGroupReferenceID:
+      title: TransferGroupReferenceID
       type: string
-      description: Orum generated unique id for the resource.
-      format: uuid
-    TransferGroupResponse:
-      title: TransferGroupResponse
-      type: object
-      properties:
-        transfer_group:
-          $ref: '#/components/schemas/TransferGroup'
-      required:
-      - transfer_group
-    UpdatedAt:
-      type: string
-      description: Timestamp when the resource was last updated.
-      format: date-time
+      minLength: 1
+      description: Unique reference id for the transfer group
+      x-orum-error-invalid:
+        known-error: invalid_transfer_group_reference_id
     TransferGroup:
       title: TransferGroup
       type: object
@@ -277,6 +295,19 @@ components:
             $ref: '#/components/schemas/TransferGroup'
       required:
       - transfer_groups
+    OrumVersion:
+      type: string
+      description: Version of Deliver and Verify APIs. Use v2022-09-21.
+      enum:
+      - v2022-09-21
+    OrumId:
+      type: string
+      description: Orum generated unique id for the resource.
+      format: uuid
+    UpdatedAt:
+      type: string
+      description: Timestamp when the resource was last updated.
+      format: date-time
     TransferGroupSourceObject:
       title: Source
       type: object
@@ -301,37 +332,6 @@ components:
       required:
       - account_reference_id
       - customer_reference_id
-    TransferGroupDestinationObject:
-      title: Destination
-      type: object
-      description: Information about the ultimate destination of the transfer group.
-      properties:
-        account_reference_id:
-          type: string
-          minLength: 1
-          description: Unique id of the account on the Enterprise platform
-          x-orum-error-missing:
-            known-error: missing_transfer_group_destination_account_reference_id
-          x-orum-error-invalid:
-            known-error: invalid_transfer_group_destination_account_reference_id
-        customer_reference_id:
-          type: string
-          minLength: 1
-          description: Unique id of the customer on the Enterprise platform
-          x-orum-error-missing:
-            known-error: missing_transfer_group_destination_customer_reference_id
-          x-orum-error-invalid:
-            known-error: invalid_transfer_group_destination_customer_reference_id
-      required:
-      - account_reference_id
-      - customer_reference_id
-    TransferGroupReferenceID:
-      title: TransferGroupReferenceID
-      type: string
-      minLength: 1
-      description: Unique reference id for the transfer group
-      x-orum-error-invalid:
-        known-error: invalid_transfer_group_reference_id
   securitySchemes:
     oauth2:
       type: oauth2

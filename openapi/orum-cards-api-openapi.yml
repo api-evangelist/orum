@@ -201,28 +201,141 @@ paths:
         - write:cards
 components:
   schemas:
-    CardsResponse:
-      title: CardsResponse
-      type: object
-      required:
-      - cards
-      properties:
-        cards:
-          type: array
-          description: List of card objects.
-          items:
-            allOf:
-            - $ref: '#/components/schemas/CardResponseBase'
     State:
       title: State
       type: string
       pattern: ^[A-Z]{2}$
       description: Uppercase two-character state code of the address.
-    CardCustomerReferenceId:
-      title: CardCustomerReferenceId
+    CardResponseBase:
+      type: object
+      required:
+      - id
+      - account_reference_id
+      - customer_reference_id
+      - customer_resource_type
+      - account_holder_name
+      - status
+      - address
+      - last4
+      - expiration_month
+      - expiration_year
+      - created_at
+      - updated_at
+      properties:
+        id:
+          $ref: '#/components/schemas/OrumId'
+        account_reference_id:
+          allOf:
+          - $ref: '#/components/schemas/CardAccountReferenceId'
+        customer_reference_id:
+          $ref: '#/components/schemas/CustomerReferenceId'
+        customer_resource_type:
+          allOf:
+          - $ref: '#/components/schemas/EndCustomerResourceType'
+        account_holder_name:
+          oneOf:
+          - $ref: '#/components/schemas/CardAccountHolderNamePerson'
+          - $ref: '#/components/schemas/CardAccountHolderNameBusiness'
+        status:
+          $ref: '#/components/schemas/CardStatus'
+        pull_eligible:
+          type: boolean
+          description: Indicates that the card can be used for pull transactions.
+        push_eligible:
+          type: boolean
+          description: Indicates that the card can be used for push transactions.
+        address:
+          $ref: '#/components/schemas/CardAddressResponse'
+        created_at:
+          $ref: '#/components/schemas/CreatedAt'
+        updated_at:
+          $ref: '#/components/schemas/UpdatedAt'
+        closed_at:
+          $ref: '#/components/schemas/ClosedAt'
+        metadata:
+          type: object
+          description: Additional data you would like to provide on the resource. The field supports valid JSON of up to 5 key-value pairs with a maximum of 20 characters for the key and 50 characters for the value. Do not include any sensitive information.
+        last4:
+          $ref: '#/components/schemas/CardLastFourDigits'
+        expiration_month:
+          $ref: '#/components/schemas/CardExpirationMonth'
+        expiration_year:
+          $ref: '#/components/schemas/CardExpirationYear'
+        status_reasons:
+          type: array
+          description: Array that explains why the person failed verification.
+          items:
+            $ref: '#/components/schemas/StatusReason'
+    Country:
+      title: Country
       type: string
-      description: Unique customer_reference_id that you passed when creating the associated customer (business or person) resource.
+      description: 2-character ISO country code.
+      enum:
+      - US
+    Address1:
+      title: Address1
+      type: string
+      description: Address line 1.
       maxLength: 255
+      x-orum-error-invalid:
+        message: Address1 is invalid. Ensure it is a string with a maximum length of 255 characters.
+        code: invalid_address1
+    CardExpirationMonth:
+      type: integer
+      description: The month in which the card expires.
+      minimum: 1
+      maximum: 12
+    Zip5:
+      title: Zip5
+      type: string
+      description: 5-digit ZIP Code. Numeric values (0-9) only.
+      pattern: ^\d{5}$
+    CardAddressResponse:
+      title: CardAddressResponse
+      type: object
+      required:
+      - id
+      - type
+      - zip5
+      - created_at
+      - updated_at
+      description: Address.
+      properties:
+        id:
+          $ref: '#/components/schemas/OrumId'
+        type:
+          $ref: '#/components/schemas/AddressTypeCard'
+        address1:
+          $ref: '#/components/schemas/Address1'
+        address2:
+          $ref: '#/components/schemas/Address2'
+        city:
+          $ref: '#/components/schemas/City'
+        state:
+          $ref: '#/components/schemas/State'
+        country:
+          $ref: '#/components/schemas/Country'
+        zip5:
+          $ref: '#/components/schemas/Zip5'
+        created_at:
+          $ref: '#/components/schemas/CreatedAt'
+        updated_at:
+          $ref: '#/components/schemas/UpdatedAt'
+    AddressTypeCard:
+      title: AddressTypeCard
+      type: string
+      description: Type of address. Always 'billing' for card object.
+      enum:
+      - billing
+    City:
+      title: City
+      type: string
+      description: City.
+      maxLength: 255
+    CardLastFourDigits:
+      type: string
+      description: The last four digits of the card number supplied by the customer.
+      pattern: ^[xX]+\d{4}$
     StatusReason:
       type: object
       required:
@@ -233,29 +346,103 @@ components:
           $ref: '#/components/schemas/ReasonCode'
         reason_code_message:
           $ref: '#/components/schemas/ReasonCodeMessage'
-    Country:
-      title: Country
+    CardCustomerReferenceId:
+      title: CardCustomerReferenceId
       type: string
-      description: 2-character ISO country code.
-      enum:
-      - US
-    Address2:
-      title: Address2
-      type: string
-      description: Address line 2.
+      description: Unique customer_reference_id that you passed when creating the associated customer (business or person) resource.
       maxLength: 255
-      x-orum-error-invalid:
-        message: Address2 is invalid. Ensure it is a string with a maximum length of 255 characters.
-        code: invalid_address2
-    Zip5:
-      title: Zip5
+    ClosedAt:
       type: string
-      description: 5-digit ZIP Code. Numeric values (0-9) only.
-      pattern: ^\d{5}$
-    CardLastFourDigits:
+      description: Timestamp when the status of the resource was set to "closed".
+      format: date-time
+    CardAccountHolderNameBusiness:
+      type: object
+      title: Business Name
+      description: Business name of account holder. Accepts alphanumeric characters and hyphens, dashes, periods, apostrophes, spaces, and diacritics.
+      required:
+      - company_name
+      properties:
+        company_name:
+          type: string
+          description: Accepts alphanumeric characters and hyphens, dashes, periods, apostrophes, spaces, and diacritics.
+          pattern: ^[^\s][ ’!"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~¡¢£¤¥¦§¨©ª«¬®¯°±²³´µ¶·¸¹º»¼½¾¿ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖ×ØÙÚÛÜÝÞßàáâãäåæçèéêëìíîïðñòóôõö÷øùúûüýþÿĀāĂăĄąĆćĈĉĊċČčĎďĐđĒēĔĕĖėĘęĚěĜĝĞğĠġĢģĤĥĦħĨĩĪīĬĭĮįİıĲĳĴĵĶķĸĹĺĻļĽľĿŀŁłŃńŅņŇňŉŊŋŌōŎŏŐőŒœŔŕŖŗŘřŚśŜŝŞşŠšŢţŤťŦŧŨũŪūŬŭŮůŰűŲųŴŵŶŷŸŹźŻżŽžſ]+$
+          maxLength: 255
+          x-orum-error-invalid:
+            message: Company name is invalid. Accepted values are letters, spaces, hyphens, apostrophes, periods, and diacritics.
+            code: invalid_company_name
+          x-orum-error-missing:
+            message: Company name is required. Accepted values are letters, spaces, hyphens, apostrophes, periods, and diacritics.
+            code: missing_company_name
+    ErrorResponse:
+      type: object
+      properties:
+        error_code:
+          type: string
+        message:
+          type: string
+        details:
+          type:
+          - object
+          - 'null'
+          description: additional details about the error.
+      required:
+      - error_code
+      - message
+    CardStatusFilter:
+      title: CardStatusFilter
+      description: Filter by status of card in Orum system.
+      type: array
+      items:
+        $ref: '#/components/schemas/CardStatus'
+    CardStatus:
+      title: CardStatus
       type: string
-      description: The last four digits of the card number supplied by the customer.
-      pattern: ^[xX]+\d{4}$
+      description: Status of card in Orum system.
+      enum:
+      - created
+      - verified
+      - rejected
+      - closed
+    CardAddressRequestZipOnly:
+      type: object
+      additionalProperties: false
+      title: Zip Code
+      required:
+      - zip5
+      description: Zip code of card holder
+      properties:
+        zip5:
+          allOf:
+          - $ref: '#/components/schemas/Zip5'
+          x-orum-error-invalid:
+            known-error: invalid_zip5
+    CreatedAt:
+      type: string
+      description: Timestamp when the resource was created.
+      format: date-time
+    LastName:
+      title: LastName
+      type: string
+      description: Accepts latin characters and hyphens, dashes, periods, apostrophes, spaces, and diacritics.
+      pattern: ^[ ’!"#$%&'()*+,-./:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~¡¢£¤¥¦§¨©ª«¬®¯°±²³´µ¶·¸¹º»¼½¾¿ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖ×ØÙÚÛÜÝÞßàáâãäåæçèéêëìíîïðñòóôõö÷øùúûüýþÿĀāĂăĄąĆćĈĉĊċČčĎďĐđĒēĔĕĖėĘęĚěĜĝĞğĠġĢģĤĥĦħĨĩĪīĬĭĮįİıĲĳĴĵĶķĸĹĺĻļĽľĿŀŁłŃńŅņŇňŉŊŋŌōŎŏŐőŒœŔŕŖŗŘřŚśŜŝŞşŠšŢţŤťŦŧŨũŪūŬŭŮůŰűŲųŴŵŶŷŸŹźŻżŽžſ]+$
+      minLength: 1
+      maxLength: 255
+    CardAccountReferenceId:
+      title: CardAccountReferenceId
+      type: string
+      description: Unique reference id for the card. Generated by you.
+      minLength: 1
+      maxLength: 255
+    CustomerReferenceId:
+      title: CustomerReferenceId
+      type: string
+      description: Unique reference id for the customer (business or person) resource. Generated by you.
+      minLength: 1
+      maxLength: 255
+    ReasonCodeMessage:
+      type: string
+      description: A human-readable description of the reason code.
+      example: Address submitted is a non-supported address type
     CardRequest:
       title: CardRequest
       type: object
@@ -354,136 +541,6 @@ components:
           x-orum-error-invalid:
             message: Card's expiration year is invalid.
             code: invalid_expiration_year
-    OrumVersion:
-      type: string
-      description: Version of Deliver and Verify APIs. Use v2022-09-21.
-      enum:
-      - v2022-09-21
-    CardResponseBase:
-      type: object
-      required:
-      - id
-      - account_reference_id
-      - customer_reference_id
-      - customer_resource_type
-      - account_holder_name
-      - status
-      - address
-      - last4
-      - expiration_month
-      - expiration_year
-      - created_at
-      - updated_at
-      properties:
-        id:
-          $ref: '#/components/schemas/OrumId'
-        account_reference_id:
-          allOf:
-          - $ref: '#/components/schemas/CardAccountReferenceId'
-        customer_reference_id:
-          $ref: '#/components/schemas/CustomerReferenceId'
-        customer_resource_type:
-          allOf:
-          - $ref: '#/components/schemas/EndCustomerResourceType'
-        account_holder_name:
-          oneOf:
-          - $ref: '#/components/schemas/CardAccountHolderNamePerson'
-          - $ref: '#/components/schemas/CardAccountHolderNameBusiness'
-        status:
-          $ref: '#/components/schemas/CardStatus'
-        pull_eligible:
-          type: boolean
-          description: Indicates that the card can be used for pull transactions.
-        push_eligible:
-          type: boolean
-          description: Indicates that the card can be used for push transactions.
-        address:
-          $ref: '#/components/schemas/CardAddressResponse'
-        created_at:
-          $ref: '#/components/schemas/CreatedAt'
-        updated_at:
-          $ref: '#/components/schemas/UpdatedAt'
-        closed_at:
-          $ref: '#/components/schemas/ClosedAt'
-        metadata:
-          type: object
-          description: Additional data you would like to provide on the resource. The field supports valid JSON of up to 5 key-value pairs with a maximum of 20 characters for the key and 50 characters for the value. Do not include any sensitive information.
-        last4:
-          $ref: '#/components/schemas/CardLastFourDigits'
-        expiration_month:
-          $ref: '#/components/schemas/CardExpirationMonth'
-        expiration_year:
-          $ref: '#/components/schemas/CardExpirationYear'
-        status_reasons:
-          type: array
-          description: Array that explains why the person failed verification.
-          items:
-            $ref: '#/components/schemas/StatusReason'
-    FirstName:
-      title: FirstName
-      type: string
-      description: Accepts latin characters and hyphens, dashes, periods, apostrophes, spaces, and diacritics.
-      pattern: ^[ ’!"#$%&'()*+,-./:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~¡¢£¤¥¦§¨©ª«¬®¯°±²³´µ¶·¸¹º»¼½¾¿ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖ×ØÙÚÛÜÝÞßàáâãäåæçèéêëìíîïðñòóôõö÷øùúûüýþÿĀāĂăĄąĆćĈĉĊċČčĎďĐđĒēĔĕĖėĘęĚěĜĝĞğĠġĢģĤĥĦħĨĩĪīĬĭĮįİıĲĳĴĵĶķĸĹĺĻļĽľĿŀŁłŃńŅņŇňŉŊŋŌōŎŏŐőŒœŔŕŖŗŘřŚśŜŝŞşŠšŢţŤťŦŧŨũŪūŬŭŮůŰűŲųŴŵŶŷŸŹźŻżŽžſ]+$
-      minLength: 1
-      maxLength: 255
-    CreatedAt:
-      type: string
-      description: Timestamp when the resource was created.
-      format: date-time
-    ClosedAt:
-      type: string
-      description: Timestamp when the status of the resource was set to "closed".
-      format: date-time
-    MiddleName:
-      title: MiddleName
-      type: string
-      description: Accepts latin characters and hyphens, dashes, periods, apostrophes, spaces, and diacritics.
-      pattern: ^[ ’!"#$%&'()*+,-./:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~¡¢£¤¥¦§¨©ª«¬®¯°±²³´µ¶·¸¹º»¼½¾¿ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖ×ØÙÚÛÜÝÞßàáâãäåæçèéêëìíîïðñòóôõö÷øùúûüýþÿĀāĂăĄąĆćĈĉĊċČčĎďĐđĒēĔĕĖėĘęĚěĜĝĞğĠġĢģĤĥĦħĨĩĪīĬĭĮįİıĲĳĴĵĶķĸĹĺĻļĽľĿŀŁłŃńŅņŇňŉŊŋŌōŎŏŐőŒœŔŕŖŗŘřŚśŜŝŞşŠšŢţŤťŦŧŨũŪūŬŭŮůŰűŲųŴŵŶŷŸŹźŻżŽžſ]*$
-      maxLength: 255
-    CardResponse:
-      title: CardResponse
-      type: object
-      required:
-      - card
-      properties:
-        card:
-          allOf:
-          - $ref: '#/components/schemas/CardResponseBase'
-    CardExpirationMonth:
-      type: integer
-      description: The month in which the card expires.
-      minimum: 1
-      maximum: 12
-    EndCustomerResourceType:
-      type: string
-      description: Type of customer resource - business, person, or enterprise.
-      enum:
-      - business
-      - person
-      - enterprise
-    CardAddressRequestZipOnly:
-      type: object
-      additionalProperties: false
-      title: Zip Code
-      required:
-      - zip5
-      description: Zip code of card holder
-      properties:
-        zip5:
-          allOf:
-          - $ref: '#/components/schemas/Zip5'
-          x-orum-error-invalid:
-            known-error: invalid_zip5
-    CardStatusFilter:
-      title: CardStatusFilter
-      description: Filter by status of card in Orum system.
-      type: array
-      items:
-        $ref: '#/components/schemas/CardStatus'
-    UpdatedAt:
-      type: string
-      description: Timestamp when the resource was last updated.
-      format: date-time
     CardAccountHolderNamePerson:
       type: object
       title: Person Name
@@ -529,69 +586,14 @@ components:
       x-orum-error-invalid:
         message: Account holder name is invalid. Accepted values are letters, spaces, hyphens, apostrophes, periods and diacritics.
         code: invalid_account_holder_name
-    LastName:
-      title: LastName
-      type: string
-      description: Accepts latin characters and hyphens, dashes, periods, apostrophes, spaces, and diacritics.
-      pattern: ^[ ’!"#$%&'()*+,-./:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~¡¢£¤¥¦§¨©ª«¬®¯°±²³´µ¶·¸¹º»¼½¾¿ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖ×ØÙÚÛÜÝÞßàáâãäåæçèéêëìíîïðñòóôõö÷øùúûüýþÿĀāĂăĄąĆćĈĉĊċČčĎďĐđĒēĔĕĖėĘęĚěĜĝĞğĠġĢģĤĥĦħĨĩĪīĬĭĮįİıĲĳĴĵĶķĸĹĺĻļĽľĿŀŁłŃńŅņŇňŉŊŋŌōŎŏŐőŒœŔŕŖŗŘřŚśŜŝŞşŠšŢţŤťŦŧŨũŪūŬŭŮůŰűŲųŴŵŶŷŸŹźŻżŽžſ]+$
-      minLength: 1
-      maxLength: 255
-    City:
-      title: City
-      type: string
-      description: City.
-      maxLength: 255
-    CardAccountReferenceId:
-      title: CardAccountReferenceId
-      type: string
-      description: Unique reference id for the card. Generated by you.
-      minLength: 1
-      maxLength: 255
     OrumId:
       type: string
       description: Orum generated unique id for the resource.
       format: uuid
-    AddressTypeCard:
-      title: AddressTypeCard
+    UpdatedAt:
       type: string
-      description: Type of address. Always 'billing' for card object.
-      enum:
-      - billing
-    CardExpirationYear:
-      type: integer
-      description: The year in which the card expires.
-      minimum: 2024
-    CardAddressResponse:
-      title: CardAddressResponse
-      type: object
-      required:
-      - id
-      - type
-      - zip5
-      - created_at
-      - updated_at
-      description: Address.
-      properties:
-        id:
-          $ref: '#/components/schemas/OrumId'
-        type:
-          $ref: '#/components/schemas/AddressTypeCard'
-        address1:
-          $ref: '#/components/schemas/Address1'
-        address2:
-          $ref: '#/components/schemas/Address2'
-        city:
-          $ref: '#/components/schemas/City'
-        state:
-          $ref: '#/components/schemas/State'
-        country:
-          $ref: '#/components/schemas/Country'
-        zip5:
-          $ref: '#/components/schemas/Zip5'
-        created_at:
-          $ref: '#/components/schemas/CreatedAt'
-        updated_at:
-          $ref: '#/components/schemas/UpdatedAt'
+      description: Timestamp when the resource was last updated.
+      format: date-time
     CardAddressRequest:
       type: object
       title: Full Address
@@ -624,73 +626,71 @@ components:
           - $ref: '#/components/schemas/Zip5'
           x-orum-error-invalid:
             known-error: invalid_zip5
-    ErrorResponse:
+    CardsResponse:
+      title: CardsResponse
       type: object
-      properties:
-        error_code:
-          type: string
-        message:
-          type: string
-        details:
-          type:
-          - object
-          - 'null'
-          description: additional details about the error.
       required:
-      - error_code
-      - message
+      - cards
+      properties:
+        cards:
+          type: array
+          description: List of card objects.
+          items:
+            allOf:
+            - $ref: '#/components/schemas/CardResponseBase'
+    CardResponse:
+      title: CardResponse
+      type: object
+      required:
+      - card
+      properties:
+        card:
+          allOf:
+          - $ref: '#/components/schemas/CardResponseBase'
+    MiddleName:
+      title: MiddleName
+      type: string
+      description: Accepts latin characters and hyphens, dashes, periods, apostrophes, spaces, and diacritics.
+      pattern: ^[ ’!"#$%&'()*+,-./:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~¡¢£¤¥¦§¨©ª«¬®¯°±²³´µ¶·¸¹º»¼½¾¿ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖ×ØÙÚÛÜÝÞßàáâãäåæçèéêëìíîïðñòóôõö÷øùúûüýþÿĀāĂăĄąĆćĈĉĊċČčĎďĐđĒēĔĕĖėĘęĚěĜĝĞğĠġĢģĤĥĦħĨĩĪīĬĭĮįİıĲĳĴĵĶķĸĹĺĻļĽľĿŀŁłŃńŅņŇňŉŊŋŌōŎŏŐőŒœŔŕŖŗŘřŚśŜŝŞşŠšŢţŤťŦŧŨũŪūŬŭŮůŰűŲųŴŵŶŷŸŹźŻżŽžſ]*$
+      maxLength: 255
+    CardExpirationYear:
+      type: integer
+      description: The year in which the card expires.
+      minimum: 2024
+    Address2:
+      title: Address2
+      type: string
+      description: Address line 2.
+      maxLength: 255
+      x-orum-error-invalid:
+        message: Address2 is invalid. Ensure it is a string with a maximum length of 255 characters.
+        code: invalid_address2
+    FirstName:
+      title: FirstName
+      type: string
+      description: Accepts latin characters and hyphens, dashes, periods, apostrophes, spaces, and diacritics.
+      pattern: ^[ ’!"#$%&'()*+,-./:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~¡¢£¤¥¦§¨©ª«¬®¯°±²³´µ¶·¸¹º»¼½¾¿ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖ×ØÙÚÛÜÝÞßàáâãäåæçèéêëìíîïðñòóôõö÷øùúûüýþÿĀāĂăĄąĆćĈĉĊċČčĎďĐđĒēĔĕĖėĘęĚěĜĝĞğĠġĢģĤĥĦħĨĩĪīĬĭĮįİıĲĳĴĵĶķĸĹĺĻļĽľĿŀŁłŃńŅņŇňŉŊŋŌōŎŏŐőŒœŔŕŖŗŘřŚśŜŝŞşŠšŢţŤťŦŧŨũŪūŬŭŮůŰűŲųŴŵŶŷŸŹźŻżŽžſ]+$
+      minLength: 1
+      maxLength: 255
+    OrumVersion:
+      type: string
+      description: Version of Deliver and Verify APIs. Use v2022-09-21.
+      enum:
+      - v2022-09-21
+    Metadata:
+      type: object
+      description: Additional data you would like to provide on the resource. The field supports valid JSON of up to 5 key-value pairs with a maximum of 20 characters for the key and 50 characters for the value. Do not include any sensitive information.
     ReasonCode:
       type: string
       description: A word-based code that describes the verification failure.
       example: invalid_address
-    Metadata:
-      type: object
-      description: Additional data you would like to provide on the resource. The field supports valid JSON of up to 5 key-value pairs with a maximum of 20 characters for the key and 50 characters for the value. Do not include any sensitive information.
-    ReasonCodeMessage:
+    EndCustomerResourceType:
       type: string
-      description: A human-readable description of the reason code.
-      example: Address submitted is a non-supported address type
-    CustomerReferenceId:
-      title: CustomerReferenceId
-      type: string
-      description: Unique reference id for the customer (business or person) resource. Generated by you.
-      minLength: 1
-      maxLength: 255
-    CardAccountHolderNameBusiness:
-      type: object
-      title: Business Name
-      description: Business name of account holder. Accepts alphanumeric characters and hyphens, dashes, periods, apostrophes, spaces, and diacritics.
-      required:
-      - company_name
-      properties:
-        company_name:
-          type: string
-          description: Accepts alphanumeric characters and hyphens, dashes, periods, apostrophes, spaces, and diacritics.
-          pattern: ^[^\s][ ’!"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~¡¢£¤¥¦§¨©ª«¬®¯°±²³´µ¶·¸¹º»¼½¾¿ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖ×ØÙÚÛÜÝÞßàáâãäåæçèéêëìíîïðñòóôõö÷øùúûüýþÿĀāĂăĄąĆćĈĉĊċČčĎďĐđĒēĔĕĖėĘęĚěĜĝĞğĠġĢģĤĥĦħĨĩĪīĬĭĮįİıĲĳĴĵĶķĸĹĺĻļĽľĿŀŁłŃńŅņŇňŉŊŋŌōŎŏŐőŒœŔŕŖŗŘřŚśŜŝŞşŠšŢţŤťŦŧŨũŪūŬŭŮůŰűŲųŴŵŶŷŸŹźŻżŽžſ]+$
-          maxLength: 255
-          x-orum-error-invalid:
-            message: Company name is invalid. Accepted values are letters, spaces, hyphens, apostrophes, periods, and diacritics.
-            code: invalid_company_name
-          x-orum-error-missing:
-            message: Company name is required. Accepted values are letters, spaces, hyphens, apostrophes, periods, and diacritics.
-            code: missing_company_name
-    Address1:
-      title: Address1
-      type: string
-      description: Address line 1.
-      maxLength: 255
-      x-orum-error-invalid:
-        message: Address1 is invalid. Ensure it is a string with a maximum length of 255 characters.
-        code: invalid_address1
-    CardStatus:
-      title: CardStatus
-      type: string
-      description: Status of card in Orum system.
+      description: Type of customer resource - business, person, or enterprise.
       enum:
-      - created
-      - verified
-      - rejected
-      - closed
+      - business
+      - person
+      - enterprise
   securitySchemes:
     oauth2:
       type: oauth2

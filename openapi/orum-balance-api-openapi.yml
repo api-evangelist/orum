@@ -172,46 +172,21 @@ components:
           items:
             allOf:
             - $ref: '#/components/schemas/SubledgerBalance'
-    OrumVersion:
-      type: string
-      description: Version of Deliver and Verify APIs. Use v2022-09-21.
-      enum:
-      - v2022-09-21
-    Currency:
-      title: Currency
-      type: string
-      description: Currency code in ISO 4217 format. Only USD is supported.
-      enum:
-      - USD
-    Balance:
-      title: Balance
+    ErrorResponse:
       type: object
-      required:
-      - pending
-      - available
-      - currency
-      - updated_at
       properties:
-        pending:
-          type: integer
-          format: int64
-          description: 'Pending amount of the balance in integral cents (example: 100 = $1).'
-        available:
-          type: integer
-          format: int64
-          description: 'Available amount of the balance in integral cents (example: 100 = $1).'
-        currency:
-          $ref: '#/components/schemas/Currency'
-        updated_at:
-          $ref: '#/components/schemas/UpdatedAt'
-    SubledgerBalanceResponse:
-      title: BalanceResponse
-      type: object
+        error_code:
+          type: string
+        message:
+          type: string
+        details:
+          type:
+          - object
+          - 'null'
+          description: additional details about the error.
       required:
-      - balance
-      properties:
-        balance:
-          $ref: '#/components/schemas/SubledgerBalance'
+      - error_code
+      - message
     SubledgerBalance:
       title: SubledgerBalance
       type: object
@@ -242,25 +217,11 @@ components:
         subledger_reference_id:
           type: string
           description: The subledger reference id associated with the balance
-    ErrorResponse:
-      type: object
-      properties:
-        error_code:
-          type: string
-        message:
-          type: string
-        details:
-          type:
-          - object
-          - 'null'
-          description: additional details about the error.
-      required:
-      - error_code
-      - message
-    UpdatedAt:
+    OrumVersion:
       type: string
-      description: Timestamp when the resource was last updated.
-      format: date-time
+      description: Version of Deliver and Verify APIs. Use v2022-09-21.
+      enum:
+      - v2022-09-21
     BalanceResponse:
       title: BalanceResponse
       type: object
@@ -272,6 +233,45 @@ components:
           $ref: '#/components/schemas/Balance'
         total_balance:
           $ref: '#/components/schemas/Balance'
+    Balance:
+      title: Balance
+      type: object
+      required:
+      - pending
+      - available
+      - currency
+      - updated_at
+      properties:
+        pending:
+          type: integer
+          format: int64
+          description: 'Pending amount of the balance in integral cents (example: 100 = $1).'
+        available:
+          type: integer
+          format: int64
+          description: 'Available amount of the balance in integral cents (example: 100 = $1).'
+        currency:
+          $ref: '#/components/schemas/Currency'
+        updated_at:
+          $ref: '#/components/schemas/UpdatedAt'
+    UpdatedAt:
+      type: string
+      description: Timestamp when the resource was last updated.
+      format: date-time
+    Currency:
+      title: Currency
+      type: string
+      description: Currency code in ISO 4217 format. Only USD is supported.
+      enum:
+      - USD
+    SubledgerBalanceResponse:
+      title: BalanceResponse
+      type: object
+      required:
+      - balance
+      properties:
+        balance:
+          $ref: '#/components/schemas/SubledgerBalance'
   securitySchemes:
     oauth2:
       type: oauth2
