@@ -79,21 +79,6 @@ paths:
       security: []
 components:
   schemas:
-    ErrorResponse:
-      type: object
-      properties:
-        error_code:
-          type: string
-        message:
-          type: string
-        details:
-          type:
-          - object
-          - 'null'
-          description: additional details about the error.
-      required:
-      - error_code
-      - message
     OauthTokenBody:
       type: object
       required:
@@ -120,6 +105,21 @@ components:
             message: client_secret must be a string
             code: invalid_client_secret
             status: '400'
+    ErrorResponse:
+      type: object
+      properties:
+        error_code:
+          type: string
+        message:
+          type: string
+        details:
+          type:
+          - object
+          - 'null'
+          description: additional details about the error.
+      required:
+      - error_code
+      - message
     OauthTokenResponse:
       title: OauthTokenResponse
       type: object

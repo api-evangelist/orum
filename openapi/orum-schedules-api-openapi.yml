@@ -269,96 +269,10 @@ paths:
         - write:schedules
 components:
   schemas:
-    DestinationTransferParty:
-      title: TransferDestination
-      type: object
-      description: Information about the transfer funds destination, which will be credited.
-      properties:
-        customer_reference_id:
-          type: string
-          description: Unique reference ID for the customer (person or business) associated with the external account being credited.
-          minLength: 1
-          x-orum-error-missing:
-            known-error: missing_destination_customer_reference_id
-          x-orum-error-invalid:
-            known-error: invalid_destination_customer_reference_id
-        account_reference_id:
-          type: string
-          description: Unique reference ID for the account being credited.
-          minLength: 1
-          x-orum-error-missing:
-            known-error: missing_destination_account_reference_id
-          x-orum-error-invalid:
-            known-error: invalid_destination_account_reference_id
-        statement_display_name:
-          type:
-          - string
-          - 'null'
-          description: The name that will appear on the bank account statement of the account being credited. The field supports 16 alphanumeric characters for ACH, and 140 for RTP.
-      required:
-      - account_reference_id
-      - customer_reference_id
-    TransferSpeed:
-      title: TransferSpeed
+    ScheduleRecurrence:
       type: string
-      description: Speed of transfer.
-      enum:
-      - asap
-      - standard
-      - same_day
-      - wire
-    ScheduleStartDate:
-      type: string
-      description: The date when the schedule starts, in YYYY-MM-DD format.
-      format: date
-      example: '2025-01-01'
-    Currency:
-      title: Currency
-      type: string
-      description: Currency code in ISO 4217 format. Only USD is supported.
-      enum:
-      - USD
-    ScheduleResponse:
-      title: ScheduleResponse
-      type: object
-      required:
-      - schedule
-      properties:
-        schedule:
-          $ref: '#/components/schemas/ScheduleResponseBaseObject'
-    ScheduleStatus:
-      title: ScheduleStatus
-      type: string
-      description: Describes the current status of the schedule.
-      enum:
-      - active
-      - inactive
-    SchedulesResponse:
-      title: SchedulesResponse
-      type: object
-      required:
-      - schedules
-      properties:
-        schedules:
-          type: array
-          description: List of schedules.
-          items:
-            $ref: '#/components/schemas/ScheduleResponseBaseObject'
-    ErrorResponse:
-      type: object
-      properties:
-        error_code:
-          type: string
-        message:
-          type: string
-        details:
-          type:
-          - object
-          - 'null'
-          description: additional details about the error.
-      required:
-      - error_code
-      - message
+      description: Recurrence of the schedule in iCalendar RRULE format
+      example: RRULE:FREQ=WEEKLY;INTERVAL=1;BYDAY=MO,WE,FR
     ScheduleRequest:
       title: ScheduleRequest
       type: object
@@ -424,101 +338,45 @@ components:
       - speed
       - start_date
       - recurrence
-    SourceTransferParty:
-      title: Source
+    ScheduleStartDate:
+      type: string
+      description: The date when the schedule starts, in YYYY-MM-DD format.
+      format: date
+      example: '2025-01-01'
+    DestinationTransferParty:
+      title: TransferDestination
       type: object
-      description: For use cases that require a Source, information about the transfer funding source, which will be debited.
+      description: Information about the transfer funds destination, which will be credited.
       properties:
         customer_reference_id:
           type: string
-          description: Unique reference ID for the customer (person or business) associated with the external account being debited.
+          description: Unique reference ID for the customer (person or business) associated with the external account being credited.
           minLength: 1
           x-orum-error-missing:
-            known-error: missing_source_customer_reference_id
+            known-error: missing_destination_customer_reference_id
           x-orum-error-invalid:
-            known-error: invalid_source_customer_reference_id
+            known-error: invalid_destination_customer_reference_id
         account_reference_id:
           type: string
-          description: Unique reference ID for the external account being debited.
+          description: Unique reference ID for the account being credited.
           minLength: 1
           x-orum-error-missing:
-            known-error: missing_source_account_reference_id
+            known-error: missing_destination_account_reference_id
           x-orum-error-invalid:
-            known-error: invalid_source_account_reference_id
+            known-error: invalid_destination_account_reference_id
         statement_display_name:
           type:
           - string
           - 'null'
-          description: The name that will appear on the bank account statement of the account being debited. The field supports 16 alphanumeric characters for ACH, and 140 for RTP.
+          description: The name that will appear on the bank account statement of the account being credited. The field supports 16 alphanumeric characters for ACH, and 140 for RTP.
       required:
       - account_reference_id
       - customer_reference_id
-    ScheduleReferenceId:
-      title: ScheduleReferenceId
+    ScheduleHumanReadableCadence:
+      title: ScheduleHumanReadableCadence
       type: string
-      description: Unique reference id for the Schedule. Generated by you.
-      minLength: 1
-    RruleValidationRequest:
-      title: RruleValidationRequest
-      type: object
-      properties:
-        start_date:
-          allOf:
-          - $ref: '#/components/schemas/ScheduleStartDate'
-          x-orum-error-missing:
-            known-error: missing_schedule_start_date
-          x-orum-error-invalid:
-            known-error: invalid_schedule_start_date
-        recurrence:
-          allOf:
-          - $ref: '#/components/schemas/ScheduleRecurrence'
-          x-orum-error-missing:
-            known-error: missing_schedule_recurrence
-          x-orum-error-invalid:
-            known-error: invalid_schedule_recurrence
-        occurrence_count:
-          type: integer
-          minimum: 1
-          maximum: 5
-          description: Number of occurrences to return. Defaults to 2 if not specified.
-          x-orum-error-invalid:
-            known-error: invalid_occurrence_count
-      required:
-      - start_date
-      - recurrence
-    CreatedAt:
-      type: string
-      description: Timestamp when the resource was created.
-      format: date-time
-    TransferAmount:
-      title: TransferAmount
-      type: integer
-      description: 'Transfer amount in integral cents (example: 100 = $1). Must be greater than zero.'
-      minimum: 1
-    RruleValidationResponse:
-      title: RruleValidationResponse
-      type: object
-      properties:
-        start_date:
-          $ref: '#/components/schemas/ScheduleStartDate'
-        rrule_string:
-          type: string
-          description: The original RRULE string
-        rrule_readable:
-          type: string
-          description: Human readable form of the RRULE
-        occurrences:
-          type: array
-          description: List of next occurrence dates
-          items:
-            type: string
-            format: date
-      required:
-      - start_date
-      - recurrence
-      - occurrences
-      - rrule_string
-      - rrule_readable
+      description: The human-readable cadence of the schedule.
+      example: Weekly on Monday, Wednesday, and Friday
     ScheduleResponseBaseObject:
       type: object
       properties:
@@ -563,33 +421,175 @@ components:
       - created_at
       - updated_at
       - rrule_readable
-    ScheduleRecurrence:
-      type: string
-      description: Recurrence of the schedule in iCalendar RRULE format
-      example: RRULE:FREQ=WEEKLY;INTERVAL=1;BYDAY=MO,WE,FR
+    SourceTransferParty:
+      title: Source
+      type: object
+      description: For use cases that require a Source, information about the transfer funding source, which will be debited.
+      properties:
+        customer_reference_id:
+          type: string
+          description: Unique reference ID for the customer (person or business) associated with the external account being debited.
+          minLength: 1
+          x-orum-error-missing:
+            known-error: missing_source_customer_reference_id
+          x-orum-error-invalid:
+            known-error: invalid_source_customer_reference_id
+        account_reference_id:
+          type: string
+          description: Unique reference ID for the external account being debited.
+          minLength: 1
+          x-orum-error-missing:
+            known-error: missing_source_account_reference_id
+          x-orum-error-invalid:
+            known-error: invalid_source_account_reference_id
+        statement_display_name:
+          type:
+          - string
+          - 'null'
+          description: The name that will appear on the bank account statement of the account being debited. The field supports 16 alphanumeric characters for ACH, and 140 for RTP.
+      required:
+      - account_reference_id
+      - customer_reference_id
     OrumId:
       type: string
       description: Orum generated unique id for the resource.
       format: uuid
-    UpdatedAt:
+    ScheduleReferenceId:
+      title: ScheduleReferenceId
       type: string
-      description: Timestamp when the resource was last updated.
-      format: date-time
+      description: Unique reference id for the Schedule. Generated by you.
+      minLength: 1
+    ScheduleStatus:
+      title: ScheduleStatus
+      type: string
+      description: Describes the current status of the schedule.
+      enum:
+      - active
+      - inactive
+    ErrorResponse:
+      type: object
+      properties:
+        error_code:
+          type: string
+        message:
+          type: string
+        details:
+          type:
+          - object
+          - 'null'
+          description: additional details about the error.
+      required:
+      - error_code
+      - message
+    Currency:
+      title: Currency
+      type: string
+      description: Currency code in ISO 4217 format. Only USD is supported.
+      enum:
+      - USD
+    RruleValidationResponse:
+      title: RruleValidationResponse
+      type: object
+      properties:
+        start_date:
+          $ref: '#/components/schemas/ScheduleStartDate'
+        rrule_string:
+          type: string
+          description: The original RRULE string
+        rrule_readable:
+          type: string
+          description: Human readable form of the RRULE
+        occurrences:
+          type: array
+          description: List of next occurrence dates
+          items:
+            type: string
+            format: date
+      required:
+      - start_date
+      - recurrence
+      - occurrences
+      - rrule_string
+      - rrule_readable
     ScheduleNextPaymentDate:
       type: string
       description: The date when the schedule will execute
       format: date
       example: '2025-01-01'
-    ScheduleHumanReadableCadence:
-      title: ScheduleHumanReadableCadence
+    CreatedAt:
       type: string
-      description: The human-readable cadence of the schedule.
-      example: Weekly on Monday, Wednesday, and Friday
+      description: Timestamp when the resource was created.
+      format: date-time
     OrumVersion:
       type: string
       description: Version of Deliver and Verify APIs. Use v2022-09-21.
       enum:
       - v2022-09-21
+    RruleValidationRequest:
+      title: RruleValidationRequest
+      type: object
+      properties:
+        start_date:
+          allOf:
+          - $ref: '#/components/schemas/ScheduleStartDate'
+          x-orum-error-missing:
+            known-error: missing_schedule_start_date
+          x-orum-error-invalid:
+            known-error: invalid_schedule_start_date
+        recurrence:
+          allOf:
+          - $ref: '#/components/schemas/ScheduleRecurrence'
+          x-orum-error-missing:
+            known-error: missing_schedule_recurrence
+          x-orum-error-invalid:
+            known-error: invalid_schedule_recurrence
+        occurrence_count:
+          type: integer
+          minimum: 1
+          maximum: 5
+          description: Number of occurrences to return. Defaults to 2 if not specified.
+          x-orum-error-invalid:
+            known-error: invalid_occurrence_count
+      required:
+      - start_date
+      - recurrence
+    TransferAmount:
+      title: TransferAmount
+      type: integer
+      description: 'Transfer amount in integral cents (example: 100 = $1). Must be greater than zero.'
+      minimum: 1
+    UpdatedAt:
+      type: string
+      description: Timestamp when the resource was last updated.
+      format: date-time
+    ScheduleResponse:
+      title: ScheduleResponse
+      type: object
+      required:
+      - schedule
+      properties:
+        schedule:
+          $ref: '#/components/schemas/ScheduleResponseBaseObject'
+    TransferSpeed:
+      title: TransferSpeed
+      type: string
+      description: Speed of transfer.
+      enum:
+      - asap
+      - standard
+      - same_day
+      - wire
+    SchedulesResponse:
+      title: SchedulesResponse
+      type: object
+      required:
+      - schedules
+      properties:
+        schedules:
+          type: array
+          description: List of schedules.
+          items:
+            $ref: '#/components/schemas/ScheduleResponseBaseObject'
   securitySchemes:
     oauth2:
       type: oauth2
