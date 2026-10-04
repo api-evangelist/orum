@@ -160,31 +160,6 @@ paths:
         - read:balances
 components:
   schemas:
-    UpdatedAt:
-      type: string
-      description: Timestamp when the resource was last updated.
-      format: date-time
-    ErrorResponse:
-      type: object
-      properties:
-        error_code:
-          type: string
-        message:
-          type: string
-        details:
-          type:
-          - object
-          - 'null'
-          description: additional details about the error.
-      required:
-      - error_code
-      - message
-    Currency:
-      title: Currency
-      type: string
-      description: Currency code in ISO 4217 format. Only USD is supported.
-      enum:
-      - USD
     Balance:
       title: Balance
       type: object
@@ -206,6 +181,10 @@ components:
           $ref: '#/components/schemas/Currency'
         updated_at:
           $ref: '#/components/schemas/UpdatedAt'
+    UpdatedAt:
+      type: string
+      description: Timestamp when the resource was last updated.
+      format: date-time
     SubledgerBalancesResponse:
       title: BalancesResponse
       type: object
@@ -218,19 +197,6 @@ components:
           items:
             allOf:
             - $ref: '#/components/schemas/SubledgerBalance'
-    SubledgerBalanceResponse:
-      title: BalanceResponse
-      type: object
-      required:
-      - balance
-      properties:
-        balance:
-          $ref: '#/components/schemas/SubledgerBalance'
-    OrumVersion:
-      type: string
-      description: Version of Deliver and Verify APIs. Use v2022-09-21.
-      enum:
-      - v2022-09-21
     SubledgerBalance:
       title: SubledgerBalance
       type: object
@@ -272,6 +238,40 @@ components:
           $ref: '#/components/schemas/Balance'
         total_balance:
           $ref: '#/components/schemas/Balance'
+    Currency:
+      title: Currency
+      type: string
+      description: Currency code in ISO 4217 format. Only USD is supported.
+      enum:
+      - USD
+    OrumVersion:
+      type: string
+      description: Version of Deliver and Verify APIs. Use v2022-09-21.
+      enum:
+      - v2022-09-21
+    ErrorResponse:
+      type: object
+      properties:
+        error_code:
+          type: string
+        message:
+          type: string
+        details:
+          type:
+          - object
+          - 'null'
+          description: additional details about the error.
+      required:
+      - error_code
+      - message
+    SubledgerBalanceResponse:
+      title: BalanceResponse
+      type: object
+      required:
+      - balance
+      properties:
+        balance:
+          $ref: '#/components/schemas/SubledgerBalance'
   securitySchemes:
     oauth2:
       type: oauth2

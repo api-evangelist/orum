@@ -359,146 +359,83 @@ paths:
         - read:transfers
 components:
   schemas:
-    ReasonCodes:
-      title: ReasonCode
-      type: object
-      required:
-      - reason_code
-      - reason_code_message
-      properties:
-        reason_code:
-          type: string
-          description: A word-based code created by Orum to describe the reason for the failure. Orum reason codes are rail-agnostic.
-          example: insufficient_funds
-        reason_code_message:
-          type: string
-          description: A human-readable description of the reason code.
-        network_reason_code:
-          type: string
-          description: The reason code sent by the network (ex R01).
-        network_reason_code_message:
-          type: string
-          description: The message sent by the network.
-        network_reason_code_rail_type:
-          type: string
-          description: The payment rail used in the transfer. Either RTP or ACH.
-    TransferResponseBaseObject:
-      title: TransferResponseBaseObject
-      type: object
-      properties:
-        id:
-          $ref: '#/components/schemas/OrumId'
-        transfer_reference_id:
-          $ref: '#/components/schemas/TransferReferenceId'
-        amount:
-          $ref: '#/components/schemas/TransferAmount'
-        currency:
-          $ref: '#/components/schemas/Currency'
-        speed:
-          $ref: '#/components/schemas/TransferSpeed'
-        source:
-          $ref: '#/components/schemas/SourceTransferPartyResponse'
-        destination:
-          $ref: '#/components/schemas/DestinationTransferPartyResponse'
-        status:
-          $ref: '#/components/schemas/TransferStatus'
-        status_reasons:
-          type: array
-          description: Array that explains why the transfer failed.
-          items:
-            $ref: '#/components/schemas/TransferStatusReason'
-        account_statement_descriptor:
-          type: string
-          description: Banks can display additional information to help the end user understand why they received funds. This information will appear on both the source and destination bank account statements. The field supports 10 alphanumeric characters for ACH and 140 for RTP.
-        estimated_funds_delivery_date:
-          type: string
-          format: date-time
-          description: Estimated date that funds will arrive in destination account. Time will always be midnight and should be ignored.
-        created_at:
-          $ref: '#/components/schemas/CreatedAt'
-        updated_at:
-          $ref: '#/components/schemas/UpdatedAt'
-        metadata:
-          $ref: '#/components/schemas/Metadata'
-        transfer_group_id:
-          $ref: '#/components/schemas/OrumId'
-        schedule_id:
-          $ref: '#/components/schemas/OrumId'
-        subledger_reference_id:
-          $ref: '#/components/schemas/SubledgerReferenceId'
-      required:
-      - id
-      - transfer_reference_id
-      - amount
-      - currency
-      - speed
-      - status
-      - created_at
-      - updated_at
-    Metadata:
-      type: object
-      description: Additional data you would like to provide on the resource. The field supports valid JSON of up to 5 key-value pairs with a maximum of 20 characters for the key and 50 characters for the value. Do not include any sensitive information.
-    ReturnTraceNumber:
-      title: ReturnTraceNumber
-      type: string
-      description: Unique tracking number assigned to a return to associate it back with its original trace number for reconciliation.
-    DestinationTransferParty:
-      title: TransferDestination
-      type: object
-      description: Information about the transfer funds destination, which will be credited.
-      properties:
-        customer_reference_id:
-          type: string
-          description: Unique reference ID for the customer (person or business) associated with the external account being credited.
-          minLength: 1
-          x-orum-error-missing:
-            known-error: missing_destination_customer_reference_id
-          x-orum-error-invalid:
-            known-error: invalid_destination_customer_reference_id
-        account_reference_id:
-          type: string
-          description: Unique reference ID for the account being credited.
-          minLength: 1
-          x-orum-error-missing:
-            known-error: missing_destination_account_reference_id
-          x-orum-error-invalid:
-            known-error: invalid_destination_account_reference_id
-        statement_display_name:
-          type:
-          - string
-          - 'null'
-          description: The name that will appear on the bank account statement of the account being credited. The field supports 16 alphanumeric characters for ACH, and 140 for RTP.
-      required:
-      - account_reference_id
-      - customer_reference_id
     TransferReferenceId:
       title: TransferReferenceId
       type: string
       description: Unique reference id for the transfer. Generated by you.
       minLength: 1
-    SourceTransferPartyResponse:
-      title: SourceTransferPartyResponse
+    SourceTransferParty:
+      title: Source
       type: object
       description: For use cases that require a Source, information about the transfer funding source, which will be debited.
       properties:
         customer_reference_id:
           type: string
           description: Unique reference ID for the customer (person or business) associated with the external account being debited.
+          minLength: 1
+          x-orum-error-missing:
+            known-error: missing_source_customer_reference_id
+          x-orum-error-invalid:
+            known-error: invalid_source_customer_reference_id
         account_reference_id:
           type: string
           description: Unique reference ID for the external account being debited.
+          minLength: 1
+          x-orum-error-missing:
+            known-error: missing_source_account_reference_id
+          x-orum-error-invalid:
+            known-error: invalid_source_account_reference_id
         statement_display_name:
-          allOf:
-          - $ref: '#/components/schemas/PartyStatementDisplayName'
-        trace_number:
-          allOf:
-          - $ref: '#/components/schemas/TraceNumber'
-        return_trace_number:
-          allOf:
-          - $ref: '#/components/schemas/ReturnTraceNumber'
+          type:
+          - string
+          - 'null'
+          description: The name that will appear on the bank account statement of the account being debited. The field supports 16 alphanumeric characters for ACH, and 140 for RTP.
       required:
       - account_reference_id
       - customer_reference_id
+    TransferStatus:
+      title: TransferStatus
+      type: string
+      description: Describes the current status of the transfer.
+      enum:
+      - completed
+      - created
+      - failed
+      - pending
+      - settled
+    TransferHistoryEntry:
+      title: TransferHistoryEntry
+      type: object
+      required:
+      - status
+      - updated_at
+      properties:
+        status:
+          $ref: '#/components/schemas/TransferStatus'
+        updated_at:
+          $ref: '#/components/schemas/UpdatedAt'
+    PartyStatementDisplayName:
+      title: PartyStatementDisplayName
+      type: string
+      description: The name that will appear on the bank account statement of the account being debited. The field supports 16 alphanumeric characters for ACH, and 140 for RTP.
+    ReturnTraceNumber:
+      title: ReturnTraceNumber
+      type: string
+      description: Unique tracking number assigned to a return to associate it back with its original trace number for reconciliation.
+    TransferHistoryResponse:
+      title: TransferHistoryResponse
+      type: object
+      required:
+      - statuses
+      properties:
+        statuses:
+          type: array
+          description: List of transfer status history entries.
+          items:
+            $ref: '#/components/schemas/TransferHistoryEntry'
+    Metadata:
+      type: object
+      description: Additional data you would like to provide on the resource. The field supports valid JSON of up to 5 key-value pairs with a maximum of 20 characters for the key and 50 characters for the value. Do not include any sensitive information.
     TransferRequest:
       title: TransferRequest
       type: object
@@ -577,64 +514,117 @@ components:
       - amount
       - currency
       - speed
-    TransferStatus:
-      title: TransferStatus
-      type: string
-      description: Describes the current status of the transfer.
-      enum:
-      - completed
-      - created
-      - failed
-      - pending
-      - settled
-    TransferResponse:
-      title: TransferResponse
+    TransferPatchMetadataRequest:
+      title: TransferPatchMetadata
       type: object
+      properties:
+        metadata:
+          allOf:
+          - $ref: '#/components/schemas/Metadata'
+          x-orum-error-missing:
+            message: Metadata is required
+            code: missing_metadata
+          x-orum-error-invalid:
+            message: Metadata must be a valid JSON object.
+            code: invalid_metadata
       required:
-      - transfer
-      properties:
-        transfer:
-          $ref: '#/components/schemas/TransferResponseBaseObject'
-    TransferStatusReason:
-      title: Transfer Status Reason
+      - metadata
+    UpdatedAt:
+      type: string
+      description: Timestamp when the resource was last updated.
+      format: date-time
+    TransferResponseBaseObject:
+      title: TransferResponseBaseObject
       type: object
-      description: For failed transfers - details on why the transfer is in a failed state.
       properties:
+        id:
+          $ref: '#/components/schemas/OrumId'
+        transfer_reference_id:
+          $ref: '#/components/schemas/TransferReferenceId'
+        amount:
+          $ref: '#/components/schemas/TransferAmount'
+        currency:
+          $ref: '#/components/schemas/Currency'
+        speed:
+          $ref: '#/components/schemas/TransferSpeed'
         source:
-          description: Present if transfer failed due to an issue with the transfer source.
-          $ref: '#/components/schemas/ReasonCodes'
+          $ref: '#/components/schemas/SourceTransferPartyResponse'
         destination:
-          description: Present if transfer failed due to an issue with the transfer destination.
-          $ref: '#/components/schemas/ReasonCodes'
-    SourceTransferParty:
-      title: Source
+          $ref: '#/components/schemas/DestinationTransferPartyResponse'
+        status:
+          $ref: '#/components/schemas/TransferStatus'
+        status_reasons:
+          type: array
+          description: Array that explains why the transfer failed.
+          items:
+            $ref: '#/components/schemas/TransferStatusReason'
+        account_statement_descriptor:
+          type: string
+          description: Banks can display additional information to help the end user understand why they received funds. This information will appear on both the source and destination bank account statements. The field supports 10 alphanumeric characters for ACH and 140 for RTP.
+        estimated_funds_delivery_date:
+          type: string
+          format: date-time
+          description: Estimated date that funds will arrive in destination account. Time will always be midnight and should be ignored.
+        created_at:
+          $ref: '#/components/schemas/CreatedAt'
+        updated_at:
+          $ref: '#/components/schemas/UpdatedAt'
+        metadata:
+          $ref: '#/components/schemas/Metadata'
+        transfer_group_id:
+          $ref: '#/components/schemas/OrumId'
+        schedule_id:
+          $ref: '#/components/schemas/OrumId'
+        subledger_reference_id:
+          $ref: '#/components/schemas/SubledgerReferenceId'
+      required:
+      - id
+      - transfer_reference_id
+      - amount
+      - currency
+      - speed
+      - status
+      - created_at
+      - updated_at
+    OrumId:
+      type: string
+      description: Orum generated unique id for the resource.
+      format: uuid
+    DestinationTransferParty:
+      title: TransferDestination
       type: object
-      description: For use cases that require a Source, information about the transfer funding source, which will be debited.
+      description: Information about the transfer funds destination, which will be credited.
       properties:
         customer_reference_id:
           type: string
-          description: Unique reference ID for the customer (person or business) associated with the external account being debited.
+          description: Unique reference ID for the customer (person or business) associated with the external account being credited.
           minLength: 1
           x-orum-error-missing:
-            known-error: missing_source_customer_reference_id
+            known-error: missing_destination_customer_reference_id
           x-orum-error-invalid:
-            known-error: invalid_source_customer_reference_id
+            known-error: invalid_destination_customer_reference_id
         account_reference_id:
           type: string
-          description: Unique reference ID for the external account being debited.
+          description: Unique reference ID for the account being credited.
           minLength: 1
           x-orum-error-missing:
-            known-error: missing_source_account_reference_id
+            known-error: missing_destination_account_reference_id
           x-orum-error-invalid:
-            known-error: invalid_source_account_reference_id
+            known-error: invalid_destination_account_reference_id
         statement_display_name:
           type:
           - string
           - 'null'
-          description: The name that will appear on the bank account statement of the account being debited. The field supports 16 alphanumeric characters for ACH, and 140 for RTP.
+          description: The name that will appear on the bank account statement of the account being credited. The field supports 16 alphanumeric characters for ACH, and 140 for RTP.
       required:
       - account_reference_id
       - customer_reference_id
+    Currency:
+      title: Currency
+      type: string
+      description: Currency code in ISO 4217 format. Only USD is supported.
+      enum:
+      - USD
     DestinationTransferPartyResponse:
       title: DestinationTransferPartyResponse
       type: object
@@ -658,10 +648,120 @@ components:
       required:
       - account_reference_id
       - customer_reference_id
-    OrumId:
+    OrumVersion:
       type: string
-      description: Orum generated unique id for the resource.
-      format: uuid
+      description: Version of Deliver and Verify APIs. Use v2022-09-21.
+      enum:
+      - v2022-09-21
+    SubledgerReferenceId:
+      title: SubledgerReferenceId
+      type: string
+      description: Unique reference id for the subledger resource. Generated by you.
+      minLength: 1
+      maxLength: 255
+    TransferResponse:
+      title: TransferResponse
+      type: object
+      required:
+      - transfer
+      properties:
+        transfer:
+          $ref: '#/components/schemas/TransferResponseBaseObject'
+    ReasonCodes:
+      title: ReasonCode
+      type: object
+      required:
+      - reason_code
+      - reason_code_message
+      properties:
+        reason_code:
+          type: string
+          description: A word-based code created by Orum to describe the reason for the failure. Orum reason codes are rail-agnostic.
+          example: insufficient_funds
+        reason_code_message:
+          type: string
+          description: A human-readable description of the reason code.
+        network_reason_code:
+          type: string
+          description: The reason code sent by the network (ex R01).
+        network_reason_code_message:
+          type: string
+          description: The message sent by the network.
+        network_reason_code_rail_type:
+          type: string
+          description: The payment rail used in the transfer. Either RTP or ACH.
+    TransferCancelResponse:
+      title: TransferCancelResponse
+      type: object
+      required:
+      - message
+      properties:
+        message:
+          type: string
+          description: An explanation for the status of the transfer cancellation request.
+    TransfersResponse:
+      title: TransfersResponse
+      type: object
+      required:
+      - transfers
+      properties:
+        transfers:
+          type: array
+          description: List of transfers.
+          items:
+            $ref: '#/components/schemas/TransferResponseBaseObject'
+    TransferSpeed:
+      title: TransferSpeed
+      type: string
+      description: Speed of transfer.
+      enum:
+      - asap
+      - standard
+      - same_day
+      - wire
+    TransferAmount:
+      title: TransferAmount
+      type: integer
+      description: 'Transfer amount in integral cents (example: 100 = $1). Must be greater than zero.'
+      minimum: 1
+    TransferStatusReason:
+      title: Transfer Status Reason
+      type: object
+      description: For failed transfers - details on why the transfer is in a failed state.
+      properties:
+        source:
+          description: Present if transfer failed due to an issue with the transfer source.
+          $ref: '#/components/schemas/ReasonCodes'
+        destination:
+          description: Present if transfer failed due to an issue with the transfer destination.
+          $ref: '#/components/schemas/ReasonCodes'
+    SourceTransferPartyResponse:
+      title: SourceTransferPartyResponse
+      type: object
+      description: For use cases that require a Source, information about the transfer funding source, which will be debited.
+      properties:
+        customer_reference_id:
+          type: string
+          description: Unique reference ID for the customer (person or business) associated with the external account being debited.
+        account_reference_id:
+          type: string
+          description: Unique reference ID for the external account being debited.
+        statement_display_name:
+          allOf:
+          - $ref: '#/components/schemas/PartyStatementDisplayName'
+        trace_number:
+          allOf:
+          - $ref: '#/components/schemas/TraceNumber'
+        return_trace_number:
+          allOf:
+          - $ref: '#/components/schemas/ReturnTraceNumber'
+      required:
+      - account_reference_id
+      - customer_reference_id
+    CreatedAt:
+      type: string
+      description: Timestamp when the resource was created.
+      format: date-time
     ErrorResponse:
       type: object
       properties:
@@ -677,110 +777,10 @@ components:
       required:
       - error_code
       - message
-    Currency:
-      title: Currency
-      type: string
-      description: Currency code in ISO 4217 format. Only USD is supported.
-      enum:
-      - USD
-    TransfersResponse:
-      title: TransfersResponse
-      type: object
-      required:
-      - transfers
-      properties:
-        transfers:
-          type: array
-          description: List of transfers.
-          items:
-            $ref: '#/components/schemas/TransferResponseBaseObject'
-    CreatedAt:
-      type: string
-      description: Timestamp when the resource was created.
-      format: date-time
-    TransferHistoryEntry:
-      title: TransferHistoryEntry
-      type: object
-      required:
-      - status
-      - updated_at
-      properties:
-        status:
-          $ref: '#/components/schemas/TransferStatus'
-        updated_at:
-          $ref: '#/components/schemas/UpdatedAt'
-    TransferHistoryResponse:
-      title: TransferHistoryResponse
-      type: object
-      required:
-      - statuses
-      properties:
-        statuses:
-          type: array
-          description: List of transfer status history entries.
-          items:
-            $ref: '#/components/schemas/TransferHistoryEntry'
-    OrumVersion:
-      type: string
-      description: Version of Deliver and Verify APIs. Use v2022-09-21.
-      enum:
-      - v2022-09-21
-    TransferAmount:
-      title: TransferAmount
-      type: integer
-      description: 'Transfer amount in integral cents (example: 100 = $1). Must be greater than zero.'
-      minimum: 1
-    TransferCancelResponse:
-      title: TransferCancelResponse
-      type: object
-      required:
-      - message
-      properties:
-        message:
-          type: string
-          description: An explanation for the status of the transfer cancellation request.
-    UpdatedAt:
-      type: string
-      description: Timestamp when the resource was last updated.
-      format: date-time
-    TransferSpeed:
-      title: TransferSpeed
-      type: string
-      description: Speed of transfer.
-      enum:
-      - asap
-      - standard
-      - same_day
-      - wire
     TraceNumber:
       title: TraceNumber
       type: string
       description: Unique tracking number of the payment assigned by its origination FI. This number can be used to track the lifecycle of the payment at the FI.
-    PartyStatementDisplayName:
-      title: PartyStatementDisplayName
-      type: string
-      description: The name that will appear on the bank account statement of the account being debited. The field supports 16 alphanumeric characters for ACH, and 140 for RTP.
-    SubledgerReferenceId:
-      title: SubledgerReferenceId
-      type: string
-      description: Unique reference id for the subledger resource. Generated by you.
-      minLength: 1
-      maxLength: 255
-    TransferPatchMetadataRequest:
-      title: TransferPatchMetadata
-      type: object
-      properties:
-        metadata:
-          allOf:
-          - $ref: '#/components/schemas/Metadata'
-          x-orum-error-missing:
-            message: Metadata is required
-            code: missing_metadata
-          x-orum-error-invalid:
-            message: Metadata must be a valid JSON object.
-            code: invalid_metadata
-      required:
-      - metadata
   securitySchemes:
     oauth2:
       type: oauth2

@@ -79,6 +79,38 @@ paths:
       security: []
 components:
   schemas:
+    OauthTokenResponse:
+      title: OauthTokenResponse
+      type: object
+      required:
+      - access_token
+      - token_type
+      - expires_in
+      properties:
+        access_token:
+          type: string
+          description: Short-lived auth (access) token that you will pass in the Authorization header of all Deliver and Verify calls.
+        token_type:
+          type: string
+          description: The type of token returned. This will always be "Bearer".
+        expires_in:
+          type: number
+          description: The time in seconds until the token expires.
+    ErrorResponse:
+      type: object
+      properties:
+        error_code:
+          type: string
+        message:
+          type: string
+        details:
+          type:
+          - object
+          - 'null'
+          description: additional details about the error.
+      required:
+      - error_code
+      - message
     OauthTokenBody:
       type: object
       required:
@@ -105,38 +137,6 @@ components:
             message: client_secret must be a string
             code: invalid_client_secret
             status: '400'
-    ErrorResponse:
-      type: object
-      properties:
-        error_code:
-          type: string
-        message:
-          type: string
-        details:
-          type:
-          - object
-          - 'null'
-          description: additional details about the error.
-      required:
-      - error_code
-      - message
-    OauthTokenResponse:
-      title: OauthTokenResponse
-      type: object
-      required:
-      - access_token
-      - token_type
-      - expires_in
-      properties:
-        access_token:
-          type: string
-          description: Short-lived auth (access) token that you will pass in the Authorization header of all Deliver and Verify calls.
-        token_type:
-          type: string
-          description: The type of token returned. This will always be "Bearer".
-        expires_in:
-          type: number
-          description: The time in seconds until the token expires.
   securitySchemes:
     oauth2:
       type: oauth2

@@ -543,53 +543,54 @@ paths:
         - read:external-accounts
 components:
   schemas:
-    EndCustomerResourceType:
-      type: string
-      description: Type of customer resource - business, person, or enterprise.
-      enum:
-      - business
-      - person
-      - enterprise
-    DuplicateAccountError:
-      allOf:
-      - $ref: '#/components/schemas/ErrorResponse'
-      - type: object
-        properties:
-          error_code:
-            type: string
-            enum:
-            - duplicate_account_details
-          details:
-            type:
-            - object
-            - 'null'
-            description: fields for duplicate account case.
-            properties:
-              customer_resource_type:
-                type: string
-                description: The type of customer resource that caused the error.
-                enum:
-                - person
-                - business
-              customer_reference_id:
-                type: string
-                description: The attempted customer_reference_id that already exists with this account.
-              customer_resource_id:
-                $ref: '#/components/schemas/OrumId'
-    AccountHolderName:
-      type: string
-      description: Name of account holder. Accepts alphanumeric characters and hyphens, dashes, periods, apostrophes, spaces, and diacritics.
-      pattern: ^([ ’!"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~¡¢£¤¥¦§¨©ª«¬®¯°±²³´µ¶·¸¹º»¼½¾¿ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖ×ØÙÚÛÜÝÞßàáâãäåæçèéêëìíîïðñòóôõö÷øùúûüýþÿĀāĂăĄąĆćĈĉĊċČčĎďĐđĒēĔĕĖėĘęĚěĜĝĞğĠġĢģĤĥĦħĨĩĪīĬĭĮįİıĲĳĴĵĶķĸĹĺĻļĽľĿŀŁłŃńŅņŇňŉŊŋŌōŎŏŐőŒœŔŕŖŗŘřŚśŜŝŞşŠšŢţŤťŦŧŨũŪūŬŭŮůŰűŲųŴŵŶŷŸŹźŻżŽžſ]*|)$
-      maxLength: 255
-      minLength: 1
-    Metadata:
+    PatchExternalAccountRequest:
+      title: PatchExternalAccountRequest
       type: object
-      description: Additional data you would like to provide on the resource. The field supports valid JSON of up to 5 key-value pairs with a maximum of 20 characters for the key and 50 characters for the value. Do not include any sensitive information.
-    AbaRoutingNumber:
-      title: AbaRoutingNumber
-      type: string
-      pattern: ^\d{9}$
-      description: 9-digit American Bankers Association (ABA) routing number.
+      properties:
+        account_type:
+          allOf:
+          - $ref: '#/components/schemas/AccountType'
+          type:
+          - string
+          - 'null'
+          x-orum-error-invalid:
+            message: Account type is invalid. Valid account type is "checking" or "savings".
+            code: invalid_account_type
+        account_number:
+          allOf:
+          - $ref: '#/components/schemas/UsBankAccountNumber'
+          type:
+          - string
+          - 'null'
+          x-orum-error-invalid:
+            known-error: invalid_account_number
+        routing_number:
+          allOf:
+          - $ref: '#/components/schemas/AbaRoutingNumber'
+          type:
+          - string
+          - 'null'
+          x-orum-error-invalid:
+            message: Routing number is invalid. Pass a valid 9-digit routing number.
+            code: invalid_routing_number
+        account_holder_name:
+          allOf:
+          - $ref: '#/components/schemas/AccountHolderName'
+          type:
+          - string
+          - 'null'
+          x-orum-error-invalid:
+            message: Account holder name is invalid. Accepted values are letters, spaces, hyphens, apostrophes, periods and diacritics.
+            code: invalid_account_holder_name
+        metadata:
+          allOf:
+          - $ref: '#/components/schemas/Metadata'
+          type:
+          - object
+          - 'null'
+          x-orum-error-invalid:
+            message: Metadata must be a valid JSON object.
+            code: invalid_metadata
     ExternalAccountResponse:
       title: ExternalAccountResponse
       type: object
@@ -598,56 +599,73 @@ components:
       properties:
         external_account:
           $ref: '#/components/schemas/ExternalAccountResponseBase'
+    MetadataPut:
+      type: object
+      description: Additional data you would like to provide on the resource. The field supports valid JSON of up to 5 key-value pairs with a maximum of 20 characters for the key and 50 characters for the value. Do not include any sensitive information.
+    Metadata:
+      type: object
+      description: Additional data you would like to provide on the resource. The field supports valid JSON of up to 5 key-value pairs with a maximum of 20 characters for the key and 50 characters for the value. Do not include any sensitive information.
+    UsBankAccountNumber:
+      title: UsBankAccountNumber
+      type: string
+      pattern: ^(?:\d-{0,1}){3,16}\d$
+      description: Account number for US bank account. 4 to 17 digits are acceptable.
+    AccountHolderName:
+      type: string
+      description: Name of account holder. Accepts alphanumeric characters and hyphens, dashes, periods, apostrophes, spaces, and diacritics.
+      pattern: ^([ ’!"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~¡¢£¤¥¦§¨©ª«¬®¯°±²³´µ¶·¸¹º»¼½¾¿ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖ×ØÙÚÛÜÝÞßàáâãäåæçèéêëìíîïðñòóôõö÷øùúûüýþÿĀāĂăĄąĆćĈĉĊċČčĎďĐđĒēĔĕĖėĘęĚěĜĝĞğĠġĢģĤĥĦħĨĩĪīĬĭĮįİıĲĳĴĵĶķĸĹĺĻļĽľĿŀŁłŃńŅņŇňŉŊŋŌōŎŏŐőŒœŔŕŖŗŘřŚśŜŝŞşŠšŢţŤťŦŧŨũŪūŬŭŮůŰűŲųŴŵŶŷŸŹźŻżŽžſ]*|)$
+      maxLength: 255
+      minLength: 1
+    ExternalAccountCustomerReferenceId:
+      title: ExternalAccountCustomerReferenceId
+      type: string
+      description: Unique customer_reference_id that you passed when creating the associated customer (business or person) resource.
+      maxLength: 255
+    UpdatedAt:
+      type: string
+      description: Timestamp when the resource was last updated.
+      format: date-time
+    ClosedAt:
+      type: string
+      description: Timestamp when the status of the resource was set to "closed".
+      format: date-time
+    AbaRoutingNumber:
+      title: AbaRoutingNumber
+      type: string
+      pattern: ^\d{9}$
+      description: 9-digit American Bankers Association (ABA) routing number.
+    OrumId:
+      type: string
+      description: Orum generated unique id for the resource.
+      format: uuid
+    OrumVersion:
+      type: string
+      description: Version of Deliver and Verify APIs. Use v2022-09-21.
+      enum:
+      - v2022-09-21
     AccountReferenceId:
       title: AccountReferenceId
       type: string
       description: Unique reference id for the external account. Generated by you.
       minLength: 1
       maxLength: 255
-    ExternalAccountResponseBase:
-      title: ExternalAccountResponseBase
+    AccountType:
+      type: string
+      description: Type of bank account - checking or savings.
+      enum:
+      - checking
+      - savings
+    ExternalAccountsResponse:
+      title: ExternalAccountsResponse
       type: object
-      description: A single object of External Account.
       required:
-      - id
-      - account_reference_id
-      - customer_reference_id
-      - customer_resource_type
-      - account_type
-      - account_number
-      - routing_number
-      - account_holder_name
-      - status
-      - created_at
-      - updated_at
+      - external_accounts
       properties:
-        id:
-          $ref: '#/components/schemas/OrumId'
-        account_reference_id:
-          $ref: '#/components/schemas/AccountReferenceId'
-        customer_reference_id:
-          $ref: '#/components/schemas/ExternalAccountCustomerReferenceId'
-        customer_resource_type:
-          $ref: '#/components/schemas/EndCustomerResourceType'
-        account_type:
-          $ref: '#/components/schemas/AccountType'
-        account_number:
-          $ref: '#/components/schemas/UsBankAccountNumber'
-        routing_number:
-          $ref: '#/components/schemas/AbaRoutingNumber'
-        account_holder_name:
-          type: string
-          description: Name of account holder.
-        status:
-          $ref: '#/components/schemas/ExternalAccountStatus'
-        created_at:
-          $ref: '#/components/schemas/CreatedAt'
-        updated_at:
-          $ref: '#/components/schemas/UpdatedAt'
-        closed_at:
-          $ref: '#/components/schemas/ClosedAt'
-        metadata:
-          $ref: '#/components/schemas/Metadata'
+        external_accounts:
+          type: array
+          description: List of External Accounts.
+          items:
+            $ref: '#/components/schemas/ExternalAccountResponseBase'
     ExternalAccountRequest:
       title: ExternalAccountRequest
       type: object
@@ -731,118 +749,85 @@ components:
           x-orum-error-invalid:
             message: Metadata must be a valid JSON object.
             code: invalid_metadata
-    ClosedAt:
+    ExternalAccountStatus:
       type: string
-      description: Timestamp when the status of the resource was set to "closed".
-      format: date-time
-    OrumId:
-      type: string
-      description: Orum generated unique id for the resource.
-      format: uuid
-    ErrorResponse:
-      type: object
-      properties:
-        error_code:
-          type: string
-        message:
-          type: string
-        details:
-          type:
-          - object
-          - 'null'
-          description: additional details about the error.
-      required:
-      - error_code
-      - message
-    CustomerReferenceId:
-      title: CustomerReferenceId
-      type: string
-      description: Unique reference id for the customer (business or person) resource. Generated by you.
-      minLength: 1
-      maxLength: 255
-    ExternalAccountsResponse:
-      title: ExternalAccountsResponse
-      type: object
-      required:
-      - external_accounts
-      properties:
-        external_accounts:
-          type: array
-          description: List of External Accounts.
-          items:
-            $ref: '#/components/schemas/ExternalAccountResponseBase'
-    CreatedAt:
-      type: string
-      description: Timestamp when the resource was created.
-      format: date-time
-    OrumVersion:
-      type: string
-      description: Version of Deliver and Verify APIs. Use v2022-09-21.
+      description: Status of the external account.
       enum:
-      - v2022-09-21
-    PatchExternalAccountRequest:
-      title: PatchExternalAccountRequest
+      - created
+      - verified
+      - rejected
+      - restricted
+      - closed
+    ExternalAccountResponseBase:
+      title: ExternalAccountResponseBase
       type: object
+      description: A single object of External Account.
+      required:
+      - id
+      - account_reference_id
+      - customer_reference_id
+      - customer_resource_type
+      - account_type
+      - account_number
+      - routing_number
+      - account_holder_name
+      - status
+      - created_at
+      - updated_at
       properties:
+        id:
+          $ref: '#/components/schemas/OrumId'
+        account_reference_id:
+          $ref: '#/components/schemas/AccountReferenceId'
+        customer_reference_id:
+          $ref: '#/components/schemas/ExternalAccountCustomerReferenceId'
+        customer_resource_type:
+          $ref: '#/components/schemas/EndCustomerResourceType'
         account_type:
-          allOf:
-          - $ref: '#/components/schemas/AccountType'
-          type:
-          - string
-          - 'null'
-          x-orum-error-invalid:
-            message: Account type is invalid. Valid account type is "checking" or "savings".
-            code: invalid_account_type
+          $ref: '#/components/schemas/AccountType'
         account_number:
-          allOf:
-          - $ref: '#/components/schemas/UsBankAccountNumber'
-          type:
-          - string
-          - 'null'
-          x-orum-error-invalid:
-            known-error: invalid_account_number
+          $ref: '#/components/schemas/UsBankAccountNumber'
         routing_number:
-          allOf:
-          - $ref: '#/components/schemas/AbaRoutingNumber'
-          type:
-          - string
-          - 'null'
-          x-orum-error-invalid:
-            message: Routing number is invalid. Pass a valid 9-digit routing number.
-            code: invalid_routing_number
+          $ref: '#/components/schemas/AbaRoutingNumber'
         account_holder_name:
-          allOf:
-          - $ref: '#/components/schemas/AccountHolderName'
-          type:
-          - string
-          - 'null'
-          x-orum-error-invalid:
-            message: Account holder name is invalid. Accepted values are letters, spaces, hyphens, apostrophes, periods and diacritics.
-            code: invalid_account_holder_name
+          type: string
+          description: Name of account holder.
+        status:
+          $ref: '#/components/schemas/ExternalAccountStatus'
+        created_at:
+          $ref: '#/components/schemas/CreatedAt'
+        updated_at:
+          $ref: '#/components/schemas/UpdatedAt'
+        closed_at:
+          $ref: '#/components/schemas/ClosedAt'
         metadata:
-          allOf:
-          - $ref: '#/components/schemas/Metadata'
-          type:
-          - object
-          - 'null'
-          x-orum-error-invalid:
-            message: Metadata must be a valid JSON object.
-            code: invalid_metadata
-    AccountType:
-      type: string
-      description: Type of bank account - checking or savings.
-      enum:
-      - checking
-      - savings
-    UsBankAccountNumber:
-      title: UsBankAccountNumber
-      type: string
-      pattern: ^(?:\d-{0,1}){3,16}\d$
-      description: Account number for US bank account. 4 to 17 digits are acceptable.
-    UpdatedAt:
-      type: string
-      description: Timestamp when the resource was last updated.
-      format: date-time
+          $ref: '#/components/schemas/Metadata'
+    DuplicateAccountError:
+      allOf:
+      - $ref: '#/components/schemas/ErrorResponse'
+      - type: object
+        properties:
+          error_code:
+            type: string
+            enum:
+            - duplicate_account_details
+          details:
+            type:
+            - object
+            - 'null'
+            description: fields for duplicate account case.
+            properties:
+              customer_resource_type:
+                type: string
+                description: The type of customer resource that caused the error.
+                enum:
+                - person
+                - business
+              customer_reference_id:
+                type: string
+                description: The attempted customer_reference_id that already exists with this account.
+              customer_resource_id:
+                $ref: '#/components/schemas/OrumId'
     PutExternalAccountRequest:
       title: PutExternalAccountRequest
       allOf:
@@ -858,23 +843,38 @@ components:
             x-orum-error-invalid:
               message: Metadata must be a valid JSON object.
               code: invalid_metadata
-    ExternalAccountStatus:
+    CustomerReferenceId:
+      title: CustomerReferenceId
       type: string
-      description: Status of the external account.
-      enum:
-      - created
-      - verified
-      - rejected
-      - restricted
-      - closed
-    MetadataPut:
-      type: object
-      description: Additional data you would like to provide on the resource. The field supports valid JSON of up to 5 key-value pairs with a maximum of 20 characters for the key and 50 characters for the value. Do not include any sensitive information.
-    ExternalAccountCustomerReferenceId:
-      title: ExternalAccountCustomerReferenceId
-      type: string
-      description: Unique customer_reference_id that you passed when creating the associated customer (business or person) resource.
+      description: Unique reference id for the customer (business or person) resource. Generated by you.
+      minLength: 1
       maxLength: 255
+    CreatedAt:
+      type: string
+      description: Timestamp when the resource was created.
+      format: date-time
+    EndCustomerResourceType:
+      type: string
+      description: Type of customer resource - business, person, or enterprise.
+      enum:
+      - business
+      - person
+      - enterprise
+    ErrorResponse:
+      type: object
+      properties:
+        error_code:
+          type: string
+        message:
+          type: string
+        details:
+          type:
+          - object
+          - 'null'
+          description: additional details about the error.
+      required:
+      - error_code
+      - message
   securitySchemes:
     oauth2:
       type: oauth2
