@@ -1,5 +1,5 @@
 generated: '2026-10-12'
-method: none
+method: searched
 source:
 - https://zapier.com/apps/orum/integrations
 - https://n8n.io/integrations/orum/
@@ -9,8 +9,33 @@ checked:
 - https://composio.dev/toolkits/orum
 - https://monid.ai/tools/orum
 - https://n8n.io/integrations/orum/
+- https://registry.financialdataexchange.org/
 - https://zapier.com/apps/orum/integrations
 summary: null
 marketplace_apps: []
-edges: []
+edges:
+- partner_name: FDX (Financial Data Exchange)
+  partner: fdx
+  type: contract
+  channel: standard-directory
+  relationship: standard-participant
+  direction: partner-built
+  evidence: https://registry.financialdataexchange.org/
+  contract_reference:
+    register: FDX Registry
+    standard: FDX API
+    spec_file: null
+    register_api: https://registry.financialdataexchange.org/fdxregistryapi/organizations/search/listingTags
+    role: industry-group
+    member_type: MEMBER
+    registered_name: Orum - Project Midas
+    register_id: 241
+    registered_website: https://orum.io/
+    country: United States
+    fdx_version: null
+    matched_by: domain:orum.io
+    detected_by: sweep-fdx.py
+    detected: '2026-10-14'
+  detected_by: sweep-fdx.py
+  first_seen: '2026-10-14'
 templates: []
