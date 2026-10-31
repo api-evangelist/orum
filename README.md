@@ -64,6 +64,159 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Orum is a company surfaced as a portfolio company of accel, bain-capital-ventures, craft-ventures and added to the API Evangelist network as a stub for enrichment. Sector: ai. This profile is a lead awaiting the enrichment pipeline.
+Orum is a payments infrastructure company that lets businesses move money and verify bank accounts through a single unified API. Its Deliver product provides "Direct to Fed" money movement across FedNow, RTP, Same Day ACH, ACH, Wires, and Visa Direct; Verify instantly confirms bank account status, ownership, and control; and Monitor is a portal for orchestrating and reconciling payment operations in real time. The REST API uses OAuth 2.0 client-credentials, offers signed webhooks for money-movement events, and ships a published OpenAPI spec and an OpenAPI-generated MCP server. Orum is backed by Accel, Bain Capital Ventures, and Craft Ventures.
 
-Backed by: accel, bain-capital-ventures, craft-ventures — https://orum.io/
+**Areas:** Company · Payments · Fintech · Banking · Instant Payments · ACH · Money Movement · Bank Account Verification
+
+## Orum on APIs.io
+
+Everything profiled for Orum is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/orum/](https://apis.io/providers/orum/)** — or go straight to one of the APIs or properties below.
+
+### APIs (17)
+
+- [Orum Authentication API](https://apis.io/apis/orum/orum-authentication-api/) — The Authentication API from Orum — 1 operation(s) for authentication.
+- [Orum Balance API](https://apis.io/apis/orum/orum-balance-api/) — The Balance API from Orum — 3 operation(s) for balance.
+- [Orum Book Transfers API](https://apis.io/apis/orum/orum-book-transfers-api/) — The Book Transfers API from Orum — 2 operation(s) for book transfers.
+- [Orum Businesses API](https://apis.io/apis/orum/orum-businesses-api/) — The Businesses API from Orum — 2 operation(s) for businesses.
+- [Orum Cards API](https://apis.io/apis/orum/orum-cards-api/) — The Cards API from Orum — 2 operation(s) for cards.
+- [Orum Configure webhooks API](https://apis.io/apis/orum/orum-configure-webhooks-api/) — The Configure webhooks API from Orum — 2 operation(s) for configure webhooks.
+- [Orum Eligibility API](https://apis.io/apis/orum/orum-eligibility-api/) — The Eligibility API from Orum — 1 operation(s) for eligibility.
+- [Orum External Accounts API](https://apis.io/apis/orum/orum-external-accounts-api/) — The External Accounts API from Orum — 4 operation(s) for external accounts.
+- [Orum Persons API](https://apis.io/apis/orum/orum-persons-api/) — The Persons API from Orum — 2 operation(s) for persons.
+- [Orum Reports API](https://apis.io/apis/orum/orum-reports-api/) — The Reports API from Orum — 5 operation(s) for reports.
+- [Orum Schedules API](https://apis.io/apis/orum/orum-schedules-api/) — The Schedules API from Orum — 3 operation(s) for schedules.
+- [Orum Secure webhooks API](https://apis.io/apis/orum/orum-secure-webhooks-api/) — The Secure webhooks API from Orum — 1 operation(s) for secure webhooks.
+- [Orum Subledgers API](https://apis.io/apis/orum/orum-subledgers-api/) — The Subledgers API from Orum — 2 operation(s) for subledgers.
+- [Orum Transfer Groups API](https://apis.io/apis/orum/orum-transfer-groups-api/) — The Transfer Groups API from Orum — 2 operation(s) for transfer groups.
+- [Orum Transfers API](https://apis.io/apis/orum/orum-transfers-api/) — The Transfers API from Orum — 4 operation(s) for transfers.
+- [Orum Trigger webhooks API](https://apis.io/apis/orum/orum-trigger-webhooks-api/) — The Trigger webhooks API from Orum — 1 operation(s) for trigger webhooks.
+- [Orum Verify API](https://apis.io/apis/orum/orum-verify-api/) — The Verify API from Orum — 4 operation(s) for verify.
+
+### Published properties
+
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
+
+#### AsyncAPI (1)
+
+Event-driven and webhook contracts.
+
+- [Orum Webhooks](https://apis.io/asyncapis/orum/orum-webhooks/)
+
+#### MCP servers (1)
+
+Model Context Protocol servers that expose the API to agents.
+
+- [orum-openapi-mcp-server](https://apis.io/servers/orum/orum-openapi-mcp-server/)
+
+#### Agentic access (1)
+
+Which operations an agent can call, which act, and which need a human in the loop.
+
+- [Orum Agentic Access](https://apis.io/agentic-access/orum/orum-agentic-access/)
+
+#### Collections (17)
+
+Postman and Open Collection request collections.
+
+- [Orum Authentication API](https://apis.io/collections/orum/open-orum-authentication-api/)
+- [Orum Authentication Balance API](https://apis.io/collections/orum/open-orum-balance-api/)
+- [Orum Authentication Book Transfers API](https://apis.io/collections/orum/open-orum-book-transfers-api/)
+- [Orum Authentication Businesses API](https://apis.io/collections/orum/open-orum-businesses-api/)
+- [Orum Authentication Cards API](https://apis.io/collections/orum/open-orum-cards-api/)
+- [Orum Authentication Configure webhooks API](https://apis.io/collections/orum/open-orum-configure-webhooks-api/)
+- [Orum Authentication Eligibility API](https://apis.io/collections/orum/open-orum-eligibility-api/)
+- [Orum Authentication External Accounts API](https://apis.io/collections/orum/open-orum-external-accounts-api/)
+- [Orum Authentication Persons API](https://apis.io/collections/orum/open-orum-persons-api/)
+- [Orum Authentication Reports API](https://apis.io/collections/orum/open-orum-reports-api/)
+- [Orum Authentication Schedules API](https://apis.io/collections/orum/open-orum-schedules-api/)
+- [Orum Authentication Secure webhooks API](https://apis.io/collections/orum/open-orum-secure-webhooks-api/)
+- [Orum Authentication Subledgers API](https://apis.io/collections/orum/open-orum-subledgers-api/)
+- [Orum Authentication Transfer Groups API](https://apis.io/collections/orum/open-orum-transfer-groups-api/)
+- [Orum Authentication Transfers API](https://apis.io/collections/orum/open-orum-transfers-api/)
+- [Orum Authentication Trigger webhooks API](https://apis.io/collections/orum/open-orum-trigger-webhooks-api/)
+- [Orum Authentication Verify API](https://apis.io/collections/orum/open-orum-verify-api/)
+
+#### Overlays (1)
+
+OpenAPI overlays, including conversational phrasing for each operation.
+
+- [Orum Openapi Overlay](https://apis.io/overlays/orum/orum-openapi-overlay/)
+
+#### Security (3)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Orum Authentication](https://apis.io/security/orum/orum-authentication/)
+- [Orum Domain Security](https://apis.io/security/orum/orum-domain-security/)
+- [Orum Trust Center](https://apis.io/security/orum/orum-trust-center/)
+
+#### OAuth scopes (1)
+
+The permissions the API asks for.
+
+- [Orum Scopes](https://apis.io/scopes/orum/orum-scopes/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://orum.io/)
+- [Documentation](https://docs.orum.io)
+- [Getting started](https://docs.orum.io/guides/welcome)
+- [API reference](https://docs.orum.io/api-reference)
+- [GitHub](https://github.com/orum-io)
+
+## API Evangelist rating
+
+**Kin Score 41.8** — developing · rubric 0.25.0 · scored 2026-10-23
+
+| Facet | Score |
+|---|---|
+| Discoverability | 71.7 |
+| Contract quality | 58.0 |
+| Contract governance | 4.5 |
+| Operational transparency | 34.2 |
+| Developer ergonomics | 63.7 |
+| Access clarity | 7.9 |
+
+**Agent readiness 40.1** — agent-ready (gated down from agent-native)
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | documented (partial credit) |
+| MCP Server | documented (partial credit) |
+| Auth Clarity | negotiable (partial credit) |
+| Idempotency | — |
+| Error Semantics | verified |
+| OpenAPI Examples | — |
+| Rate Limit Signal | documented (partial credit) |
+| Event Surface Described | yes |
+| Agent Skills | derived (partial credit) |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+| Pagination Ratio | na |
+| Operation Distinctiveness | distinct |
+
+**Regulatory alignment 30.7** — Banking & Open Finance
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/orum/](https://apis.io/providers/orum/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Orum: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/orum/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
